@@ -1,0 +1,271 @@
+/usr/bin/feh	c64474051ffc24ca87ea1d29ee4239c2
+/usr/bin/omxplayer	NotExist
+/usr/bin/wget	4f97c2d96c5dd94904dfb62b6fe0912a
+/usr/bin/upnpc	72cdc647c9524097137d92c6466c3a96
+/usr/bin/curl	bf7e66d7bbd0465cfcba5b1cf68a9b59
+/usr/bin/lxterminal	NotExist
+/usr/bin/php	00f1157e956607b36d1c4f31e1542b16
+
+/home/anhive/.config/openbox/autostart	NotExist
+/home/anhive/.config/lxsession/LXDE-pi/autostart	NotExist
+/home/anhive/.config/openbox/rc.xml	NotExist
+/home/anhive/.config/openbox/lxde-pi-rc.xml	NotExist
+/etc/sudoers.d/sign_sudoers	NotExist
+
+/etc/hive/bin/cutconnect	fb7a682e6c30f9dd6b023fb35fd5af57
+/etc/hive/bin/rmtrack	8d66631807a64f895e6afea9191923e8
+/etc/hive/bin/shellcmd	725965f2f894b10ae89ed0d2c0e5a42c
+/etc/hive/signage/feh.sh	NotExist
+/etc/hive/signage/omx.sh	NotExist
+/etc/hive/rinputd	d5a2388ee25601bccd35fb3031619ed4
+/etc/hive/tasks/gen_playlist.sh	071e4bf47ce06eae6d6cc42f400215ec
+/etc/hive/tasks/schedule.tasks	46fb1f1830f020b0792f1f144e61aec6
+/etc/hive/timeworks	7ebd6931324c5269aca467f387916c1d
+/etc/hive/.config/rinput.port	a35fe7f7fe8217b4369a0af4244d1fca
+/etc/hive/bin/set_ap.sh	NotExist
+
+/etc/init.d/rinput	506a8cace273cf4da86942f1812b4e65
+/etc/init.d/timeworks	06d92b759aa5598840235ed0c26a3780
+/etc/init.d/hostapd	666b9ab55a1e45985f7b8d412aaffb38
+/etc/init.d/apache2	744ef9ca584493299c353e2251cbf993
+/etc/init.d/sign-hive	NotExist
+/etc/init.d/samba	NotExist
+
+/home/anhive/media	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/slide	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/playlist	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/playlist/captions	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/captions	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/thumbs	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/video	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/media/info	d41d8cd98f00b204e9800998ecf8427e
+
+/var/www/index.html	NotExist
+/var/www/media	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/slide	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/playlist	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/playlist/captions	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/captions	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/thumbs	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/video	d41d8cd98f00b204e9800998ecf8427e
+/var/www/media/info	d41d8cd98f00b204e9800998ecf8427e
+
+/var/www/signage	d41d8cd98f00b204e9800998ecf8427e
+/var/www/signage/index.php	c6278cc945c0784417f81038e5087556
+/var/www/signage/syswork_sv.php	50ee531a3e54017a8808d206059e587f
+/var/www/signage/upload_pkg.php	4933a205d3594f97aea063e56fffc564
+/var/www/signage/emergency.dumy	53cfa32c548e311c2a34625cdd1a2380
+/var/www/signage/signage.base.js	d7bed0fdcc8118eba29cd7e89abce67c
+/var/www/signage/listphotos.php	1b2bc5e883a78f9240e9db0c008abc5c
+/var/www/signage/listvideos.php	8c9a7bc5c5198eaec18cbd1291f98dae
+/var/www/signage/listwork.php	a7e5081c926fd46d8487d62102c4eb08
+/var/www/signage/testwork.php	fdb635fc29a8d137e335ef6ed4a0c5c7
+/var/www/signage/s00_event.php	a778d6ef5425e61468b5a15464588640
+/var/www/signage/slidework.php	1c9d13015c382979ac645cb89ee0df03
+/var/www/signage/uploadphoto.html	62d2a0d5b8d13ec9a2bbfc979176cea2
+/var/www/signage/home.php	6a8d2ff8f2b7048c6542a82f4aa21e4a
+/var/www/signage/favicon.ico	22aa8021d6468d7f2a274ef953b58bb3
+/var/www/signage/samworks.php	e73912e422e0f573833f8793d064f7ac
+/var/www/signage/s00_signage.php	1efe9099210833e205ecc7c41fefeb62
+/var/www/signage/syswork.php	b3daf2f5f5b79df40cb824ed9673ef3c
+/var/www/signage/NanumGothic.woff	782da5deb7fa83aca03a25282f60b25a
+/var/www/signage/signwork.php	51e65288e455d10a9761de9ec89a2972
+/var/www/signage/playwork.php	646b94acdc748a243b412b79be688912
+/var/www/signage/openvideo.php	5c1b4921a082b35265de9c05683b96ae
+/var/www/signage/cardwork.php	369f48763b70b05340427fb4b12ba99a
+/var/www/signage/signage.base.css	48ad955cd88542fba045d2b0276591f4
+/var/www/signage/welcome.php	5d59975291640c601132edca9de911ce
+/var/www/signage/s00_file.php	9409b69b91ab6d29f795d032e2666bf0
+/var/www/signage/openimages.php	d342b665a83ec30d4f78e11b8f4fcf76
+/var/www/signage/participants.php	c4e111bdedc635956c592a74f6e55305
+/var/www/signage/upload_pkg.lst	3d892e40c98c2fc42c7de5267dd630ed
+/var/www/signage/images/loading.gif	c9ce85b7b97604c9eace6de11fd95123
+/var/www/signage/images/shutdown.png	c7a97823419301cbc130dd33a4793444
+/var/www/signage/images/leftward.png	6b453ef330a4e821e0e04463de1206e4
+/var/www/signage/images/right_next.png	2908283557de4b74a1e37f27366e46e7
+/var/www/signage/images/rotate_270.png	41991244bc333b4731a716d7f45660d2
+/var/www/signage/images/downward.png	3aec2b3ddce96bf2318313d0d308a836
+/var/www/signage/images/upward.png	3a5befeefe457c8f62c78ff8c7776001
+/var/www/signage/images/100p.png	7713b16de6ac4145bbf3f05ab4583738
+/var/www/signage/images/rotate_90.png	42a05686ba6b0d8c571d649cadf1817f
+/var/www/signage/images/rotate_right.png	8cecbdfe87c3b146fccfe5e0d5ecd05e
+/var/www/signage/images/next.png	83d322aee9585d5a202f864e98c2de9d
+/var/www/signage/images/mirrored.png	ddbc1bc7ed56522f80bc9733ffc4220a
+/var/www/signage/images/playlist.png	b6cc858aef8745f2fd8196f913bb22cf
+/var/www/signage/images/smaller.png	75ff969d1b4ef39b8169e99184cb7b02
+/var/www/signage/images/larger.png	b641c344bbcaa57dd2fcceacb72ae772
+/var/www/signage/images/left_next.png	c2fee934f1e2c4a6deb77ffbe4fa8937
+/var/www/signage/images/rightward.png	d07e422935b6a52f45a8b71ec2df3491
+/var/www/signage/images/cancel.png	d4f2a8bedcefeb03ddc3659c16f77613
+/var/www/signage/images/playhold.png	125cf282acb9a87c6cf996f4a324a04e
+/var/www/signage/images/fittosize.png	904be009adde64c6ae77b2839f04b211
+/var/www/signage/images/previous.png	78462139cad6b2e6c2b9253584ed811d
+/var/www/signage/images/rotate_left.png	9ceb8b7e1dbad67d85a68c3eee9c65c8
+/var/www/signage/images/exclude.png	c0ad91e0c844bd27665a94da025baa32
+/var/www/signage/images/reset.png	40fcb5a15414e3e4c750a8b2905f7731
+/var/www/signage/images/restart.png	12fdc7b43254c1970e9e4c6aa311797f
+/var/www/signage/images/delete.png	1d4d41d48990fe89ea7b8becd1582c9a
+/var/www/signage/images/flipped.png	af654e133cf9b336b746537472201649
+/var/www/signage/custom/default	5e8ff9bf55ba3508199d22e984129be6
+/var/www/signage/custom/sample/access.conf	a7aca54246a69c1bfac5aff18216eb21
+/var/www/signage/custom/sample/profile.conf	09af7501373d7a1bdac3fe383b161f21
+/var/www/signage/custom/sample/profile.png	6ceae25af40246c0ed9d4c04315f943b
+/var/www/signage/custom/sample/playmode.conf	7a2bf35705a6c6e5dcf715eb689181f6
+/var/www/signage/custom/sample/storage.conf	ce9b1b40addc37006ee9ca16f7898a8a
+/var/www/signage/custom/sample/playlist.conf	c5ff27accd38404224682146575baa6e
+/var/www/signage/custom/sample/service.conf	d41d8cd98f00b204e9800998ecf8427e
+/var/www/signage/custom/sample/profile.jpg	82efbf7d681d7ae40826358e20c7e8f5
+/var/www/signage/lib/lib_message.php	1d5c4deada1dfbb1bec373c9b1ba9135
+/var/www/signage/lib/update.php	f10c5e9d7ba244873d647925c763ebff
+/var/www/signage/lib/get_access.php	c0eb70dafd129c104b85ace786e32128
+/var/www/signage/lib/get_config.php	9f4ccccb2f1f82ba338cf12c635efa4e
+/var/www/signage/lib/captive_sv.php	c5f3920f70f9a11c69e2cc81d553796e
+/var/www/signage/lib/get_resource.php	f20e6aa2ff552da9cd778e0ad25fb474
+/var/www/signage/lib/s00_file.php	7a5b811ebe2460d7b5dcc427380576c7
+/var/www/signage/lib/captive.php	f5bffda4ae0a53cde31eb8640a6972a2
+
+
+/home/anhive/signage/slidework.php	1c9d13015c382979ac645cb89ee0df03
+/home/anhive/signage/samworks.php	e73912e422e0f573833f8793d064f7ac
+/home/anhive/signage/upload_pkg.php	4933a205d3594f97aea063e56fffc564
+/home/anhive/signage/playwork.php	646b94acdc748a243b412b79be688912
+/home/anhive/signage/custom/default	5e8ff9bf55ba3508199d22e984129be6
+/home/anhive/signage/custom/sample/profile.conf	09af7501373d7a1bdac3fe383b161f21
+/home/anhive/signage/custom/sample/sample_slide.jpg	c3df425f186cfffb2a8416dd81e1b596
+/home/anhive/signage/custom/sample/playmode.conf	7a2bf35705a6c6e5dcf715eb689181f6
+/home/anhive/signage/custom/sample/playlist.conf	c5ff27accd38404224682146575baa6e
+/home/anhive/signage/custom/sample/access.conf	a7aca54246a69c1bfac5aff18216eb21
+/home/anhive/signage/custom/sample/sample_slide.jpg.json	e8675e926648d5db27b17e1a9f865866
+/home/anhive/signage/custom/sample/profile.jpg	82efbf7d681d7ae40826358e20c7e8f5
+/home/anhive/signage/custom/sample/profile.png	6ceae25af40246c0ed9d4c04315f943b
+/home/anhive/signage/custom/sample/service.conf	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/signage/custom/sample/storage.conf	ce9b1b40addc37006ee9ca16f7898a8a
+/home/anhive/signage/images/quite.png	d6326726e1bd6bdf7fe82c7b24db0802
+/home/anhive/signage/images/video.png	22aa8021d6468d7f2a274ef953b58bb3
+/home/anhive/signage/images/playhold.png	125cf282acb9a87c6cf996f4a324a04e
+/home/anhive/signage/images/left_next.png	c2fee934f1e2c4a6deb77ffbe4fa8937
+/home/anhive/signage/images/right_next.png	2908283557de4b74a1e37f27366e46e7
+/home/anhive/signage/images/restart.png	12fdc7b43254c1970e9e4c6aa311797f
+/home/anhive/signage/images/offsound.png	9e895952bd7655e0a75bec44d16fb7bc
+/home/anhive/signage/images/100p.png	7713b16de6ac4145bbf3f05ab4583738
+/home/anhive/signage/images/rotate_270.png	41991244bc333b4731a716d7f45660d2
+/home/anhive/signage/images/smaller.png	75ff969d1b4ef39b8169e99184cb7b02
+/home/anhive/signage/images/previous_o.png	b9a0e0c447951917ffef6f65c3b55252
+/home/anhive/signage/images/reset.png	40fcb5a15414e3e4c750a8b2905f7731
+/home/anhive/signage/images/fittosize.png	904be009adde64c6ae77b2839f04b211
+/home/anhive/signage/images/rightward.png	d07e422935b6a52f45a8b71ec2df3491
+/home/anhive/signage/images/cancel.png	d4f2a8bedcefeb03ddc3659c16f77613
+/home/anhive/signage/images/next_o.png	d283c8469c7d05909bbefc76e94f5667
+/home/anhive/signage/images/loading.gif	c9ce85b7b97604c9eace6de11fd95123
+/home/anhive/signage/images/delete.png	1d4d41d48990fe89ea7b8becd1582c9a
+/home/anhive/signage/images/next.png	83d322aee9585d5a202f864e98c2de9d
+/home/anhive/signage/images/shutdown.png	c7a97823419301cbc130dd33a4793444
+/home/anhive/signage/images/previous.png	78462139cad6b2e6c2b9253584ed811d
+/home/anhive/signage/images/playlist.png	b6cc858aef8745f2fd8196f913bb22cf
+/home/anhive/signage/images/rotate_right.png	8cecbdfe87c3b146fccfe5e0d5ecd05e
+/home/anhive/signage/images/reload.png	0cf6fe54b79f794a2522752e7f7b1a5d
+/home/anhive/signage/images/larger.png	b641c344bbcaa57dd2fcceacb72ae772
+/home/anhive/signage/images/upward.png	3a5befeefe457c8f62c78ff8c7776001
+/home/anhive/signage/images/louder.png	af695a16fba38cb8307f8c7ce4ebf185
+/home/anhive/signage/images/rotate_left.png	9ceb8b7e1dbad67d85a68c3eee9c65c8
+/home/anhive/signage/images/leftward.png	6b453ef330a4e821e0e04463de1206e4
+/home/anhive/signage/images/flipped.png	af654e133cf9b336b746537472201649
+/home/anhive/signage/images/mirrored.png	ddbc1bc7ed56522f80bc9733ffc4220a
+/home/anhive/signage/images/exclude.png	c0ad91e0c844bd27665a94da025baa32
+/home/anhive/signage/images/rotate_90.png	42a05686ba6b0d8c571d649cadf1817f
+/home/anhive/signage/images/onsound.png	0cf2336aec863412ab20a29ec4549219
+/home/anhive/signage/images/downward.png	3aec2b3ddce96bf2318313d0d308a836
+/home/anhive/signage/videolist.php	647dc71070f5fe5706370898975af48f
+/home/anhive/signage/cardwork.php	369f48763b70b05340427fb4b12ba99a
+/home/anhive/signage/welcome.php	5d59975291640c601132edca9de911ce
+/home/anhive/signage/upload_pkg.lst	3d892e40c98c2fc42c7de5267dd630ed
+/home/anhive/signage/testwork.php	fdb635fc29a8d137e335ef6ed4a0c5c7
+/home/anhive/signage/signage.base.css	48ad955cd88542fba045d2b0276591f4
+/home/anhive/signage/home.php	6a8d2ff8f2b7048c6542a82f4aa21e4a
+/home/anhive/signage/emergency.dumy	53cfa32c548e311c2a34625cdd1a2380
+/home/anhive/signage/signinit.php	709775c7c60ce09aab8f3605a2578170
+/home/anhive/signage/index.php	c6278cc945c0784417f81038e5087556
+/home/anhive/signage/uploadphoto.html	62d2a0d5b8d13ec9a2bbfc979176cea2
+/home/anhive/signage/NanumGothic.woff	782da5deb7fa83aca03a25282f60b25a
+/home/anhive/signage/s00_access.php	ac5d1c5241c9778461baab0ebb92c8ce
+/home/anhive/signage/.installer/setup.php	ff1d8b5b6fcf016aff14ba89e95d6784
+/home/anhive/signage/.installer/res/cutconnect	fb7a682e6c30f9dd6b023fb35fd5af57
+/home/anhive/signage/.installer/res/sign_sudoers	6eb9e06ebc71e8348bc5294f316076d9
+/home/anhive/signage/.installer/res/omx.sh	c1972d26aa24d325f73d5ae61b0b6e80
+/home/anhive/signage/.installer/res/feh.sh	8de91e55416052ca4decf3cc742f8966
+/home/anhive/signage/.installer/res/autostart	a3c51ebc871b71615920da6af0a1995c
+/home/anhive/signage/.installer/res/index.html	2149d886ad404238a8bad6e00c456b6e
+/home/anhive/signage/.installer/res/rc.xml	3441211e2ae7d418d838136ae1c36708
+/home/anhive/signage/.installer/res/rmtrack	8d66631807a64f895e6afea9191923e8
+/home/anhive/signage/.installer/res/schedule.tasks	d41d8cd98f00b204e9800998ecf8427e
+/home/anhive/signage/.installer/res/shellcmd	725965f2f894b10ae89ed0d2c0e5a42c
+/home/anhive/signage/.installer/install_pixel.sh	25bbea3be19dc582298add6e7b1ccfcd
+/home/anhive/signage/.installer/setwifi.sh	4c108d885f5b501eb43af0aa69312cd8
+/home/anhive/signage/s00_signage.php	1efe9099210833e205ecc7c41fefeb62
+/home/anhive/signage/favicon.ico	22aa8021d6468d7f2a274ef953b58bb3
+/home/anhive/signage/signage.base.js	d7bed0fdcc8118eba29cd7e89abce67c
+/home/anhive/signage/signwork.php	51e65288e455d10a9761de9ec89a2972
+/home/anhive/signage/openimages.php	d342b665a83ec30d4f78e11b8f4fcf76
+/home/anhive/signage/listwork.php	a7e5081c926fd46d8487d62102c4eb08
+/home/anhive/signage/s00_file.php	9409b69b91ab6d29f795d032e2666bf0
+/home/anhive/signage/lib/get_resource.php	f20e6aa2ff552da9cd778e0ad25fb474
+/home/anhive/signage/lib/get_access.php	c0eb70dafd129c104b85ace786e32128
+/home/anhive/signage/lib/lib_common.php	96e8f8087ee2e2f02682d257930d4a18
+/home/anhive/signage/lib/lib_message.php	1d5c4deada1dfbb1bec373c9b1ba9135
+/home/anhive/signage/lib/s00_file.php	7a5b811ebe2460d7b5dcc427380576c7
+/home/anhive/signage/lib/update.php	f10c5e9d7ba244873d647925c763ebff
+/home/anhive/signage/lib/captive_sv.php	c5f3920f70f9a11c69e2cc81d553796e
+/home/anhive/signage/lib/get_config.php	9f4ccccb2f1f82ba338cf12c635efa4e
+/home/anhive/signage/lib/captive.php	f5bffda4ae0a53cde31eb8640a6972a2
+/home/anhive/signage/participants.php	c4e111bdedc635956c592a74f6e55305
+/home/anhive/signage/s00_event.php	a778d6ef5425e61468b5a15464588640
+/home/anhive/signage/openvideo.php	5c1b4921a082b35265de9c05683b96ae
+/home/anhive/signage/listvideos.php	8c9a7bc5c5198eaec18cbd1291f98dae
+/home/anhive/signage/validator/execs.lst	27e1df9c46e463b4d0c41d5c983f5fc5
+/home/anhive/signage/validator/files.lst	cec38cd47011c36b111acbe3baccd9eb
+/home/anhive/signage/validator/blackscreen.jpg	5065812cc18bdb88712e08674cd996fa
+/home/anhive/signage/validator/etc.lst	2c6be941b5f97f4cbf77eb915c5121a7
+/home/anhive/signage/validator/pkg.lst	2dca6239b2f88302ffec3641cb41eb76
+/home/anhive/signage/validator/permission.lst	1931fe3d96d4b36663dd883220f4b0a0
+/home/anhive/signage/validator/checker.php	55ba38eb8d629ad8b126f40884494c0c
+/home/anhive/signage/timerjob.php	a84ba58c06a4972582a2473a687350d9
+/home/anhive/signage/videowork.php	1f090f4f626c96c65eeb536613012ba7
+/home/anhive/signage/listphotos.php	1b2bc5e883a78f9240e9db0c008abc5c
+/home/anhive/signage/syswork_sv.php	50ee531a3e54017a8808d206059e587f
+/home/anhive/signage/syswork.php	b3daf2f5f5b79df40cb824ed9673ef3c
+/home/anhive/signage/nailwork.php	550d6d1c592eefada77fb51cf0426701
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

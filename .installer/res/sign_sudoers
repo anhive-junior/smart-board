@@ -1,0 +1,4 @@
+www-data ALL = NOPASSWD: /etc/hive/bin/rmtrack
+www-data ALL = NOPASSWD: /etc/hive/bin/cutconnet
+www-data ALL = NOPASSWD: /sbin/iptables
+www-data ALL = NOPASSWD: /usr/sbin/arp

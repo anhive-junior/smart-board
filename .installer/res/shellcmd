@@ -1,0 +1,40 @@
+#!/bin/bash
+# shell command interpreter
+
+version="$0 v0.5, 2014/09/01"
+
+usage="
+Usage: $0 ...
+
+    -d | --direct     without check command but under normal user account
+    -r | --root       execute root user
+    -s | --sleep      execute user after sleep
+    -h | --help       display this help and exit
+         --version    display version information and exit
+"
+#validate interface
+if [ "$1" == "" ] ; then
+  echo -e "$usage"
+  exit 1
+fi
+echo "$@" >> /etc/hive/log/command.log
+while [ "$1" != "" ]; do
+    case $1 in
+        shutdown    )     shutdown -h 0; exit  ;;
+        reboot      )     reboot; exit  ;;
+        -d | --direct )   shift; "$@" ; exit ;;
+        -s | --sleep)     shift; sleep $1; shift; "$@"; exit  ;;
+        -h | --help )     exec echo "$usage"; exit ;;
+        -v | --version )  exec echo "$version"; exit ;;
+        * )               exec echo "[$1] is not defined.\n$usage"; exit 1
+    esac
+    shift
+done
+
+exit 0
+
+
+
+
+
+
