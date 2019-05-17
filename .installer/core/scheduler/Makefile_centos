@@ -1,0 +1,24 @@
+
+%.o: %.c 
+	gcc -c -o $@ $< 
+
+timeworks: timeworks.c
+	gcc -o $@ $^ 
+
+install: 
+	-service timeworks stop
+	chmod 755 timeworks res/timeworks_centos@init.d
+	chkconfig --del timeworks
+	cp timeworks /etc/hive/timeworks
+	cp res/timeworks_centos@init.d /etc/rc.d/init.d/timeworks
+	chkconfig --add timeworks
+	#update-rc.d timeworks defaults
+	mkdir -p /etc/hive/tasks
+	touch /etc/hive/tasks/schedule.tasks
+	chown apache:apache /etc/hive/tasks/schedule.tasks
+	service timeworks start
+	-sudo rm /var/www/html/tasks
+	sudo ln -s ${CURDIR}/www /var/www/html/tasks
+
+packing:
+	 tar -cvf www/timework.core.tar.gz res/* tasks/* timeworks timeworks.c Makefile

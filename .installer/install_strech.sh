@@ -309,16 +309,13 @@ rc=$?; if [[ $rc == 0 ]]; then
  
 #remote key input
 cd ~
-mkdir -p ~/rinput && cd ~/rinput
-wget thebolle.com/archive/rinput.tar.gz -O - | tar -xvzpf -
+cp ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
 make
 sudo make install > /dev/null &
 # end of script
- 
 # schedule job
 cd ~
-mkdir -p ~/scheduler && cd ~/scheduler
-wget thebolle.com/archive/scheduler.tar.gz -O - | tar -xvzpf -
+cp ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
 cp Makefile_pi Makefile
 make
 sudo make install > /dev/null &
