@@ -1,6 +1,6 @@
 #!/bin/bash
 # create by AnHive. Co., LTd.
-
+ 
 function confirm_to_continue() {
     read -p "$1 ------continue Y/n" CONTINUE
     if [ "x$CONTINUE" == "xn" ] || [ "x$CONTINUE" == "xN" ]
@@ -9,20 +9,20 @@ function confirm_to_continue() {
     fi
     return 0
 }
-
+ 
 function echo_log() {
      echo $1 | tee -a install.log
 }
-
-confirm_to_continue "--------step.-0 to set personalization" 1
+ 
+confirm_to_continue "--------step.1 to set personalization"
 rc=$?; if [[ $rc == 0 ]]; then
 sudo raspi-config
-
+ 
 fi
 #####################################
-confirm_to_continue "--------step.0 to set WiFi connections" 2
+confirm_to_continue "--------step.2 to set WiFi connections"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 mkdir -p ~pi/bin
 cat << EOF > ~pi/bin/setwifi.sh
 #!/bin/bash
@@ -32,7 +32,7 @@ cat << EOF > ~pi/bin/setwifi.sh
 CONF=/etc/wpa_supplicant/wpa_supplicant.conf;
  
 #check the current status of wireless connection
-IFC=\$(ifconfig wlan0 | grep "inet addr" | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | head -1)
+IFC=\$(ifconfig wlan0 | grep "inet" | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | head -1)
 echo "infterface .. \$IFC"
 if [ "x\$IFC" != "x" ]; then
         sudo cat \$CONF
@@ -92,7 +92,7 @@ function checkconnection () {
    do
         echo "Waiting wifi connection. reimain[ \$COUNT ] seconds"
         sleep 1
-        IFC=\$(ifconfig wlan0 | grep "inet addr" | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | head -1 )
+        IFC=\$(ifconfig wlan0 | grep "inet" | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | head -1 )
         if [ "x\$IFC" != "x" ]; then
             echo "wifi IP address .. \$IFC"
             sudo rm /run/shm/wpa_supplicant.conf.org
@@ -111,7 +111,7 @@ while [ \$RC != 0 ]
 do 
     getssid
     setwpa
-    sudo ifdown wlan0 && sudo ifup wlan0
+    sudo service dhcpcd restart
     checkconnection
     RC=\$?
 done
@@ -119,21 +119,22 @@ done
 EOF
 chmod 755 ~pi/bin/setwifi.sh
 ~pi/bin/setwifi.sh
-
+ 
 # restart interface
 ifconfig wlan0
 #end of script
-
+ 
 fi
 #####################################
-confirm_to_continue "--------step.1 to set raspbian mirror" 3
+confirm_to_continue "--------step.3 to set RASPBIAN mirror"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 echo_log "  change archive source from origine to KAIST mirror"
 #change source list
 ls -la /etc/apt/sources.list
  
-echo "deb http://ftp.kaist.ac.kr/raspbian/raspbian/ jessie main contrib non-free rpi" > /run/shm/s.d
+module=$(head -n 1 /etc/apt/sources.list | awk '{print $3}')
+echo "deb http://ftp.kaist.ac.kr/raspbian/raspbian/ $module main contrib non-free rpi" > /run/shm/s.d
 cat /run/shm/s.d
 if [ -e /etc/apt/sources.list.org ]
 then
@@ -151,25 +152,25 @@ sudo mv /etc/apt/sources.list.net /etc/apt/sources.list
 ls -la /etc/apt/sources.list
 cat /etc/apt/sources.list
 # end of script
-
+ 
 sudo apt-get update
 # end of script
-
+ 
 # sudo apt-get -y upgrade
 sudo apt-get clean
 # end of script
-
+ 
 fi
 #####################################
-confirm_to_continue "--------step.2 to install file share" 4
+confirm_to_continue "--------step.4 to install file share(SAMBA)"
 rc=$?; if [[ $rc == 0 ]]; then
 echo "Install samba package to share document over windows file sharing protocol"
 sudo apt-get -y install samba samba-common-bin
 # end of script
-
+ 
 sudo smbpasswd -a pi
 # end of script
-
+ 
 cat << EOF > smb.tmp
 [pi]
 path = /home/pi
@@ -182,19 +183,19 @@ read list = pi
 write list = pi
 EOF
 sudo sh -c "cat smb.tmp >> \/etc\/samba\/smb.conf"
-
+ 
 tail /etc/samba/smb.conf
 # end of script
-
+ 
 fi
 #####################################
 #web server installation  
-confirm_to_continue "----- -- step.3 to install web server" 5
+confirm_to_continue "------- step.5 to install web server(APACHE)"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 sudo apt-get -y install apache2
 # end of script
-
+ 
 #set root for web
 sudo sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www/' /etc/apache2/sites-enabled/000-default.conf
 grep 'DocumentRoot \/var\/www' /etc/apache2/sites-enabled/000-default.conf
@@ -203,45 +204,45 @@ grep 'DocumentRoot \/var\/www' /etc/apache2/sites-enabled/000-default.conf
 sudo usermod -a -G www-data pi && id pi
 sudo usermod -a -G pi www-data && id www-data
 # end of script
-
+ 
 wget localhost -O - | head -10
 # end of script
-
+ 
 # set hive package space
 sudo mkdir -p /etc/hive
 # end of script
  
-
+ 
 #####################################
 #web application server installation  
-sudo apt-get -y install php5 libapache2-mod-php5 php5-mcrypt php5-gd
+sudo apt-get -y install php libapache2-mod-php php-mcrypt php-gd
 # end of script
-
+ 
 #set for file transfer bigger then 2M
-sudo sed -i 's/post_max_size = .M/post_max_size = 2G/' /etc/php5/apache2/php.ini
-grep "post_max_size =" /etc/php5/apache2/php.ini
-sudo sed -i 's/upload_max_filesize = .M/upload_max_filesize = 2G/' /etc/php5/apache2/php.ini
-grep "upload_max_filesize =" /etc/php5/apache2/php.ini
+sudo sed -i 's/post_max_size = .M/post_max_size = 2G/' /etc/php/7.0/apache2/php.ini
+grep "post_max_size =" /etc/php/7.0/apache2/php.ini
+sudo sed -i 's/upload_max_filesize = .M/upload_max_filesize = 2G/' /etc/php/7.0/apache2/php.ini
+grep "upload_max_filesize =" /etc/php/7.0/apache2/php.ini
 # end of script
-
+ 
 sudo service apache2 restart
 # end of script
-
+ 
 sudo sh -c "echo '<?= phpinfo();?>' > /var/www/test.php"
 # end of script
-
+ 
 wget localhost/test.php -O - | head -10
 # end of script
-
+ 
 fi
 #####################################
-confirm_to_continue "------- step.5 to install multimedia applicatiopn" 6
+confirm_to_continue "------- step.6 to install multimedia applicatiopn(FEH)"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 #slide show, video player
 sudo apt-get -y install feh omxplayer
 # end of script
-
+ 
 # short key registration
 cd ~
 SS="
@@ -257,58 +258,83 @@ SS="
 echo "$SS" > src.txt
  
 # for lxde as default
-if [ -e ~/.config/openbox/lxde-pi-rc.xml ]
+#if [ -e ~/.config/openbox/lxde-pi-rc.xml ]
+#then
+#	sed -i '/<\/keyboard>/r src.txt' ~/.config/openbox/lxde-pi-rc.xml
+#	sed -i '0,/<\/keyboard>/{s/<\/keyboard>//}' ~/.config/openbox/lxde-pi-rc.xml
+#	ls -la  ~/.config/openbox/lxde-pi-rc.xml
+#	grep signage ~/.config/openbox/lxde-pi-rc.xml
+#else
+#	echo_log "fail to change [~/.config/openbox/lxde-pi-rc.xml]"
+#fi
+ 
+ 
+if [ -d /home/pi/.config/openbox ]
 then
-	sed -i '/<\/keyboard>/r src.txt' ~/.config/openbox/lxde-pi-rc.xml
-	sed -i '0,/<\/keyboard>/{s/<\/keyboard>//}' ~/.config/openbox/lxde-pi-rc.xml
-	ls -la  ~/.config/openbox/lxde-pi-rc.xml
-	grep signage ~/.config/openbox/lxde-pi-rc.xml
-else
-	echo_log "fail to change [~/.config/openbox/lxde-pi-rc.xml]"
+  sudo rm -rf /home/pi/.config/openbox /home/pi/.config/lxsession
 fi
+ 
+# backup openbox of xml file
+if [ ! -f /etc/xdg/openbox/lxde-pi-rc.xml.bak ]
+then
+  sudo cp /etc/xdg/openbox/lxde-pi-rc.xml /etc/xdg/openbox/lxde-pi-rc.xml.bak
+fi
+ 
+# for lxde as default
+if [ -e /etc/xdg/openbox/lxde-pi-rc.xml ]
+then
+	sudo sed -i '/<\/keyboard>/r src.txt' /etc/xdg/openbox/lxde-pi-rc.xml
+	sudo sed -i '0,/<\/keyboard>/{s/<\/keyboard>//}' /etc/xdg/openbox/lxde-pi-rc.xml
+	ls -la  /etc/xdg/openbox/lxde-pi-rc.xml
+	grep signage /etc/xdg/openbox/lxde-pi-rc.xml
+else
+	echo "fail to change [/etc/xdg/openbox/lxde-pi-rc.xml]"
+fi
+ 
  
 rm src.txt
 # end of script
-
+ 
 #
 echo_log extent to full screen when monitor is connected
 sudo sed -i.old 's/#disable_overscan=1/disable_overscan=1/g' /boot/config.txt
 grep disable_overscan /boot/config.txt
 # end of script
-
-
+ 
+ 
 fi
 #####################################
-confirm_to_continue "------- step.6 to application to remote inputs" 7
+confirm_to_continue "------- step.7 to install Internet Photoframe(SurpriseBox)"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 #remote key input
 cd ~
 mkdir -p ~/rinput && cd ~/rinput
 wget thebolle.com/archive/rinput.tar.gz -O - | tar -xvzpf -
 make
-sudo make install
+sudo make install > /dev/null &
 # end of script
-
+ 
 # schedule job
 cd ~
 mkdir -p ~/scheduler && cd ~/scheduler
 wget thebolle.com/archive/scheduler.tar.gz -O - | tar -xvzpf -
 cp Makefile_pi Makefile
 make
-sudo make install
+sudo make install > /dev/null &
+ 
 sudo sh -c "echo -n > /etc/hive/tasks/schedule.tasks"
 sudo chmod 666 /etc/hive/tasks/schedule.tasks
 sudo chmod 777 /etc/hive/tasks
 sudo service timeworks start
 # end of script
-
+ 
 # download signage
 cd ~
 mkdir -p ~/signage && cd ~/signage
 wget thebolle.com/archive/signage.tar.gz -O - | tar -xvzpf -
 # end of script
-
+ 
 # set default landing page
 cd ~/signage/.installer
 sudo ln -sfT ~/signage /var/www/signage
@@ -331,44 +357,44 @@ mkdir -p ~/media/info
 sudo ln -sfT ~/media /var/www/media
 chmod -R 775 ~/media
 # end of script
-
-
-
-cd ~/signage/.installer
  
-# for autostart in pixel
-[ -e ~/.config/lxsession/LXDE-pi ] && cat res/autostart >> ~/.config/lxsession/LXDE-pi/autostart
-cat ~/.config/lxsession/LXDE-pi/autostart
-# end of script
-
 sudo mkdir -p /etc/hive/signage
-sudo cp res/feh.sh /etc/hive/signage/feh.sh
-sudo cp res/omx.sh /etc/hive/signage/omx.sh
+sudo ln res/feh.sh /etc/hive/signage/feh.sh
+sudo ln res/omx.sh /etc/hive/signage/omx.sh
 sudo chmod -R 775 /etc/hive/signage
 ls -la /etc/hive/signage/
 # end of script
-
+ 
 sudo mkdir -p /etc/hive/default
 sudo ln -sfT ~/signage /etc/hive/default/signage
 ls -al /etc/hive/default/signage
 # end of script
-
+ 
 fi
+ 
+# for autostart in pixel
+if [ -f /etc/xdg/lxsession/LXDE-pi/autostart.bak ]; then
+   echo "this file already fix"
+else
+   sudo cp /etc/xdg/lxsession/LXDE-pi/autostart /etc/xdg/lxsession/LXDE-pi/autostart.bak
+   sudo sh -c "echo '/etc/hive/signage/feh.sh' >> /etc/xdg/lxsession/LXDE-pi/autostart"
+fi
+# end of script
 #####################################
-confirm_to_continue "------- step.7 to install suppliment package" 8
+confirm_to_continue "------- step.8 to install suppliment package(Utilities)"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 # additional network packages
 sudo apt-get -y install conntrack
 # end of script
-
+ 
 sudo mkdir -p /etc/hive/bin
 sudo cp res/cutconnect /etc/hive/bin/cutconnect
 sudo cp res/rmtrack /etc/hive/bin/rmtrack
 sudo cp res/shellcmd /etc/hive/bin/shellcmd
 sudo chmod -R 755 /etc/hive/bin
 # end of script
-
+ 
 sudo sh -c "echo 'www-data ALL = NOPASSWD: /etc/hive/bin/rmtrack' >> /etc/sudoers.d/sign_sudoers"
 sudo sh -c "echo 'www-data ALL = NOPASSWD: /etc/hive/bin/cutconnet' >> /etc/sudoers.d/sign_sudoers"
 sudo sh -c "echo 'www-data ALL = NOPASSWD: /sbin/iptables' >> /etc/sudoers.d/sign_sudoers"
@@ -376,19 +402,19 @@ sudo sh -c "echo 'www-data ALL = NOPASSWD: /usr/sbin/arp' >> /etc/sudoers.d/sign
  
 cat /etc/sudoers.d/sign_sudoers
 # end of script
-
+ 
 cd ~
 sudo apt-get -y install evtest imagemagick miniupnpc
 # end of script
-
+ 
 fi
 #####################################
-confirm_to_continue "------- step.8 to insall hot spot applications"
+confirm_to_continue "------- step.9 to insall AP applications(HOSTAP)"
 rc=$?; if [[ $rc == 0 ]]; then
-
+ 
 sudo apt-get -y install hostapd
 # end of script
-
+ 
 # set path
 cd ~ && mkdir -p ap && chmod 775 ap && cd ap
  
@@ -422,17 +448,17 @@ chmod 664 ~/ap/hostapd_sign.conf
  
 grep ssid ~/ap/hostapd_sign.conf
 # end of script
-
-
+ 
+ 
 sudo mkdir -p /etc/hive/default
 sudo chown www-data:www-data /etc/hive/default
 sudo chmod 775 /etc/hive/default
 sudo ln -sfT ~/ap/hostapd_sign.conf /etc/hive/default/hostapd.conf
 # end of script
-
+ 
 sudo apt-get -y install isc-dhcp-server
 # end of script
-
+ 
 [ ! -e /etc/dhcp/dhcpd.conf.org ] && sudo mv /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.org
  
 SS="
@@ -460,7 +486,7 @@ subnet 192.168.201.0 netmask 255.255.255.0 {
 sudo sh -c "echo \"$SS\" > \/etc\/dhcp\/dhcpd.conf"
 cat /etc/dhcp/dhcpd.conf
 # end of script
-
+ 
 #ap startup script
  
 SS="#\!/bin/bash
@@ -504,7 +530,7 @@ sed -i 's/\\!\/bin/!\/bin/' ~pi/ap/initAP
 chmod 755 ~pi/ap/initAP
 ls -l ~pi/ap/initAP
 # end of script
-
+ 
 SS="#\!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          anhive
@@ -572,17 +598,15 @@ ls -l /etc/init.d/sign-hive
 # regist init script
 sudo update-rc.d sign-hive defaults
 # end of script
-
-
-fi
+ 
+ 
 #####################################
-confirm_to_continue "------- step.9 to control hot spop "
 rc=$?; if [[ $rc == 0 ]]; then
-
-
+ 
+ 
 echo "remove this file, access point will be available" > ~pi/ap/disable_ap
 # end of script'
-
+ 
 SS="
 # stop to assign ip to wlan0
 # uncomment if AP mode 
@@ -590,8 +614,8 @@ SS="
 "
 sudo sh -c "echo \"$SS\" >> /etc/dhcpcd.conf"
 # end of script
-
-
+ 
+ 
 SS="#\!/bin/bash
 # AnHive, 2017.01
  
@@ -620,8 +644,20 @@ chmod 755 ~pi/ap/set_ap.sh
 sudo cp ~pi/ap/set_ap.sh /etc/hive/bin/set_ap.sh
 sudo sh -c "echo 'www-data ALL = NOPASSWD: /etc/hive/bin/set_ap.sh' >> /etc/sudoers.d/sign_sudoers"
 # end of script
-
-#WI-FI 실행
+ 
+fi
+#####################################
+confirm_to_continue "------- step.10 to change to AP mode and another setting"
+ 
+## remove the piwiz program
+sudo apt-get remove --purge piwiz -y
+#end of script
+ 
+## remove ssh window
+sudo rm -rf /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
+#end of script
+ 
+#WI-FI enable
 cd ~/ap
 sudo ./set_ap.sh enable
 sudo reboot
