@@ -313,6 +313,7 @@ cd ~
 cp -r ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
 make
 sudo make install > /dev/null &
+wait $! ## waiting make install
 # end of script
 # schedule job
 cd ~
@@ -320,6 +321,7 @@ cp -r ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
 cp Makefile_pi Makefile
 make
 sudo make install > /dev/null &
+wait $! ## waiting make install
  
 sudo sh -c "echo -n > /etc/hive/tasks/schedule.tasks"
 sudo chmod 666 /etc/hive/tasks/schedule.tasks
