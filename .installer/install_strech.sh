@@ -200,13 +200,10 @@ sudo apt-get -y install apache2
 #set root for web
 sudo sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www/' /etc/apache2/sites-enabled/000-default.conf
 grep 'DocumentRoot \/var\/www' /etc/apache2/sites-enabled/000-default.conf
- 
+
 # share contents between www-data and pi
 sudo usermod -a -G www-data pi && id pi
 sudo usermod -a -G pi www-data && id www-data
-# end of script
- 
-wget localhost -O - | head -10
 # end of script
  
 # set hive package space
