@@ -159,7 +159,8 @@ sudo apt-get update
 # sudo apt-get -y upgrade
 sudo apt-get clean
 # end of script
- 
+else
+	sudo apt-get update
 fi
 #####################################
 confirm_to_continue "--------step.4 to install file share(SAMBA)"
