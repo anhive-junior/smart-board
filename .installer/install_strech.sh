@@ -310,13 +310,13 @@ rc=$?; if [[ $rc == 0 ]]; then
  
 #remote key input
 cd ~
-cp ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
+cp -r ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
 make
 sudo make install > /dev/null &
 # end of script
 # schedule job
 cd ~
-cp ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
+cp -r ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
 cp Makefile_pi Makefile
 make
 sudo make install > /dev/null &
@@ -596,12 +596,7 @@ ls -l /etc/init.d/sign-hive
 # regist init script
 sudo update-rc.d sign-hive defaults
 # end of script
- 
- 
-#####################################
-rc=$?; if [[ $rc == 0 ]]; then
- 
- 
+
 echo "remove this file, access point will be available" > ~pi/ap/disable_ap
 # end of script'
  
@@ -642,11 +637,11 @@ chmod 755 ~pi/ap/set_ap.sh
 sudo cp ~pi/ap/set_ap.sh /etc/hive/bin/set_ap.sh
 sudo sh -c "echo 'www-data ALL = NOPASSWD: /etc/hive/bin/set_ap.sh' >> /etc/sudoers.d/sign_sudoers"
 # end of script
- 
+
 fi
 #####################################
-confirm_to_continue "------- step.10 to change to AP mode and another setting"
- 
+confirm_to_continue "------- step.10 Change to AP enable mode and another setting"
+rc=$?; if [[ $rc == 0 ]]; then
 ## remove the piwiz program
 sudo apt-get remove --purge piwiz -y
 #end of script
