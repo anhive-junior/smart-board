@@ -645,7 +645,7 @@ rc=$?; if [[ $rc == 0 ]]; then
 sudo apt-get remove --purge piwiz -y
 #end of script
  
-## remove ssh window
+## remove the ssh warnning
 sudo rm -rf /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
 #end of script
  
