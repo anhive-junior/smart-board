@@ -309,7 +309,7 @@ rc=$?; if [[ $rc == 0 ]]; then
 cd ~
 cp -r ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
 make
-sudo make install > /dev/null &
+sudo make install > /dev/null 2&>1 &
 wait $! ## waiting make install
 # end of script
 # schedule job
@@ -317,7 +317,7 @@ cd ~
 cp -r ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
 cp Makefile_pi Makefile
 make
-sudo make install > /dev/null &
+sudo make install > /dev/null 2&>1 &
 wait $! ## waiting make install
  
 sudo sh -c "echo -n > /etc/hive/tasks/schedule.tasks"
@@ -642,11 +642,11 @@ fi
 confirm_to_continue "------- step.10 Change to AP enable mode and another setting"
 rc=$?; if [[ $rc == 0 ]]; then
 ## remove the piwiz program
-sudo apt-get remove --purge piwiz -y
+# sudo apt-get remove --purge piwiz -y
 #end of script
  
 ## remove the ssh warnning
-sudo rm -rf /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
+# sudo rm -rf /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
 #end of script
  
 #WI-FI enable
