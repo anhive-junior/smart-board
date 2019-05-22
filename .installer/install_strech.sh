@@ -613,7 +613,7 @@ SS="#\!/bin/bash
  
 cd ~pi/ap
  
-[ \"\$#\" -lt \"1\" ] && echo \"usage \$0 enable\|disagle\" && exit 0
+[ \"\$#\" -lt \"1\" ] && echo \"usage \$0 enable\|disable\" && exit 0
  
 if [ \"\$1\" == \"enable\" ]
 then
