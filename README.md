@@ -26,7 +26,7 @@ Smart-board를 만드는 교육을 통하여 프로그램이 어떻게 만들어
 
 #### 1.4. 그 외의 것들 (Others)
 
-Smart-board 오픈 소스를 통하여 무궁무진한 아이디어를 통하여 다양한 방면에 적용해보시길 바랍니다.
+무궁무진한 아이디어를 통하여 다양한 방면에 smart-board 오픈소스를 적용해보시길 바랍니다.
 
 #### smart-board 설치하기 (install smart-board)
 
