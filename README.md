@@ -28,18 +28,21 @@ Smart-board를 만드는 교육을 통하여 프로그램이 어떻게 만들어
 
 Smart-board 오픈 소스를 통하여 무궁무진한 아이디어를 통하여 다양한 방면에 적용해보시길 바랍니다.
 
-# smart-board 설치하기
+## smart-board 설치하기
 
 
 
-# 기여
+## 기여
 
 smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항에 올려주시거나 풀리퀘스트로 남겨주시길 바랍니다.
 
-# 만든이 (Author or Manager)
+## 만든이 (Author or Manager)
 
 * **Yongsoo Han** - * github, @ilovecho* -
 * **Ryujae Seok** - * github, @yhk1515* -
 * **Sangha Lee** - * github, @toriato *-
 * **Yonghoon Jung** - * github, @dydgns2017* -
 
+## 라이센스 (License)
+
+- 
