@@ -43,10 +43,10 @@ smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항
 
 ### 만든이 (Author or Manager)
 
-* **Yongsoo Han** - * github, @ilovecho* -
-* **Ryujae Seok** - * github, @yhk1515* -
-* **Sangha Lee** - * github, @toriato *-
-* **Yonghoon Jung** - * github, @dydgns2017* -
+* **Yongsoo Han** - *github, @ilovecho* -
+* **Ryujae Seok** - *github, @yhk1515* -
+* **Sangha Lee** - *github, @toriato *-
+* **Yonghoon Jung** - *github, @dydgns2017* -
 
 ### 라이센스 (License)
 
