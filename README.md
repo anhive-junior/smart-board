@@ -1,123 +1,45 @@
+![raspbian-version](https://img.shields.io/badge/raspbian->=2019--04--08-red.svg)
+![php-version](https://img.shields.io/badge/php-%5E7.1.3-blue.svg)
+![smart-board-version](https://img.shields.io/badge/smart--board-v0.05-orange.svg)
 # smart-board
 
-## Getting Started - 시작하기
+smart-board 프로젝트는 라즈베리파이로 집에서 혹은 가게에서 \
+디지털 액자가 필요한 어느 곳이든지 적용할 수 있는 오픈소스입니다.
 
-- 라즈베리파이 3b에 라즈비안 설치하기
+## smart-board 적용 사례들
+![data](https://user-images.githubusercontent.com/36920367/58385242-318ecc80-8028-11e9-9036-1ecd0e5f9daa.png)
 
-## Prerequisites - 라즈비안 환경
+### 1.1. 가게
 
-- OS 환경 : RPi_stretch 이상
+가게에서는 메뉴판 혹은 고객들에게 어떠한 정보 전달을 하기 위해서 사용되고 있습니다.
 
-## installing - 설치하기
+### 1.2. 가정용 액자
 
-### git clone, - 클론으로 스마트 액자 프로그램 다운로드
+가정에서 사진을 전송하거나 보관할 때 사용하고 있습니다. \
+여러 기능을 가지고 있어서 언제 어디서든 사진을 변경하고 올릴 수 있습니다. \
+멀리 떨어져있는 가족에게 Smart-board를 이용해서 바쁜 삶속에서 사진을 통하여 안부를 확인하는 역할도 할 수 있죠.
 
-```
-cd ~
-git clone https://github.com/anhive-junior/smart-board
-```
+### 1.3. 교육
 
-### auto installing, - 자동 설치 스크립트 실행
+Smart-board를 만드는 교육을 통하여 프로그램이 어떻게 만들어지는지에 대해서 배웁니다. \
+쉬운 Copy & Paste 교육을 이용하기 때문에 어린 아이들도 쉽게 만들어볼 수 있습니다.
 
-```
-cd ~/smart-board/.installer/
-bash install_strech.sh
-```
+### 1.4. 그 외의 것들
 
-#### 라즈비안 기본설정
+Smart-board 오픈 소스를 통하여 무궁무진한 아이디어를 통하여 다양한 방면에 적용해보시길 바랍니다.
 
-```
---------step.1 to set personalization------continue Y/n
-```
-
-Y : raspi-config 명령어를 불러들임.\
-N : 다음 설정으로 넘어가기.
-
-#### wifi 연결
-
-```
---------step.2 to set WiFi connections------continue Y/n
-```
-
-Y : 와이파이를 연결함. - 와이파이에 대한 ssid와 password를 알고 있어야합니다.\
-N : 다음 설정으로 넘어가기.
-
-#### 라즈비안 프로그램 저장소 설정
-
-```
---------step.3 to set RASPBIAN mirror------continue Y/n
-```
-
-Y : 저장소 위치를 Kaist (과학기술원)으로 변경합니다.\
-N : 다음 설정으로 넘어가기.
+# smart-board 설치하기
 
 
-#### SAMBA 프로그램 설치
 
-```
---------step.4 to install file share(SAMBA)------continue Y/n
-```
+# 기여
 
-Y : SAMBA 프로그램을 설치합니다.\
-N : 다음 설정으로 넘어가기.
+smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항에 올려주시거나 풀리퀘스트로 남겨주시길 바랍니다.
 
-#### apache 서버 설치 및 설정
+# 만든이 (Author or Manager)
 
-```
-------- step.5 to install web server(APACHE)------continue Y/n
-```
+* **Yongsoo Han** - * github, @ilovecho* -
+* **Ryujae Seok** - * github, @yhk1515* -
+* **Sangha Lee** - * github, @toriato *-
+* **Yonghoon Jung** - * github, @dydgns2017* -
 
-Y : Apache 서버를 설치하고 설정합니다.\
-N : 다음 설정으로 넘어가기.
-
-#### 디지털 액자 관련 프로그램 설치
-
-```
-------- step.6 to install multimedia applicatiopn(FEH)------continue Y/n
-```
-
-Y : feh, omxplayer 프로그램 설치 및 설정\
-N : 다음 설정으로 넘어가기.
-
-#### 인터넷 액자 설치
-
-```
-------- step.7 to install Internet Photoframe(SurpriseBox)------continue Y/n
-```
-
-Y : 인터넷 액자 프로그램 설치 및 설정\
-N : 다음 설정으로 넘어가기.
-
-#### 기타 프로그램 설치
-
-```
-------- step.8 to install suppliment package(Utilities)------continue Y/n
-```
-
-Y : 인터넷 액자 관련 프로그램 설치 및 설정\
-N : 다음 설정으로 넘어가기.
-
-#### AP 프로그램 설치
-
-```
-------- step.9 to insall AP applications(HOSTAP)------continue Y/n
-```
-
-Y : 무선 wifi 프로그램 설치 및 설정\
-N : 다음 설정으로 넘어가기.
-
-#### AP 프로그램 모드를 설정
-
-```
-------- step.10 to change to AP mode and another setting------continue Y/n
-```
-
-Y : 무선 wifi 프로그램을 enable 합니다. - 다른 와이파이와 연결이 되지 않음. (인터넷을 사용하려면 LAN을 이용하여야함)\
-N : 무선 wifi 프로그램을 disable 합니다. - 다른 와이파이와 연결하여 사용가능.
-
-## 확인하기
-
-smart-board 프로그램이 정상적으로 동작하는지 확인해보세요. 정상적으로 동작하지 않는다면, 다음과 같은 절차를 확인해주시길 바랍니다.
-
-1. install.log 파일에서 설치하지 않은 프로그램 및 설치시 오류가 났는지 확인하기
-2. 프로그램이 정상적으로 다 설치가 되었는데, smart-board에서 특정 기능이 동작하지 않는다면 이슈 사항에 올려주세요.
