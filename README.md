@@ -31,7 +31,7 @@ Smart-board 오픈 소스를 통하여 무궁무진한 아이디어를 통하여
 ### smart-board 설치하기 (install smart-board)
 
 smart-board를 설치하려면 라즈베리파이 OS인 라즈비안을 먼저 설치 하여야합니다.\
-라즈비안이 설치가 되어있는 상태라면 위키를 이용하여 smart-board 설치하시길 바랍니다.\
+라즈비안이 설치가 되어있는 상태라면 위키를 이용하여 smart-board 설치하시길 바랍니다.
 
 - [라즈비안 설치하기](https://github.com/anhive-junior/smart-board/wiki/%EB%9D%BC%EC%A6%88%EB%B9%84%EC%95%88-OS-%EC%84%A4%EC%B9%98)
 - [smart-board 설치하기](https://github.com/anhive-junior/smart-board/wiki/Smart-board-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
