@@ -28,7 +28,7 @@ Smart-board를 만드는 교육을 통하여 프로그램이 어떻게 만들어
 
 무궁무진한 아이디어를 통하여 다양한 방면에 smart-board 오픈소스를 적용해보시길 바랍니다.
 
-#### smart-board 설치하기 (install smart-board)
+## smart-board 설치하기 (install smart-board)
 
 smart-board를 설치하려면 라즈베리파이 OS인 라즈비안을 먼저 설치 하여야합니다.\
 라즈비안이 설치가 되어있는 상태라면 위키를 이용하여 smart-board 설치하시길 바랍니다.
@@ -37,17 +37,17 @@ smart-board를 설치하려면 라즈베리파이 OS인 라즈비안을 먼저 �
 - [smart-board 설치하기](https://github.com/anhive-junior/smart-board/wiki/Smart-board-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
 
 
-### 기여 (Contribute)
+## 기여 (Contribute)
 
 smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항에 올려주시거나 풀리퀘스트로 남겨주시길 바랍니다.
 
-### 만든이 (Author or Manager)
+## 만든이 (Author or Manager)
 
 * **Yongsoo Han** - *github, @ilovecho* -
 * **Ryujae Seok** - *github, @yhk1515* -
 * **Sangha Lee** - *github, @toriato*-
 * **Yonghoon Jung** - *github, @dydgns2017* -
 
-### 라이센스 (License)
+## 라이센스 (License)
 
 - 현재까지 미적용
