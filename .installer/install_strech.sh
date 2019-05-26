@@ -307,14 +307,14 @@ rc=$?; if [[ $rc == 0 ]]; then
  
 #remote key input
 cd ~
-cp -r ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
+ln -s ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
 make
 sudo make install > /dev/null 2&>1 &
 wait $! ## waiting make install
 # end of script
 # schedule job
 cd ~
-cp -r ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
+ln -s ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
 cp Makefile_pi Makefile
 make
 sudo make install > /dev/null 2&>1 &
@@ -325,16 +325,15 @@ sudo chmod 666 /etc/hive/tasks/schedule.tasks
 sudo chmod 777 /etc/hive/tasks
 sudo service timeworks start
 # end of script
- 
-# download signage
+
+# signage configuration
 cd ~
-mkdir -p ~/signage && cd ~/signage
-wget thebolle.com/archive/signage.tar.gz -O - | tar -xvzpf -
+ln -s ~/smart-board ~/signage && cd ~/signage
 # end of script
  
 # set default landing page
 cd ~/signage/.installer
-sudo ln -sfT ~/signage /var/www/signage
+sudo ln -sfT ~/smart-board /var/www/signage
 sudo cp res/index.html /var/www/index.html
  
 # set permission
@@ -354,6 +353,9 @@ mkdir -p ~/media/info
 sudo ln -sfT ~/media /var/www/media
 chmod -R 775 ~/media
 # end of script
+
+# open usb access
+sudo chmod -R 755 /media
  
 sudo mkdir -p /etc/hive/signage
 sudo ln res/feh.sh /etc/hive/signage/feh.sh
@@ -369,7 +371,7 @@ ls -al /etc/hive/default/signage
  
 fi
  
-# for autostart in pixel
+# for autostart in stretch
 if [ -f /etc/xdg/lxsession/LXDE-pi/autostart.bak ]; then
    echo "this file already fix"
 else
