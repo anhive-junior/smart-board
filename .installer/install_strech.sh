@@ -307,14 +307,14 @@ rc=$?; if [[ $rc == 0 ]]; then
  
 #remote key input
 cd ~
-ln -s ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
+ln -sfT ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
 make
 sudo make install > /dev/null 2&>1 &
 wait $! ## waiting make install
 # end of script
 # schedule job
 cd ~
-ln -s ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
+ln -sfT ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
 cp Makefile_pi Makefile
 make
 sudo make install > /dev/null 2&>1 &
@@ -328,7 +328,7 @@ sudo service timeworks start
 
 # signage configuration
 cd ~
-ln -s ~/smart-board ~/signage && cd ~/signage
+ln -sfT ~/smart-board ~/signage && cd ~/signage
 # end of script
  
 # set default landing page
