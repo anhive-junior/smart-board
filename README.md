@@ -7,7 +7,6 @@ smart-board 프로젝트는 라즈베리파이로 집에서 혹은 가게에서 
 디지털 액자가 필요한 어느 곳이든지 적용할 수 있는 오픈소스입니다.
 
 ## 1. smart-board 적용 사례들
-![data](https://user-images.githubusercontent.com/36920367/58385242-318ecc80-8028-11e9-9036-1ecd0e5f9daa.png)
 
 #### 1.1. 가게 (Store)
 
