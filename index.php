@@ -75,11 +75,11 @@ if (!$anonymous) $_SESSION["scope"] = $pname;
 
     $user_code = isset($_POST['user_code'])?trim($_POST['user_code']):"";
     $input_code = isset($_POST['input_code'])?trim($_POST['input_code']):"";
-	setrawcookie ("FAVORIT", 'norm1', time()+3); // homepage의 메뉴 자동선택
+	setrawcookie("FAVORIT", 'norm1', time()+3); // homepage의 메뉴 자동선택
 
     error_log("------- user_code -[$user_code] -------access code-[$input_code]-------"); 
 	$_SESSION['uselevel']=0;
-	$destination="home.php";
+	$destination="home.html";
 	$cookie_expire = time()+60*60*24*365;
     if ( ! $user_code /* isset($_POST['user_code']) */ ) {
         $resp = "사용자와 접속코드를 입력하세요!"."-- :) <br>";
