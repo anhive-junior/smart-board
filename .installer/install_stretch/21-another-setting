@@ -1,0 +1,15 @@
+#!/bin/bash
+
+confirm_to_continue "------- another setting : piwizard program delete"
+rc=$?; if [[ $rc == 0 ]]; then
+## remove the piwiz program
+sudo apt-get remove --purge piwiz -y
+#end of script
+fi
+ 
+confirm_to_continue "------- another setting : remobe the ssh warnnig"
+rc=$?; if [[ $rc == 0 ]]; then
+## remove the ssh warnning
+sudo rm -rf /etc/xdg/lxsession/LXDE-pi/sshpwd.sh
+#end of script
+fi

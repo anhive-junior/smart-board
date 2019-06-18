@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function confirm_to_continue() {
+    read -p "$1 ------continue Y/n" CONTINUE
+    if [ "x$CONTINUE" == "xn" ] || [ "x$CONTINUE" == "xN" ]
+    then
+        return -1;
+    fi
+    return 0
+}
+
+function echo_log() {
+     echo $1 | tee -a install.log
+}

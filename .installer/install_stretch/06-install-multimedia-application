@@ -1,0 +1,69 @@
+#!/bin/bash
+
+confirm_to_continue "------- step.6 to install multimedia applicatiopn(FEH)"
+rc=$?; if [[ $rc == 0 ]]; then
+ 
+#slide show, video player
+sudo apt-get -y install feh omxplayer
+# end of script
+ 
+# short key registration
+cd ~
+SS="
+<keybind key=\"A-C-f\">
+<action name=\"Execute\"><command>/etc/hive/signage/feh.sh</command></action>
+</keybind>
+<keybind key=\"A-C-o\">
+<action name=\"Execute\"><command>/etc/hive/signage/omx.sh</command></action>
+</keybind>
+ 
+</keyboard>
+"
+echo "$SS" > src.txt
+ 
+# for lxde as default
+#if [ -e ~/.config/openbox/lxde-pi-rc.xml ]
+#then
+#	sed -i '/<\/keyboard>/r src.txt' ~/.config/openbox/lxde-pi-rc.xml
+#	sed -i '0,/<\/keyboard>/{s/<\/keyboard>//}' ~/.config/openbox/lxde-pi-rc.xml
+#	ls -la  ~/.config/openbox/lxde-pi-rc.xml
+#	grep signage ~/.config/openbox/lxde-pi-rc.xml
+#else
+#	echo_log "fail to change [~/.config/openbox/lxde-pi-rc.xml]"
+#fi
+ 
+ 
+if [ -d /home/pi/.config/openbox ]
+then
+  sudo rm -rf /home/pi/.config/openbox /home/pi/.config/lxsession
+fi
+ 
+# backup openbox of xml file
+if [ ! -f /etc/xdg/openbox/lxde-pi-rc.xml.bak ]
+then
+  sudo cp /etc/xdg/openbox/lxde-pi-rc.xml /etc/xdg/openbox/lxde-pi-rc.xml.bak
+fi
+ 
+# for lxde as default
+if [ -e /etc/xdg/openbox/lxde-pi-rc.xml ]
+then
+	sudo sed -i '/<\/keyboard>/r src.txt' /etc/xdg/openbox/lxde-pi-rc.xml
+	sudo sed -i '0,/<\/keyboard>/{s/<\/keyboard>//}' /etc/xdg/openbox/lxde-pi-rc.xml
+	ls -la  /etc/xdg/openbox/lxde-pi-rc.xml
+	grep signage /etc/xdg/openbox/lxde-pi-rc.xml
+else
+	echo "fail to change [/etc/xdg/openbox/lxde-pi-rc.xml]"
+fi
+ 
+ 
+rm src.txt
+# end of script
+ 
+#
+echo_log extent to full screen when monitor is connected
+sudo sed -i.old 's/#disable_overscan=1/disable_overscan=1/g' /boot/config.txt
+grep disable_overscan /boot/config.txt
+# end of script
+ 
+ 
+fi

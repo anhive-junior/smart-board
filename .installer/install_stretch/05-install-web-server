@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#web server installation  
+confirm_to_continue "------- step.5 to install web server(APACHE)"
+rc=$?; if [[ $rc == 0 ]]; then
+ 
+sudo apt-get -y install apache2
+# end of script
+ 
+#set root for web
+sudo sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/var\/www/' /etc/apache2/sites-enabled/000-default.conf
+grep 'DocumentRoot \/var\/www' /etc/apache2/sites-enabled/000-default.conf
+
+# share contents between www-data and pi
+sudo usermod -a -G www-data pi && id pi
+sudo usermod -a -G pi www-data && id www-data
+# end of script
+ 
+# set hive package space
+sudo mkdir -p /etc/hive
+# end of script
+
+#web application server installation  
+sudo apt-get -y install php libapache2-mod-php php-mcrypt php-gd
+# end of script
+ 
+#set for file transfer bigger then 2M
+sudo sed -i 's/post_max_size = .M/post_max_size = 2G/' /etc/php/7.0/apache2/php.ini
+grep "post_max_size =" /etc/php/7.0/apache2/php.ini
+sudo sed -i 's/upload_max_filesize = .M/upload_max_filesize = 2G/' /etc/php/7.0/apache2/php.ini
+grep "upload_max_filesize =" /etc/php/7.0/apache2/php.ini
+# end of script
+ 
+sudo service apache2 restart
+# end of script
+ 
+sudo sh -c "echo '<?= phpinfo();?>' > /var/www/test.php"
+# end of script
+ 
+wget localhost/test.php -O - | head -10
+# end of script
+ 
+fi

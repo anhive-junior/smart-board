@@ -1,0 +1,234 @@
+#!/bin/bash
+
+confirm_to_continue "------- step.9 to insall AP applications(HOSTAP)"
+rc=$?; if [[ $rc == 0 ]]; then
+ 
+sudo apt-get -y install hostapd
+# end of script
+ 
+# set path
+cd ~ && mkdir -p ap && chmod 775 ap && cd ap
+ 
+#hostapd configuration
+SS="#base setting
+interface=wlan0
+driver=nl80211
+hw_mode=g
+ieee80211n=1
+wmm_enabled=1
+channel=5
+ssid=AnHive-SurpriseBox
+ignore_broadcast_ssid=0
+ 
+#security
+wpa=2
+wpa_passphrase=surprisebox
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+auth_algs=3
+macaddr_acl=0
+"
+ 
+echo "$SS" > ~/ap/hostapd_sign.conf
+sed -i "s/ //g" ~/ap/hostapd_sign.conf
+# set said with hostname 
+sed -i "s/ssid=AnHive/ssid=$(hostname)/g" ~/ap/hostapd_sign.conf
+cat ~/ap/hostapd_sign.conf
+chmod 664 ~/ap/hostapd_sign.conf
+ 
+grep ssid ~/ap/hostapd_sign.conf
+# end of script
+ 
+ 
+sudo mkdir -p /etc/hive/default
+sudo chown www-data:www-data /etc/hive/default
+sudo chmod 775 /etc/hive/default
+sudo ln -sfT ~/ap/hostapd_sign.conf /etc/hive/default/hostapd.conf
+# end of script
+ 
+sudo apt-get -y install isc-dhcp-server
+# end of script
+ 
+[ ! -e /etc/dhcp/dhcpd.conf.org ] && sudo mv /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.org
+ 
+SS="
+ddns-update-style none;
+ignore client-updates;
+authoritative;
+option local-wpad code 252 = text;
+ 
+subnet 192.168.201.0 netmask 255.255.255.0 {
+        # --- default gateway
+        option routers 192.168.201.1;
+        # --- Netmask
+        option subnet-mask 255.255.255.0;
+        # --- Broadcast Address
+        option broadcast-address 192.168.201.255;
+        # --- Domain name servers, tells the clients which DNS servers to use.
+        option domain-name-servers 8.8.8.8, 8.8.4.4;
+        option time-offset 0;
+        range 192.168.201.11 192.168.201.254;
+        default-lease-time 3600;
+        max-lease-time 7200;
+}
+"
+ 
+sudo sh -c "echo \"$SS\" > \/etc\/dhcp\/dhcpd.conf"
+cat /etc/dhcp/dhcpd.conf
+# end of script
+ 
+#ap startup script
+ 
+SS="#\!/bin/bash
+#Initial wifi interface configuration
+ 
+DIR=\$(dirname \$0)
+if [ -e \"\$DIR/disable_ap\" ]
+then
+   echo \"disabled access point by disable_ap file in \$DIR\"
+   exit 0
+fi
+ 
+CONF=\$1
+APIF=\$2
+WAN=\$3
+ 
+ifconfig \$APIF up 192.168.201.1 netmask 255.255.255.0
+sleep 2
+###########Start DHCP, comment out / add relevant section##########
+killall dhcpd
+sleep 1
+if [ \"\$(ps -e | grep dhcpd)\" == \"\" ]; then
+        dhcpd \$APIF &
+fi
+###########
+#Enable NAT
+iptables --flush
+iptables --table nat --flush
+iptables --delete-chain
+iptables --table nat --delete-chain
+iptables --table nat --append POSTROUTING --out-interface \$WAN -j MASQUERADE
+iptables --append FORWARD --in-interface \$APIF -j ACCEPT
+ 
+sysctl -w net.ipv4.ip_forward=1
+#start hostapd
+/usr/sbin/hostapd -B \$CONF
+"
+ 
+echo "$SS" > ~pi/ap/initAP
+sed -i 's/\\!\/bin/!\/bin/' ~pi/ap/initAP
+chmod 755 ~pi/ap/initAP
+ls -l ~pi/ap/initAP
+# end of script
+ 
+SS="#\!/bin/bash
+### BEGIN INIT INFO
+# Provides:          anhive
+# Required-Start:    \$local_fs \$syslog
+# Required-Stop:     \$local_fs \$syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop sign-hive application
+### END INIT INFO
+ 
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+PIDF=/run/sign-hive.pid
+PID=\$(cat \$PIDF)
+ 
+do_start () {
+  # Start remote input for application 
+  sleep 2
+  /home/pi/ap/initAP /home/pi/ap/hostapd_sign.conf wlan0 eth0
+  echo \$1 > \$PIDF
+}
+ 
+do_status () {
+  ps -ef | grep \$PID
+  return \$PID
+}
+ 
+do_stop () {
+  # check current status which is good or bat
+  kill -9 \$(ps -ef | grep \$PID | awk '{print \$2}')
+  rm \$PIDF
+}
+ 
+case \"\$1\" in
+ start|\"\")
+      do_start
+      exit \$?
+      ;;
+ restart|reload|force-reload)
+      do_stop
+      do_start
+      exit \$?
+      ;;
+ stop)
+      do_stop
+      exit \$?
+      ;;
+ status)
+      do_status
+      exit \$?
+      ;;
+ *)
+      echo \"Usage: sign-hive [start|stop|status]\" >&2
+      exit 3
+      ;;
+esac
+"
+# set init script to sign-hive
+echo "$SS" > ~pi/ap/sign-hive
+sed -i 's/\\!\/bin/!\/bin/' ~pi/ap/sign-hive
+sudo mv ~pi/ap/sign-hive /etc/init.d/
+sudo chmod +x /etc/init.d/sign-hive
+ls -l /etc/init.d/sign-hive
+ 
+# regist init script
+sudo update-rc.d sign-hive defaults
+# end of script
+
+echo "remove this file, access point will be available" > ~pi/ap/disable_ap
+# end of script'
+ 
+SS="
+# stop to assign ip to wlan0
+# uncomment if AP mode 
+#denyinterfaces wlan0 
+"
+sudo sh -c "echo \"$SS\" >> /etc/dhcpcd.conf"
+# end of script
+ 
+ 
+SS="#\!/bin/bash
+# AnHive, 2017.01
+ 
+cd ~pi/ap
+ 
+[ \"\$#\" -lt \"1\" ] && echo \"usage \$0 enable\|disable\" && exit 0
+ 
+if [ \"\$1\" == \"enable\" ]
+then
+    sudo sed -i 's/#denyinterfaces/denyinterfaces/g' /etc/dhcpcd.conf
+    [ -e disable_ap ] && mv disable_ap enable_ap
+    sudo sed -i 's/wlan0/wlanX/g' /etc/network/interfaces
+elif [ \"\$1\" == \"disable\" ]
+then
+    sudo sed -i 's/denyinterfaces/#denyinterfaces/g' /etc/dhcpcd.conf
+    [ -e enable_ap ] && mv enable_ap disable_ap
+    sudo sed -i 's/wlanX/wlan0/g' /etc/network/interfaces
+else
+  echo \"not defined option \$1.\"
+fi
+"
+ 
+echo "$SS" > ~pi/ap/set_ap.sh
+sed -i 's/\\!\/bin/!\/bin/' ~pi/ap/set_ap.sh
+chmod 755 ~pi/ap/set_ap.sh
+sudo cp ~pi/ap/set_ap.sh /etc/hive/bin/set_ap.sh
+sudo sh -c "echo 'www-data ALL = NOPASSWD: /etc/hive/bin/set_ap.sh' >> /etc/sudoers.d/sign_sudoers"
+# end of script
+
+fi

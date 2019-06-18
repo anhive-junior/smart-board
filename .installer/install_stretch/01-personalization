@@ -1,0 +1,5 @@
+#!/bin/bash
+confirm_to_continue "--------step.1 to set personalization"
+rc=$?; if [[ $rc == 0 ]]; then
+sudo raspi-config
+fi
