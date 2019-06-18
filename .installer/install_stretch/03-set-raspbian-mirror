@@ -3,7 +3,7 @@
 confirm_to_continue "--------step.3 to set RASPBIAN mirror"
 rc=$?; if [[ $rc == 0 ]]; then
  
-echo_log "  change archive source from origine to KAIST mirror"
+echo_log "change archive source from origine to KAIST mirror"
 #change source list
 ls -la /etc/apt/sources.list
  

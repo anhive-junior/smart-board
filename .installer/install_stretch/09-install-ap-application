@@ -99,7 +99,7 @@ sleep 2
 ###########Start DHCP, comment out / add relevant section##########
 killall dhcpd
 sleep 1
-if [ \"\$(ps -e | grep dhcpd)\" == \"\" ]; then
+if [ \"$(ps -e | grep dhcpd)\" == \"\" ]; then
         dhcpd \$APIF &
 fi
 ###########

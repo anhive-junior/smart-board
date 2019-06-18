@@ -5,14 +5,14 @@ rc=$?; if [[ $rc == 0 ]]; then
  
 #remote key input
 cd ~
-ln -sfT ~/smart-board/.installer/core/rinput ./ && cd ~/rinput
+ln -sfT ~/smart-board/.installer/core/rinput ./rinput && cd ~/rinput
 make
 sudo make install > /dev/null 2&>1 &
 wait $! ## waiting make install
 # end of script
 # schedule job
 cd ~
-ln -sfT ~/smart-board/.installer/core/scheduler ./ && cd ~/scheduler
+ln -sfT ~/smart-board/.installer/core/scheduler ./scheduler && cd ~/scheduler
 cp Makefile_pi Makefile
 make
 sudo make install > /dev/null 2&>1 &

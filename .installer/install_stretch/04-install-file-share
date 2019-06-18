@@ -21,6 +21,7 @@ read list = pi
 write list = pi
 EOF
 sudo sh -c "cat smb.tmp >> \/etc\/samba\/smb.conf"
+rm -rf ./smp.tmp
  
 tail /etc/samba/smb.conf
 # end of script

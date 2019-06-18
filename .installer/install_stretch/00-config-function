@@ -10,5 +10,5 @@ function confirm_to_continue() {
 }
 
 function echo_log() {
-     echo $1 | tee -a install.log
+     echo "$1" >> ~/install.log
 }
