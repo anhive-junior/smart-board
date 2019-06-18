@@ -3,7 +3,7 @@ COMPILED_PATH="./.compiled"
 
 # Compile all scripts
 rm -f $COMPILED_PATH || true
-find ./install_stretch -maxdepth 1 -type f | while read SCRIPT_PATH; do
+find ./install_stretch -maxdepth 1 -type f | sort -n | while read SCRIPT_PATH; do
 	printf "# START OF ${SCRIPT_PATH}\n$(cat $SCRIPT_PATH)\n# END OF ${SCRIPT_PATH}\n" >> $COMPILED_PATH
 done
 
