@@ -50,4 +50,4 @@ smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항
 
 ## 라이센스 (License)
 
-- 현재까지 미적용
+- [MIT LICENSE](https://github.com/anhive-junior/smart-board/blob/master/LICENSE.md)
