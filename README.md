@@ -1,7 +1,7 @@
 ![raspbian-version](https://img.shields.io/badge/raspbian->=2019--04--08-red.svg)
 ![php-version](https://img.shields.io/badge/php-%5E7.1.3-blue.svg)
 ![smart-board-version](https://img.shields.io/badge/smart--board-v0.05-orange.svg)
-![license](https://img.shields.io/github/license/anhive-junior/smart-board.sv)
+![license](https://img.shields.io/github/license/anhive-junior/smart-board.svg)
 # smart-board
 
 smart-board 프로젝트는 라즈베리파이로 집에서 혹은 가게에서 \
