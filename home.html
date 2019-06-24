@@ -39,6 +39,7 @@
         font-weight:bold; 
 		padding-top:0.6em;
     }
+	
 
     </style>
 </head>
@@ -49,16 +50,19 @@
 			<!-- head note -->
 			<div class='headnote' onclick="javascript:document.location.href='home.html'">
 				<img id="headnote_img" style="height:15px">
-				<span class="input_title"></span>
-				<span class="input_title"></span>
+				<span class="input_title" ></span>
+				<span class="input_title" ></span>
 			</div>
 
 			<div style="margin-top:5px;"><!-- upper line feed --></div>
+			
 			<div id="contents" style="text-align:center; margin: 0 auto;">
+			
 				<div id='content_none' class="tile" style="display:none;background-color:#f86924">
-					<div class="tiletitle" ></div>
-					<div class="instruction" ></div>
+					<div class="tiletitle"></div>
+					<div class="instruction"></div>
 				</div>
+				
 			</div>
 
 			<div style="margin-top:5px;"><!-- upper line feed --></div>
@@ -68,11 +72,10 @@
 			<div style="margin-top:10px;"><!-- upper line feed --></div>
 		</div>
 	</div>
-	<div class='footer' ></div>
+	<div class='footer'></div>
 <script>
 
-var contents = document.getElementById("contents");
-var footer = document.getElementsByClassName("footer")[0];
+var content_none = document.getElementById("content_none");
 var buttons = document.getElementsByClassName("button_base")[0];
 
 var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
@@ -90,14 +93,20 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
 				};
 			}
 			console.log(resp.status + ':' + resp.data);
-			document.getElementsByTagName("img")[0].setAttribute("src", resp.data.photo[0]);
-			document.getElementsByTagName("img")[0].setAttribute("alt", resp.data.photo[1]);
-			document.getElementsByClassName("input_title")[0].innerHTML=resp.data.subject;
-			document.getElementsByClassName("input_title")[1].innerHTML=resp.data.owner;
-			document.getElementsByClassName("footer")[0].innerHTML=resp.data.footer;
+			
+			document.getElementById("headnote_img").setAttribute("src", resp.data.photo[0]);
+			document.getElementById("headnote_img").setAttribute("alt", resp.data.photo[1]);
+			
+			for(var i = 0; i<resp.data.sodata.length; i++){
+				document.getElementsByClassName("input_title")[i].setAttribute("id","input_title" + (i+1));
+				document.getElementById("input_title" + (i+1)).innerHTML=resp.data.sodata[i];
+			}
+				
+				document.getElementsByClassName("footer")[0].setAttribute("id","footer1");
+				document.getElementById("footer1").innerHTML=resp.data.footer;
 		}
 	};
-	request.open("POST", "home.php");
+	request.open("POST", "homecontroll.php");
 	request.send(data);
 }
 
@@ -120,13 +129,15 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
 			clone.setAttribute("id","norm" + (i+1));
 			document.getElementById("norm" + (i+1)).style.display="block";
 			document.getElementById("norm" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
-			document.getElementsByClassName("tiletitle")[i+1].innerHTML=resp.data.tiletitle[i];
-			document.getElementsByClassName("instruction")[i+1].innerHTML = resp.data.ins[i];
-			document.getElementsByClassName("tile")[i+1].style.backgroundColor = resp.data.color[i];
+			document.getElementsByClassName("tiletitle")[i+1].setAttribute("id","title" + (i+1));
+			document.getElementsByClassName("instruction")[i+1].setAttribute("id","ins" + (i+1));
+			document.getElementById("title" + (i+1)).innerHTML=resp.data.tiletitle[i];
+			document.getElementById("ins" + (i+1)).innerHTML = resp.data.ins[i];
+			document.getElementById("norm" + (i+1)).style.backgroundColor = resp.data.color[i];
 			}
 		}
 	};
-request.open('POST', 'home.php');
+request.open('POST', 'homecontroll.php');
 request.send();
 }
 
@@ -147,6 +158,7 @@ var bottom_button = function(){
 			console.log(resp.status + ' : ' + resp.data.link.length);
 			if(resp.data == "0") return;
 			for(let i=0; i<resp.data.link.length; i++){
+	
 				let clone = document.getElementById("button_none").cloneNode(true);
 				buttons.appendChild(clone);
 				clone.style.display="inline-block";

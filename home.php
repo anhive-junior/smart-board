@@ -9,8 +9,7 @@ include_once("lib/lib_common.php");
 if (isset($_POST['init']) && $_POST['init'] == 1){
 	$data=array(
 		"photo" => array($photo, "profile"),
-		"subject" => $subject,
-		"owner" => $owner,
+		"sodata" => array($subject,$owner),
 		"footer" => $footnote
 	);
 	outputJSON($data, "success");
