@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />   
+    <script type="text/javascript" src="signage.base.js"></script>
+	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <title>AnHive, Show Video</title>
+    <style>
+       body { margin:0; height:100%;width:100%}
+    </style>
+</head>
+<body>
+	<div style="margin-top:10px;"><!-- upper line feed --></div>
+	<div style="text-align:center;">
+	<div id="file_name"></div>
+	<div id="date"></div>
+	<div id="memo"></div>
+    <img id="img" style="width:90%;height:90%;"/><br>
+	<div style="margin-top:10px;"><!-- upper line feed --></div>
+	<input type="button" onclick="history.go(-1);" value="돌아가기">
+	<input type="button" id="btn_rmcard" style="display:none">
+	</div>
+	
+<script>
+function parseURLParams(url) { // URL, GET 데이터 읽어들이기
+    var queryStart = url.indexOf("?") + 1,
+        queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+        query = url.slice(queryStart, queryEnd - 1),
+        pairs = query.replace(/\+/g, " ").split("&"),
+        parms = {}, i, n, v, nv;
+
+    if (query === url || query === "") return;
+
+    for (i = 0; i < pairs.length; i++) {
+        nv = pairs[i].split("=", 2);
+        n = decodeURIComponent(nv[0]);
+        v = decodeURIComponent(nv[1]);
+
+        if (!parms.hasOwnProperty(n)) parms[n] = [];
+        parms[n].push(nv.length === 2 ? v : null);
+    }
+    return parms;
+}
+var url = parseURLParams(document.URL).name[0];
+
+var init = function(){ // rmcard 권한 및 초기 데이터 설정
+	var data = new FormData();
+	data.append("name", url);
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch(e) {
+				var resp ={
+					status : "error",
+					data : "Unknown error occurred : [" + request.responseText +"]"
+				};
+			}
+			console.log("init -" + resp.status + ':' + resp.data);
+			document.getElementById("btn_rmcard").value = resp.data.value;
+			document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
+		// 수정해야함, 	(typeof resp.data.value == "undefined") ? document.getElementById("btn_rmcard").setAttribute("style", "") : document.getElementById( )
+			document.getElementById("file_name").innerHTML = resp.data.file_name;
+			document.getElementById("date").innerHTML = resp.data.date;
+			document.getElementById("memo").innerHTML = resp.data.memo;
+			document.getElementById("img").setAttribute("src", resp.data.img);
+			// add rmcard script
+			var script = document.createElement("script");
+			script.innerHTML = resp.data.script;
+			document.head.appendChild(script);
+		}
+	};
+	request.open("POST", "openimages.php");
+	request.send(data);
+}
+init();
+</script>
+</body>
+</html>
