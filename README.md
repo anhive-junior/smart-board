@@ -1,7 +1,7 @@
 ![raspbian-version](https://img.shields.io/badge/raspbian->=2019--04--08-red.svg)
 ![php-version](https://img.shields.io/badge/php-%5E7.1.3-blue.svg)
 ![smart-board-version](https://img.shields.io/badge/smart--board-v0.05-orange.svg)
-![license](https://img.shields.io/github/license/anhive-junior/smart-board.svg)
+![license](https://img.shields.io/badge/license-MIT-green.svg)
 # smart-board
 
 smart-board 프로젝트는 라즈베리파이로 집에서 혹은 가게에서 \
@@ -34,7 +34,7 @@ smart-board를 설치하려면 라즈베리파이 OS인 라즈비안을 먼저 �
 라즈비안이 설치가 되어있는 상태라면 위키를 이용하여 smart-board 설치하시길 바랍니다.
 
 - [라즈비안 설치하기](https://github.com/anhive-junior/smart-board/wiki/%EB%9D%BC%EC%A6%88%EB%B9%84%EC%95%88-OS-%EC%84%A4%EC%B9%98)
-- [smart-board 설치하기](https://github.com/anhive-junior/smart-board/wiki/Smart-board-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+- [smart-board 설치하기](https://github.com/anhive-junior/smart-board/wiki/Install-Smart-Board)
 
 
 ## 기여 (Contribute)
@@ -50,4 +50,4 @@ smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항
 
 ## 라이센스 (License)
 
-- 현재까지 미적용
+- [MIT_LICENSE](https://github.com/anhive-junior/smart-board/blob/master/LICENSE.md)
