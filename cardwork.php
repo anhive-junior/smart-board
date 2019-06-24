@@ -16,9 +16,20 @@ if (isset($_POST['init']) && $_POST['init'] == 1){
 
 if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
 	$data=array(
-		"id" => "btn_cancel",
 		"func" => "rmcard()",
-		"spanInner" => "회수"
+		"spanInner" => "회수",
+		"script" => "var rmcard = function(msg){
+		
+        var data = new FormData();
+        data.append('func','rmcard');
+		data.append('card', _photo.alt);
+		
+		POST('s00_signage.php', data, 
+			function (resp) {  
+			    document.getElementById('vlog').innerHTML=resp.data;
+				getslide('first');
+		});
+    }"
 	);
 	outputJSON($data, "success");
 }

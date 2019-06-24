@@ -85,10 +85,15 @@ var privilege_rmcard = function(){ // rmcard 권한
 					status : "error",
 					data : "Unknown error occurred : [" + request.responseText +"]"
 				};
-				console.log(resp.status + ':' + resp.data);
-				document.getElementById("btn_rmcard").innerHTML = rasp.data.spanInner;
-				document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
 			}
+			console.log("privilege_rmcard -" + resp.status + ':' + resp.data);
+			document.getElementById("btn_rmcard").innerHTML = resp.data.spanInner;
+			document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
+			document.getElementById("btn_rmcard").setAttribute("style", "");
+			// add rmcard script
+			var script = document.createElement("script");
+			script.innerHTML = resp.data.script;
+			document.head.appendChild(script);
 		}
 	};
 	request.open("POST", "cardwork.php");
@@ -109,7 +114,7 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
 					data: 'Unknown error occurred : [' + request.responseText + ']'
 				};
 			}
-			console.log(resp.status + ':' + resp.data);
+			console.log("headnote - " + resp.status + ':' + resp.data);
 			document.getElementById("headnote_img").setAttribute("src", resp.data.photo[0])
 			document.getElementById("headnote_img").setAttribute("alt", resp.data.photo[1])
 			document.getElementById("subject").innerHTML=resp.data.subject;
@@ -226,24 +231,9 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
 		request.send(data);
 		return request;
     }
-
-<?php if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2) { ?>
-    var rmcard = function(msg){
-		
-        var data = new FormData();
-        data.append('func', 'rmcard');
-		data.append('card', _photo.alt);
-		
-		POST('s00_signage.php', data, 
-			function (resp) {  
-			    document.getElementById('vlog').innerHTML=resp.data;
-				getslide("first");
-		});
-    }
-<?php } ?>
-
+	
 	var shownails = function () {
-		window.open( "nailwork.php", "_self");
+		window.open( "nailwork.html?slide", "_self");
 	}
 	headnote();
 	getslide("first");

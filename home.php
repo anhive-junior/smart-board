@@ -16,16 +16,16 @@ if (isset($_POST['init']) && $_POST['init'] == 1){
 } else if (isset($_POST['button']) && $_POST['button'] == 1){
 	if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=2){
 		$data=array(
-			"link" => array("participants.php", "samworks.php", "playwork.php"),
+			"link" => array("participants.html", "samworks.html", "playwork.html"),
 			"spanInner" => array("사용자", "앨범관리", "재생관리")
 		);
 		if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=3){
-			array_push($data["link"], "syswork.php");
+			array_push($data["link"], "syswork.html");
 			array_push($data["spanInner"], "접속관리");
 			if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=4){
-				array_push($data["link"], "testwork.php");
+				array_push($data["link"], "testwork.html");
 				array_push($data["spanInner"], "테스트");
-				array_push($data["link"], "validator/checker.php");
+				array_push($data["link"], "validator/checker.html");
 				array_push($data["spanInner"], "검증");
 			}
 		}
@@ -36,7 +36,7 @@ if (isset($_POST['init']) && $_POST['init'] == 1){
 // contents send
 if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] == 1){
 	$data=array(
-			"link" => array("cardwork.php"),
+			"link" => array("cardwork.html"),
 			"tiletitle" => array("사진(이미지) 보내기"),
 			"ins" => array("누구나 전송 가능"),
 			"color" => array("#f86924")
@@ -46,11 +46,11 @@ if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] == 1){
 else if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2){
 	$data=array(
 		"link" => 
-			array("cardwork.php", 
-			"slidework.php", 
-			"listwork.php", 
-			"signwork.php",
-			"videowork.php"),
+			array("cardwork.html", 
+			"slidework.html", 
+			"listwork.html", 
+			"signwork.html",
+			"videowork.html"),
 		"tiletitle" => 
 			array("사진(이미지) 보내기",
 			 "받은 사진 확인하기",
