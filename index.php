@@ -34,20 +34,15 @@ if (!$anonymous) $_SESSION["scope"] = $pname;
             </div>
             <br>
             <div>
-
-<?php
-if(file_exists("/run/shm/participants.lst.freezing")){ 
-    echo "<div style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:orange;'>점검중</div>";
-}
-$freespace = disk_free_space(".")/1024;
-if ( $freespace < 16 ) { 
-    echo "<div style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:red;'>저장공간 부족.</div>";
+			
+			
+			<div id ="jum1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:orange;'></div>"
+			<div id ="disk1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:red;'></div>"
    
-}
+
 
 			
-?>
-            
+       
             <form method='post' action='index.php' style="margin: 0 auto;  width:200px; ">
                 <table>
 				
@@ -167,7 +162,67 @@ var headnote_data = function(){ // headnote에 대한 데이터를 가지고 옵
 	request.send(data);
 }
 
+var file_data = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+    var data = new FormData(); 
+	data.append("file", 1);
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch(e){
+				var resp = {
+					status : 'error',
+					data: 'Unknown error occurred : [' + request.responseText + ']'
+				};
+			}
+			console.log(resp.status + ':' + resp.data);
+			if( resp.data == "0"){
+				document.getElementById("jum1").style.display = "inline-block";
+				
+			}else{
+				document.getElementById("jum1").innerHTML = resp.data;
+				
+			}
+			
+		}
+	};
+	request.open("POST", "indexcontroll.php");
+	request.send(data);
+}
+
+var disk_data = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+    var data = new FormData(); 
+	data.append("disk", 1);
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch(e){
+				var resp = {
+					status : 'error',
+					data: 'Unknown error occurred : [' + request.responseText + ']'
+				};
+			}
+			console.log(resp.status + ':' + resp.data);
+			if( resp.data == "0"){
+				document.getElementById("disk1").style.display = "inline-block";
+				
+			}else{
+				document.getElementById("disk1").innerHTML = resp.data;
+				
+			}
+			
+		}
+	};
+	request.open("POST", "indexcontroll.php");
+	request.send(data);
+}
 
 headnote_data();
+file_data();
+disk_data();
+
 
 </script>
