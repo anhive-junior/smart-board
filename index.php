@@ -91,7 +91,7 @@ if ( $freespace < 16 ) {
 
     error_log("------- user_code -[$user_code] -------access code-[$input_code]-------"); 
 	$_SESSION['uselevel']=0;
-	$destination="home.php";
+	$destination="home.html";
 	$cookie_expire = time()+60*60*24*365;
     if ( ! $user_code /* isset($_POST['user_code']) */ ) {
         $resp = "사용자와 접속코드를 입력하세요!"."-- :) <br>";
@@ -99,7 +99,7 @@ if ( $freespace < 16 ) {
         $resp = "접속코드를 입력하세요<br>";
     } else if ( $access_code == $input_code ) {
 		$_SESSION['uselevel']=1;
-		$destination="cardwork.php";
+		$destination="cardwork.html";
     } else if ( $sam_code == $input_code /* && !$anonymous */ ) {
 		if (  $freespace < 16 ) @unlink ( "emergency.dumy" );
 		$_SESSION['uselevel']=2;

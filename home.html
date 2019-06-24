@@ -106,7 +106,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
 				document.getElementById("footer1").innerHTML=resp.data.footer;
 		}
 	};
-	request.open("POST", "homecontroll.php");
+	request.open("POST", "home.php");
 	request.send(data);
 }
 
@@ -137,7 +137,7 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
 			}
 		}
 	};
-request.open('POST', 'homecontroll.php');
+request.open('POST', 'home.php');
 request.send();
 }
 
