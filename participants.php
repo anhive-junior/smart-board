@@ -39,7 +39,7 @@ include_once("lib/captive.php");
         <div class="contents">
 		
 			<!-- head note -->
-			<div class='headnote' onclick="javascript:document.location.href='home.php'">
+			<div class='headnote' onclick="javascript:document.location.href='home.html'">
 				<img src="<?=$photo?>" alt="profile" style="height:15px;">
 				<span class="input_title"><?=$subject?></span> 
 				<span class="input_title"><?=$owner?></span>
