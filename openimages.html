@@ -62,7 +62,7 @@ var init = function(){ // rmcard 권한 및 초기 데이터 설정
 			console.log("init -" + resp.status + ':' + resp.data);
 			document.getElementById("btn_rmcard").value = resp.data.value;
 			document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
-		// 수정해야함, 	(typeof resp.data.value == "undefined") ? document.getElementById("btn_rmcard").setAttribute("style", "") : document.getElementById( )
+			if(resp.data.value == "사진삭제") document.getElementById("btn_rmcard").style.display = "";
 			document.getElementById("file_name").innerHTML = resp.data.file_name;
 			document.getElementById("date").innerHTML = resp.data.date;
 			document.getElementById("memo").innerHTML = resp.data.memo;

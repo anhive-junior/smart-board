@@ -39,19 +39,23 @@ $data = array(
 );
 
 if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
-	array_push($data["func"], "rmcard($img)");
-	array_push($data["value"], "사진삭제");
-	array_push($data["script"], "var rmcard = function(msg){
+	$data += [ "func" => "rmcard(\"$img\")" ];
+	$data += [ "value" => "사진삭제"];
+	$data += [ "script" => "var rmcard = function(msg){
 		var data = new FormData();
 		data.append('func','rmcard');
-		data.append('card', _photo.alt);
+		data.append('card', msg);
 		
 		POST('s00_signage.php', data, 
-			function (resp) {  
-				document.getElementById('vlog').innerHTML=resp.data;
-				getslide('first');
+			function (resp) {
+				if( resp.status == 'success') {
+					alert('파일삭제 완료..');
+					history.go(-1);
+				} else {
+					alert('Error : 파일삭제가 되지 않았습니다.');
+				}
 		});
-	}");
+	}"];
 }
 outputJSON($data, "success");
 ?>
