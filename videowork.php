@@ -19,14 +19,22 @@ if (isset($_POST['init']) && $_POST['init'] == 1){
 }
 
 if((isset($_POST['level']) && $_POST['level'] == 1) && $_SESSION['uselevel']>1){
-	$data=array(
-	    "link" => "rmvideo()", 
-	    "stringdata" => "삭제"
-	    );
-	outputJSON($data,"success");
+	$data=array( 
+	     "func" =>"rmvideo()",
+	     "value" => "삭제",
+	     "script" => "var rmvideo = function(msg){
+		var data = new FormData();
+		data.append('func','rmvideo');
+		data.append('video', _video.name);
+		
+		POST('s00_signage.php', data, 
+			function (resp) {  
+				document.getElementById('vlog').innerHTML=resp.data;
+				getslide('first');
+		});
+	}");
+	outputJSON($data, "success");
 }else{
 	$data = "0";
 	outputJSON($data,"success");
 }
-
-?>
