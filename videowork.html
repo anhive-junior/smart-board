@@ -37,7 +37,7 @@
 						<span id="btn_get" class="button_span btn" style="width: 3.2em;" onclick="document.getElementById('_file').click();" >찾기</span>  
 						<span id="btn_send" class="button_span btn" style="width: 3.2em;" onclick="upvideo();" >등록</span>  
 
-                             <!-- 이부분이 onclick 속성은 들어가는데 session에 따른 값이 안들어감 -->
+                           
 						<span id="btn_cancel" class="button_span btn" style="width: 3.2em;"></span>
 
 						<span id="btn_list" class="button_span btn" style="width: 3.2em;" onclick="showvideos();" >목록</span>
@@ -243,8 +243,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
 				document.getElementsByClassName("input_title")[i].setAttribute("id","input_title" + (i+1));
 				document.getElementById("input_title" + (i+1)).innerHTML=resp.data.sodata[i];
 			}
-				document.getElementById("btn_cancel").setAttribute("onclick",resp.data.link);  // 이부분 확인필요
-				document.getElementById("btn_cancel").innerHTML = resp.data.stringdata;        // 이부분 확인필요
+				
 				document.getElementsByClassName("footer")[0].setAttribute("id","footer1");
 				document.getElementById("footer1").innerHTML=resp.data.footer;
 		}
@@ -252,6 +251,35 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
 	request.open("POST", "videowork.php");
 	request.send(data);
 }
+
+var level = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+	var data = new FormData(); 
+	data.append("level", 1);
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch(e){
+				var resp = {
+					status : 'error',
+					data: 'Unknown error occurred : [' + request.responseText + ']'
+				};
+			}
+			console.log(resp.status + ':' + resp.data);
+			if(resp.data == "0"){
+			    document.getElementById("btn_cancel").style.display = "none";
+			}else{
+			    document.getElementById("btn_cancel").setAttribute("onclick",resp.data.link);  
+			    document.getElementById("btn_cancel").innerHTML = resp.data.stringdata;       
+			}
+				
+		}
+	};
+	request.open("POST", "videowork.php");
+	request.send(data);
+}
+level();
 headnote();
 
 </script>

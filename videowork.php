@@ -18,12 +18,15 @@ if (isset($_POST['init']) && $_POST['init'] == 1){
 
 }
 
-if((isset($_POST['init']) && $_POST['init'] == 1) && $_SESSION['uselevel']>1){
+if((isset($_POST['level']) && $_POST['level'] == 1) && $_SESSION['uselevel']>1){
 	$data=array(
 	    "link" => "rmvideo()", 
 	    "stringdata" => "삭제"
 	    );
-		outputJSON($data,"success");
-} // session 값을 확인을 못함 .. ?? 
+	outputJSON($data,"success");
+}else{
+	$data = "0";
+	outputJSON($data,"success");
+}
 
 ?>
