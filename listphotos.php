@@ -87,7 +87,7 @@ foreach($fs2 as $fs3){
         //echo $ext;
         if(preg_match($ext,$fs3,$matches)){
             //echo "<a href=\"$dir/$file\">";
-			echo "<img src=\"$dir/$file\" style=\"height:80px;\" onclick=\"window.open('openimages.php?name=$dir/$file', '_self');\"> ";
+			echo "<img src=\"$dir/$file\" style=\"height:80px;\" onclick=\"window.open('openimages.html?name=$dir/$file', '_self');\"> ";
 
             $mcount++;
             if ($mcount >= $batch)
