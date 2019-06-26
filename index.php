@@ -34,15 +34,8 @@ if (!$anonymous) $_SESSION["scope"] = $pname;
             </div>
             <br>
             <div>
-			
-			
-			<div id ="jum1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:orange;'></div>"
-			<div id ="disk1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:red;'></div>"
-   
-
-
-			
-       
+			<div id ="jum1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:orange;'></div>
+			<div id ="disk1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:red;'></div>
             <form method='post' action='index.php' style="margin: 0 auto;  width:200px; ">
                 <table>
 				

@@ -1,4 +1,3 @@
-
 var POST = function(api, data, func ){
 	var request = new XMLHttpRequest();
 	
@@ -22,8 +21,7 @@ var POST = function(api, data, func ){
 		}
 	};
 	request.open('POST', api);
-	if( data == "null") request.send();
-	else request.send(data);
+	request.send(data);
 	return request;
 }
 

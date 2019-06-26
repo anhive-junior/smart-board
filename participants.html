@@ -25,7 +25,7 @@
     }
     </style>
 </head>
-<body > 
+<body> 
     <div class="container">
         <div class="contents">
 		
@@ -68,12 +68,17 @@
 			document.getElementById("foot_note").innerHTML = resp.data.footer;
 			// script add
 			var script = document.createElement("script");
-			script.innerText = resp.data.scripts;
+			script.innerHTML = resp.data.scripts;
 			document.head.appendChild(script);
+			
+			level();
+			get_code();
+			retrieve();
 		});
-	}; headnote();
+	};
 	var level = function(){
-		POST('participants.php', "null" ,function(resp){
+		var data = new FormData();
+		POST('participants.php', data ,function(resp){
 		if(resp.data == 1) return;
 			document.getElementById("openSmart").setAttribute("onclick", resp.data.oS);
 			document.getElementById("closeSmart").setAttribute("onclick", resp.data.cS);
@@ -83,29 +88,22 @@
 			document.getElementById("mesg").style.display="";
 			// scrits add
 			var script = document.createElement("script");
-			script.innerText = resp.data.scripts;
+			script.innerHTML = resp.data.scripts;
 			document.head.appendChild(script);
 		})
-	}; level();
+	};
     var retrieve = function() {
         api = 'lib/captive_sv.php';
         data = new FormData();
         data.append('func', 'retrieve');
         POST(api, data, cb_);
-    }; retrieve();
+    };
     var get_code = function(){
         api = 's00_signage.php';
         data = new FormData();
         data.append('func', 'get_code');
-        
-        function cb_(resp) {
-            document.getElementById('access_code').value 
-                = resp.data.access_code;
-			document.getElementById('access_code').disabled = false;
-        }
-        POST(api, data, cb_);
-    }; get_code();
-	
+		POST(api, data, ac_);
+    };
 	//자기접속 해제
     var logout = function(){
         var data = new FormData();
@@ -115,6 +113,8 @@
 			location.href = ".";
 		});
     }
+	
+	headnote();
 </script>
 </body>
 </html>
