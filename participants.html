@@ -1,0 +1,120 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />   
+    <script type="text/javascript" src="signage.base.js"></script>
+	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <title>MyHive</title>
+    <style>
+    table {
+        text-align : center;
+    }
+    table tr:nth-child(even) {
+        background-color: #fff;
+    }
+    table tr:nth-child(odd) {
+        background-color: #eee;
+    }
+    table, th, td {
+        border-bottom: 1px solid #eee;
+        border-spacing: 0px;
+		padding-buttom:3pt;padding-top:3pt;
+        //border-collapse:: collapse;
+    }
+    </style>
+</head>
+<body > 
+    <div class="container">
+        <div class="contents">
+		
+			<!-- head note -->
+			<div class='headnote' onclick="javascript:document.location.href='home.html'">
+				<img  style="height:15px;" id="headnote_img">
+				<span class="input_title" id="subject"></span> 
+				<span class="input_title" id="owner"></span>
+			</div>
+			<div style="margin-top:10px;"><!-- upper line feed --></div>
+			
+			<div style="text-align:center;">
+				(접속코드:<input type="text" id='access_code' style="width : 4em; text-align:center; color:red; font-weight:bold;font-size:1.2em" value="" disabled >)
+				<input type="button" id="openSmart" value="공 개"  style="display:none">
+				<input type="button" id="closeSmart" value="폐 쇠"  style="display:none">
+				<div id="mesg" style="display:none"></div>
+			</div>
+			<br>
+
+			<div id="students" style="margin: 0 auto;  width:330px; " >
+			</div>
+			<br>
+			<hr>
+			<div class="button_base" style="text-align:center;">
+				<span class="button_span" onclick="javascript:logout()" >로그아웃</span>
+			</div>
+		</div>
+	</div>
+	<div class='footer' id="foot_note"></div>
+
+<script>
+    var headnote = function(){
+		var data = new FormData();
+		data.append("init", 1);
+		POST('participants.php', data, function(resp) {
+			document.getElementById("headnote_img").setAttribute("src", resp.data.photo[0]);
+			document.getElementById("headnote_img").setAttribute("alt", resp.data.photo[1]);
+			document.getElementById("subject").innerHTML = resp.data.sodata[0];
+			document.getElementById("owner").innerHTML = resp.data.sodata[1];
+			document.getElementById("foot_note").innerHTML = resp.data.footer;
+			// script add
+			var script = document.createElement("script");
+			script.innerText = resp.data.scripts;
+			document.head.appendChild(script);
+		});
+	}; headnote();
+	var level = function(){
+		POST('participants.php', "null" ,function(resp){
+		if(resp.data == 1) return;
+			document.getElementById("openSmart").setAttribute("onclick", resp.data.oS);
+			document.getElementById("closeSmart").setAttribute("onclick", resp.data.cS);
+			document.getElementById("mesg").innerHTML = resp.data.mesg;
+			document.getElementById("closeSmart").style.display="";
+			document.getElementById("openSmart").style.display="";
+			document.getElementById("mesg").style.display="";
+			// scrits add
+			var script = document.createElement("script");
+			script.innerText = resp.data.scripts;
+			document.head.appendChild(script);
+		})
+	}; level();
+    var retrieve = function() {
+        api = 'lib/captive_sv.php';
+        data = new FormData();
+        data.append('func', 'retrieve');
+        POST(api, data, cb_);
+    }; retrieve();
+    var get_code = function(){
+        api = 's00_signage.php';
+        data = new FormData();
+        data.append('func', 'get_code');
+        
+        function cb_(resp) {
+            document.getElementById('access_code').value 
+                = resp.data.access_code;
+			document.getElementById('access_code').disabled = false;
+        }
+        POST(api, data, cb_);
+    }; get_code();
+	
+	//자기접속 해제
+    var logout = function(){
+        var data = new FormData();
+        data.append('func', 'logout');
+        
+        POST('s00_signage.php', data, function(resp) {
+			location.href = ".";
+		});
+    }
+</script>
+</body>
+</html>

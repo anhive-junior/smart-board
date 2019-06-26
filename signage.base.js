@@ -22,7 +22,8 @@ var POST = function(api, data, func ){
 		}
 	};
 	request.open('POST', api);
-	request.send(data);
+	if( data == "null") request.send();
+	else request.send(data);
 	return request;
 }
 
