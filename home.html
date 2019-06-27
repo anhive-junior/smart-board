@@ -7,7 +7,6 @@
 	<link rel="stylesheet" type="text/css" href="signage.base.css">
     <script type="text/javascript" src="signage.base.js"></script>
     <title>SweetHome</title>
-							 
 	<style>
     table {
         text-align : center;
@@ -78,42 +77,12 @@ var buttons = document.getElementsByClassName("button_base")[0];
 var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
 	var data = new FormData(); 
 	data.append("func", "headnote");
-<<<<<<< HEAD
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function(){
-		if(request.readyState == 4){
-			try {
-				var resp = JSON.parse(request.response);
-			} catch(e){
-				var resp = {
-					status : 'error',
-					data: 'Unknown error occurred : [' + request.responseText + ']'
-				};
-			}
-			console.log(resp.status + ':' + resp.data);
-			
-			document.getElementById("headnote_img").setAttribute("src", resp.data.photo[0]);
-			document.getElementById("headnote_img").setAttribute("alt", resp.data.photo[1]);
-			
-			for(var i = 0; i<resp.data.sodata.length; i++){
-				document.getElementsByClassName("input_title")[i].setAttribute("id","input_title" + (i+1));
-				document.getElementById("input_title" + (i+1)).innerHTML=resp.data.sodata[i];
-			}
-				
-				document.getElementsByClassName("footer")[0].setAttribute("id","footer1");
-				document.getElementById("footer1").innerHTML=resp.data.footer;
-		}
-	};
-	request.open("POST", "home.php");
-	request.send(data);
-=======
 	POST("home.php", data, function(resp){
 		document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
 		document.getElementById("subject").innerHTML = resp.data.subject;
 		document.getElementById("owner").innerHTML = resp.data.owner;
 		document.getElementById("foot_note").innerHTML = resp.data.footer;
 	});
->>>>>>> 619c90e41f029f1913ca02e4118363da820c9909
 }
 
 var level_contents = function(){ // level에 따른 contents를 가지고 옴
@@ -133,13 +102,7 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
 			document.getElementById("ins" + (i+1)).innerHTML = resp.data.ins[i];
 			document.getElementById("norm" + (i+1)).style.backgroundColor = resp.data.color[i];
 		}
-<<<<<<< HEAD
-	};
-	request.open('POST', 'home.php');
-	request.send();
-=======
 	});
->>>>>>> 619c90e41f029f1913ca02e4118363da820c9909
 }
 
 var bottom_button = function(){
