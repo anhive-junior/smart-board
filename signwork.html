@@ -7,7 +7,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
 	<link rel="stylesheet" type="text/css" href="signage.base.css">
     <script type="text/javascript" src="signage.base.js"></script>
-    <title id = "title1"></title>
+    <title></title>
 </head>
 <body > 
     <div class="container">
@@ -15,8 +15,8 @@
 			<!-- head note -->
 			<div class='headnote' onclick="javascript:document.location.href='home.html'">
 				<img id = "headnote_img"  style="height:15px;">
-				<span class="input_title"></span> 
-				<span class="input_title"></span>
+				<span class="input_title" id="subject"></span> 
+				<span class="input_title" id="owner"></span>
 			</div>
 			<div style="margin-top:10px;"><!-- upper line feed --></div>
 			<div style="text-align:center; margin: 0 auto; ">
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 	</div>
-	<div class='footer' ></div>
+	<div class='footer' id="foot_note"></div>
 </body>
 
 <script>
@@ -79,40 +79,20 @@
 		});
     }
 	
-	var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
 	var data = new FormData(); 
-	data.append("init", 1);
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function(){
-		if(request.readyState == 4){
-			try {
-				var resp = JSON.parse(request.response);
-			} catch(e){
-				var resp = {
-					status : 'error',
-					data: 'Unknown error occurred : [' + request.responseText + ']'
-				};
-			}
-			console.log(resp.status + ':' + resp.data);
-			
-		
-			document.getElementById("title1").innerHTML = resp.data.sodata[1];
-			document.getElementById("headnote_img").setAttribute("src",resp.data.photo[0]);
-			document.getElementById("headnote_img").setAttribute("alt",resp.data.photo[1]);
-			
-			for(var i = 0; i<resp.data.sodata.length; i++){
-				document.getElementsByClassName("input_title")[i].setAttribute("id","input_title" + (i+1));
-				document.getElementById("input_title" + (i+1)).innerHTML=resp.data.sodata[i];
-			}
-				
-				document.getElementsByClassName("footer")[0].setAttribute("id","footer1");
-				document.getElementById("footer1").innerHTML=resp.data.footer;
-		}
-	};
-	request.open("POST", "signwork.php");
-	request.send(data);
+	data.append("func", "headnote");
+	POST("home.php", data, function(resp){
+		console.log(resp.status + ':' + resp.data);
+		document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
+		document.getElementById("subject").innerHTML=resp.data.subject;
+		document.getElementById("owner").innerHTML=resp.data.owner;
+		document.getElementById("foot_note").innerHTML=resp.data.footer;
+		document.title=resp.data.owner; // title 변경
+	});
 }
-headnote();
+
+headnote(); 
 
 	
 	
