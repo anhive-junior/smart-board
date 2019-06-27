@@ -97,10 +97,10 @@ function getcommand($ctrl) {
     $msg["previous"]="p";
     $msg["playhold"]="h";
     $msg["next"]="n";
-$msg["rotate_left"]="<LEFTSHIFT_DOWN>,";
-$msg["rotate_right"]=">";
-$msg["flipped"]="_";
-$msg["mirrored"]="|";
+	$msg["rotate_left"]="<LEFTSHIFT_DOWN>,";
+	$msg["rotate_right"]=">";
+	$msg["flipped"]="_";
+	$msg["mirrored"]="|";
     $msg["larger"]="[UP]";
     $msg["smaller"]="[DOWN]";
     $msg["fittosize"]="[KPSLASH]";

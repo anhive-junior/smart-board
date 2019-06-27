@@ -5,23 +5,47 @@ if (!isset($_SESSION["ip"])) header("location:.");
 include_once("lib/get_config.php");
 include_once("lib/get_access.php");
 include_once("lib/lib_common.php");
+error_log( "=====================owner is : " .$owner);
 
+<<<<<<< HEAD
 
 $services['headnote'] = '_headnote';
 function _headnote() { 
     s00_log ("Start ".__FUNCTION__);
     error_log(print_r($_POST , true));
     
+=======
+//////////
+$trace=true;
+
+function s00_log($msg) {
+    global $trace;
+    if ($trace) error_log($msg);
+}
+////////////////////////////////////////////////
+/////////
+$services['headnote'] = '_headnote';
+function _headnote(){
+	s00_log("Start ".__FUNCTION__);
+>>>>>>> 619c90e41f029f1913ca02e4118363da820c9909
 	$data=array(
-		"photo" => array($photo, "profile"),
-		"sodata" => array($subject,$owner),
-		"footer" => $footnote
+		"photo" => $_SESSION['photo'],
+		"subject" => $_SESSION['subject'],
+		"owner" => $_SESSION['owner'],
+		"footer" => $_SESSION['footnote']
 	);
 	outputJSON($data, "success");
 };
+<<<<<<< HEAD
 
 $services['level_contents'] = '_level_contents';
 function _level_contents() { 
+=======
+////////////////////////////////////////////////
+/////////
+$services['bottom_button'] = '_bottom_button';
+function _bottom_button(){
+>>>>>>> 619c90e41f029f1913ca02e4118363da820c9909
 	if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=2){
 		$data=array(
 			"link" => array("participants.html", "samworks.html", "playwork.html"),
@@ -40,19 +64,24 @@ function _level_contents() {
 		outputJSON($data, "success");
 	}
 	outputJSON("0", "success");
+<<<<<<< HEAD
 }
 
+=======
+};
+>>>>>>> 619c90e41f029f1913ca02e4118363da820c9909
 // contents send
-if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] == 1){
-	$data=array(
-			"link" => array("cardwork.html"),
-			"tiletitle" => array("사진(이미지) 보내기"),
-			"ins" => array("누구나 전송 가능"),
-			"color" => array("#f86924")
-	);
-	outputJSON($data, "success");
-}
-else if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2){
+$services['level_contents'] = '_level_contents';
+function _level_contents(){
+	 if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] == 1){
+		$data=array(
+				"link" => array("cardwork.html"),
+				"tiletitle" => array("사진(이미지) 보내기"),
+				"ins" => array("누구나 전송 가능"),
+				"color" => array("#f86924")
+		);
+		outputJSON($data, "success");
+	 } else if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2){
 	$data=array(
 		"link" => 
 			array("cardwork.html", 
@@ -80,6 +109,20 @@ else if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2){
 			 "#347235")
 	);
 	outputJSON($data, "success");
+	}
+};
+
+$func= isset($_POST['func'])?$_POST["func"]:"test";
+
+
+if (!isset($services[$func])) 
+        outputJSON("Undefined service[$func].");
+try {
+    call_user_func( $services[$func]);
+    //s00_log2(4, print_r($services,true));
+} catch (Exception $e) {
+    outputJSON($e->getLine().'@'.__FILE__."\n".$e->getMessage());
+    s00_log(print_r($e->getTrace(),true));
 }
 
 

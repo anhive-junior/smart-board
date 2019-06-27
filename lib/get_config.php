@@ -40,4 +40,5 @@ if (!isset($_SESSION['profile'])) {
 	$config_info = $_SESSION['info'];
 	$config_thema = $_SESSION['thema'];
 }
+
 ?>
