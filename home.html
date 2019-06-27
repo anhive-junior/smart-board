@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="signage.base.css">
     <script type="text/javascript" src="signage.base.js"></script>
     <title>SweetHome</title>
+							 
 	<style>
     table {
         text-align : center;
@@ -76,7 +77,7 @@ var buttons = document.getElementsByClassName("button_base")[0];
 
 var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
 	var data = new FormData(); 
-	data.append("init", 1);
+	data.append("func", "headnote");
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
 		if(request.readyState == 4){
@@ -133,8 +134,8 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
 			}
 		}
 	};
-request.open('POST', 'home.php');
-request.send();
+	request.open('POST', 'home.php');
+	request.send();
 }
 
 var bottom_button = function(){

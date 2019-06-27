@@ -6,14 +6,22 @@ include_once("lib/get_config.php");
 include_once("lib/get_access.php");
 include_once("lib/lib_common.php");
 
-if (isset($_POST['init']) && $_POST['init'] == 1){
+
+$services['headnote'] = '_headnote';
+function _headnote() { 
+    s00_log ("Start ".__FUNCTION__);
+    error_log(print_r($_POST , true));
+    
 	$data=array(
 		"photo" => array($photo, "profile"),
 		"sodata" => array($subject,$owner),
 		"footer" => $footnote
 	);
 	outputJSON($data, "success");
-} else if (isset($_POST['button']) && $_POST['button'] == 1){
+};
+
+$services['level_contents'] = '_level_contents';
+function _level_contents() { 
 	if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=2){
 		$data=array(
 			"link" => array("participants.html", "samworks.html", "playwork.html"),
@@ -33,6 +41,7 @@ if (isset($_POST['init']) && $_POST['init'] == 1){
 	}
 	outputJSON("0", "success");
 }
+
 // contents send
 if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] == 1){
 	$data=array(
@@ -72,4 +81,19 @@ else if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2){
 	);
 	outputJSON($data, "success");
 }
+
+
+/////////////////////////////////////
+// execute services
+$func= isset($_POST['func'])?$_POST["func"]:"test";
+if (!isset($services[$func])) 
+        outputJSON("Undefined service[$func].");
+try {
+    call_user_func( $services[$func]);
+    //s00_log2(4, print_r($services,true));
+} catch (Exception $e) {
+    outputJSON($e->getLine().'@'.__FILE__."\n".$e->getMessage());
+    s00_log(print_r($e->getTrace(),true));
+}
+
 ?>
