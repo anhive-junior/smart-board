@@ -155,7 +155,7 @@ var headnote_data = function(){ // headnote에 대한 데이터를 가지고 옵
 	request.send(data);
 }
 
-var file_data = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+var file_data = function(){ 
     var data = new FormData(); 
 	data.append("file", 1);
 	var request = new XMLHttpRequest();
