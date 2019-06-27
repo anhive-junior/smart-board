@@ -4,35 +4,20 @@ include_once("lib/get_config.php");
 include_once("lib/get_access.php");
 include_once("lib/lib_common.php"); // outputJSON();
 
-
-$services['headnote'] = '_headnote';
-function _headnote(){
-	$data=array(
-		"photo" => $_SESSION['photo'],
-		"profile" => "profile",
-		"subject" => $_SESSION['subject'],
-		"owner" => $_SESSION['owner'],
-		"footer" => $_SESSION['footnote']
-	);
+$services['show_level'] = '_show_level';
+function _show_level(){
+	if(!isset($_SESSION["uselevel"])){
+			$data = array("level" => 0);
+			outputJSON($data, 'success');
+	}
+	$data = array("level" => $_SESSION["uselevel"] );
 	outputJSON($data, "success");
-};
-
-$service['privilege_rmcard'] = '_privilege_rmcard';
-function _privilege_rmcard(){
-	if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
-	    $data=array(
-		   "func" => "rmcard()",
-		   "spanInner" => "회수"
-		 );
-		 outputJSON($data, "success");
-	 }
 }
-
 
 $func= isset($_POST['func'])?$_POST["func"]:"test";
 
 if (!isset($services[$func])) 
-        outputJSON("Undefined service[$func].");
+        outputJSON("Undefined services[$func].");
 try {
     call_user_func( $services[$func]);
     //s00_log2(4, print_r($services,true));

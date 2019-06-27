@@ -57,7 +57,7 @@
 				<div style="margin-top:10px;"><!-- upper line feed --></div>
 					<div class="button_base" style="text-align:center;background-color:#eee;">
 						<span id="btn_send" class="button_span btn" onclick="sendcard();" >보내기</span>  
-						<span id="btn_rmcard" class="button_span btn" style="display:none"></span>
+						<span id="btn_rmcard" class="button_span btn" onclick="rmcard()" style="display:none">회수</span>
 						<span id="btn_list" class="button_span btn" onclick="shownails();" >재생목록</span>
 					</div>
 
@@ -74,35 +74,20 @@
 
 <script>
 
-var privilege_rmcard = function(){ // rmcard 권한
+var show_level = function(){ // level 값 가져오기
     var data = new FormData();
-	data.append('func','privilege_rmcard');
+	data.append('func','show_level');
 	var request = new XMLHttpRequest();
-	request.onreadystatechange = function(){
-		if(request.readyState == 4){
-			try {
-				var resp = JSON.parse(request.response);
-			} catch(e) {
-				var resp ={
-					status : "error",
-					data : "Unknown error occurred : [" + request.responseText +"]"
-				};
-			}
-			console.log("privilege_rmcard -" + resp.status + ':' + resp.data);
-			document.getElementById("btn_rmcard").innerHTML = resp.data.spanInner;
-			document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
-		}
-	};
-	request.open("POST", "cardwork.php");
-	request.send(data);
+	POST("cardwork.php", data, function(resp){
+		console.log("level : " + resp.data.level);
+		if( resp.data.level>1 ) document.getElementById("btn_rmcard").style.display="";
+	});
 }
 
 var rmcard = function(msg){
-
         var data = new FormData();
         data.append('func','rmcard');
 		data.append('card', _photo.alt);
-		
 		POST('s00_signage.php', data, 
 			function (resp) {  
 			    document.getElementById('vlog').innerHTML=resp.data;
@@ -113,29 +98,16 @@ var rmcard = function(msg){
 var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
 	var data = new FormData(); 
 	data.append('func', 'headnote');
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function(){
-		if(request.readyState == 4){
-            try {
-				var resp = JSON.parse(request.response);
-			} catch(e){
-				var resp = {
-					status : 'error',
-					data: 'Unknown error occurred : [' + request.responseText + ']'
-				};
-			}
-			console.log("headnote - " + resp.status + ':' + resp.data);
-			document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
-			document.getElementById("headnote_img").setAttribute("alt", resp.data.profile);
-			document.getElementById("subject").innerHTML=resp.data.subject;
-			document.getElementById("owner").innerHTML=resp.data.owner;
-			document.getElementById("foot_note").innerHTML=resp.data.footer;
-			privilege_rmcard();
-			
-		}
-	};
-	request.open("POST", "cardwork.php");
-	request.send(data);
+	POST("home.php", data, function(resp){
+		console.log("headnote - " + resp.status + ':' + resp.data);
+		document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
+		document.getElementById("headnote_img").setAttribute("alt", resp.data.profile);
+		document.getElementById("subject").innerHTML=resp.data.subject;
+		document.getElementById("owner").innerHTML=resp.data.owner;
+		document.getElementById("foot_note").innerHTML=resp.data.footer;
+		document.title = resp.data.owner;
+		show_level();
+	});
 }
 
 

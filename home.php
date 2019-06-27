@@ -5,7 +5,6 @@ if (!isset($_SESSION["ip"])) header("location:.");
 include_once("lib/get_config.php");
 include_once("lib/get_access.php");
 include_once("lib/lib_common.php");
-error_log( "=====================owner is : " .$owner);
 
 //////////
 $trace=true;
