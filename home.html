@@ -4,10 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
-	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
     <script type="text/javascript" src="signage.base.js"></script>
     <title>SweetHome</title>
-	<style>
+    <style>
     table {
         text-align : center;
     }
@@ -17,25 +17,25 @@
         padding-bottom: 17px;
         cursor : pointer;
         border: solid 1px #e4e4e4;
-				color:#fff;
+                color:#fff;
         background: #efefef; 
         border-radius: 2px;
     }
-	.tile:active { background:green; }
-	
-	.tiletitle{
+    .tile:active { background:green; }
+    
+    .tiletitle{
         /*border-bottom: dotted 1px #e4e4e4;*/
         font-size:1.7em;
         font-weight:bold; 
-				color:#fff;
-	}
-	.tiletitle:active { background:green; }
+                color:#fff;
+    }
+    .tiletitle:active { background:green; }
 
     .instruction {
         color:#555555;
-		font-size:1.2em;
+        font-size:1.2em;
         font-weight:bold; 
-		padding-top:0.6em;
+        padding-top:0.6em;
     }
     </style>
 </head>
@@ -43,88 +43,105 @@
     <div class="container">
         <div class="contents">
 
-			<!-- head note -->
-			<div class='headnote' onclick="javascript:document.location.href='home.html'">
-				<img id="headnote_img" alt="profile" style="height:15px" id="headnote_img">
-				<span class="input_title" id="subject"></span>
-				<span class="input_title" id="owner"></span>
-			</div>
+            <!-- head note -->
+            <div class='headnote' onclick="javascript:document.location.href='home.html'">
+                <img id="headnote_img" alt="profile" style="height:15px" id="headnote_img">
+                <span class="input_title" id="subject"></span>
+                <span class="input_title" id="owner"></span>
+            </div>
 
-			<div style="margin-top:5px;"><!-- upper line feed --></div>
-			
-			<div id="contents" style="text-align:center; margin: 0 auto;">
-			
-				<div id='content_none' class="tile" style="display:none;background-color:#f86924">
-					<div class="tiletitle"></div>
-					<div class="instruction"></div>
-				</div>
-				
-			</div>
+            <div style="margin-top:5px;"><!-- upper line feed --></div>
+            
+            <div id="contents" style="text-align:center; margin: 0 auto;">
+            
+                <div id='content_none' class="tile" style="display:none;background-color:#f86924">
+                    <div name="tilttitle" class="tiletitle"></div>
+                    <div name="instruction" class="instruction"></div>
+                </div>
+                
+            </div>
 
-			<div style="margin-top:5px;"><!-- upper line feed --></div>
-			<div class="button_base" style="text-align:center">
-				<span id='button_none' class="button_span" style="display:none"></span>
-			</div>
-			<div style="margin-top:10px;"><!-- upper line feed --></div>
-		</div>
-	</div>
-	<div class='footer' id="foot_note"></div>
+            <div style="margin-top:5px;"><!-- upper line feed --></div>
+            <div class="button_base" style="text-align:center">
+                <span id='button_none' class="button_span" style="display:none"></span>
+            </div>
+            <div style="margin-top:10px;"><!-- upper line feed --></div>
+        </div>
+    </div>
+    <div class='footer' id="foot_note"></div>
 <script>
 
 var content_none = document.getElementById("content_none");
 var buttons = document.getElementsByClassName("button_base")[0];
 
 var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
-	var data = new FormData(); 
-	data.append("func", "headnote");
-	POST("home.php", data, function(resp){
-		document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
-		document.getElementById("subject").innerHTML = resp.data.subject;
-		document.getElementById("owner").innerHTML = resp.data.owner;
-		document.getElementById("foot_note").innerHTML = resp.data.footer;
-	});
+    var data = new FormData(); 
+    data.append("func", "headnote");
+    POST("home.php", data, function(resp){
+        document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
+        document.getElementById("subject").innerHTML = resp.data.subject;
+        document.getElementById("owner").innerHTML = resp.data.owner;
+        document.getElementById("foot_note").innerHTML = resp.data.footer;
+    });
 }
 
 var level_contents = function(){ // level에 따른 contents를 가지고 옴
-	var request = new XMLHttpRequest();
-	var data = new FormData();
-	data.append("func", "level_contents");
-	POST("home.php", data, function(resp){
-		for(let i=0; i<resp.data.link.length; i++){
-			let clone = document.getElementById("content_none").cloneNode(true);
+    var request = new XMLHttpRequest();
+    var data = new FormData();
+    data.append("func", "level_contents");
+    POST("home.php", data, function(resp){
+        for(let i=0; i<resp.data.count; i++){
+			cont = resp.data.contents[i];
+            let clone = document.getElementById("content_none").cloneNode(true);
+			
+            clone.setAttribute("id","norm" + (i+1));
+			clone.style.display="block";
+			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
+			clone.style.backgroundColor = cont['color'];
+			ch = clone.childNodes
+			for (var k = 0;k<ch.length; k++ ){
+				if (ch[k].className == 'tiletitle')
+				     ch[k].innerHTML = cont['tiletitle']
+				else if (ch[k].className == 'instruction')
+				      ch[k].innerHTML = cont['ins']
+			}
 			contents.appendChild(clone);
-			clone.setAttribute("id","norm" + (i+1));
-			document.getElementById("norm" + (i+1)).style.display="block";
-			document.getElementById("norm" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
-			document.getElementsByClassName("tiletitle")[i+1].setAttribute("id","title" + (i+1));
-			document.getElementsByClassName("instruction")[i+1].setAttribute("id","ins" + (i+1));
-			document.getElementById("title" + (i+1)).innerHTML=resp.data.tiletitle[i];
-			document.getElementById("ins" + (i+1)).innerHTML = resp.data.ins[i];
-			document.getElementById("norm" + (i+1)).style.backgroundColor = resp.data.color[i];
-		}
-	});
+			/*
+            contents.appendChild(clone);
+			
+            document.getElementById("norm" + (i+1)).style.display="block";
+            document.getElementById("norm" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
+            document.getElementsByClassName("tiletitle")[i+1].setAttribute("id","title" + (i+1));
+            document.getElementsByClassName("instruction")[i+1].setAttribute("id","ins" + (i+1));
+            document.getElementById("title" + (i+1)).innerHTML=resp.data.tiletitle[i];
+            document.getElementById("ins" + (i+1)).innerHTML = resp.data.ins[i];
+            document.getElementById("norm" + (i+1)).style.backgroundColor = resp.data.color[i];
+			*/
+        }
+    });
 }
 
 var bottom_button = function(){
-	var data = new FormData();
-	data.append("func", "bottom_button");
-	POST("home.php", data, function(resp){
-		if(resp.data == "0") return;
-		for(let i=0; i<resp.data.link.length; i++){
-			let clone = document.getElementById("button_none").cloneNode(true);
-			buttons.appendChild(clone);
-			clone.style.display="inline-block";
-			clone.setAttribute("id", "b" + (i+1));
-			document.getElementById("b" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
-			document.getElementById("b" + (i+1)).innerHTML = resp.data.spanInner[i];
-		}
-	});
+    var data = new FormData();
+    data.append("func", "bottom_button");
+    POST("home.php", data, function(resp){
+        if(resp.data == "0") return;
+        for(let i=0; i<resp.data.count; i++){
+            let clone = document.getElementById("button_none").cloneNode(true);
+
+            clone.style.display="inline-block";
+            clone.setAttribute("id", "b" + (i+1));
+            document.getElementById("b" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
+            document.getElementById("b" + (i+1)).innerHTML = resp.data.spanInner[i];
+            buttons.appendChild(clone);
+        }
+    });
 }
 
 headnote();
 level_contents();
 bottom_button();
-	
-</script>	
+    
+</script>    
 </body>
 </html>

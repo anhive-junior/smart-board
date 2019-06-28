@@ -52,43 +52,51 @@ function _bottom_button(){
 // contents send
 $services['level_contents'] = '_level_contents';
 function _level_contents(){
-	 if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] == 1){
-		$data=array(
-				"link" => array("cardwork.html"),
-				"tiletitle" => array("사진(이미지) 보내기"),
-				"ins" => array("누구나 전송 가능"),
-				"color" => array("#f86924")
-		);
-		outputJSON($data, "success");
-	 } else if (isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >= 2){
-	$data=array(
-		"link" => 
-			array("cardwork.html", 
-			"slidework.html", 
-			"listwork.html", 
-			"signwork.html",
-			"videowork.html"),
-		"tiletitle" => 
-			array("사진(이미지) 보내기",
-			 "받은 사진 확인하기",
-			 "재생 목록 관리하기",
-			 "액자 리모트 컨트롤",
-			 "비디오 컨트롤"),
-		"ins" => 
-			array("누구나 전송 가능",
-			 "하나씩 사진 정리하기",
-			 "슬라이드 쇼 대상건 등록",
-			 "슬라이드 쇼 관리하기",
-			 "비디오 재생관리"),
-		"color" =>
-			array("#f86924",
-			 "#92ABDB",
-			 "#A55FEB",
-			 "#ff9f00",
-			 "#347235")
+	//entry criteria.. check condition, constraints  준비과정
+	if ( !isset($_SESSION['uselevel']) ) outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
+	
+	
+	//task default process 기본 작업과정
+	
+	$data[]=array(
+				"link" => "cardwork.html",
+				"tiletitle" => "사진(이미지) 보내기",
+				"ins" => "누구나 전송 가능",
+				"color" => "#f86924"
 	);
-	outputJSON($data, "success");
-	}
+	
+	//task extended process 확장 작업과정
+	if ($_SESSION['uselevel'] >= 2){
+
+		$data[]=array(
+						"link" => "slidework.html",
+						"tiletitle" =>"받은 사진 확인하기",
+						"ins" =>  "하나씩 사진 정리하기",
+						"color" =>"#92ABDB");
+						
+		$data[]=array(
+						"link" => "listwork.html",
+						"tiletitle" =>"재생 목록 관리하기",
+						"ins" =>  "슬라이드 쇼 대상건 등록",
+						"color" =>"#A55FEB");
+		$data[]=array(
+						"link" => "signwork.html",
+						"tiletitle" =>"액자 리모트 컨트롤",
+						"ins" =>  "슬라이드 쇼 관리하기",
+						"color" =>"#ff9f00");
+						
+		$data[]=array(
+						"link" => "videowork.html",
+						"tiletitle" =>"비디오 컨트롤",
+						"ins" =>  "비디오 재생관리",
+						"color" =>"#347235");	
+				
+	} 
+	$arr = array("contents"=>$data, "count"=>count($data));
+	//validation 검증과정
+	
+	//exit criteria,, return 끝
+	outputJSON($arr, "success");
 };
 
 $func= isset($_POST['func'])?$_POST["func"]:"test";
