@@ -62,7 +62,7 @@
             </div>
 
             <div style="margin-top:5px;"><!-- upper line feed --></div>
-            <div class="button_base" style="text-align:center">
+            <div class="button_base" id="buttons" style="text-align:center">
                 <span id='button_none' class="button_span" style="display:none"></span>
             </div>
             <div style="margin-top:10px;"><!-- upper line feed --></div>
@@ -72,7 +72,7 @@
 <script>
 
 var content_none = document.getElementById("content_none");
-var buttons = document.getElementsByClassName("button_base")[0];
+var buttons = document.getElementById("buttons");
 
 var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
@@ -98,7 +98,7 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
 			clone.style.display="block";
 			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
 			clone.style.backgroundColor = cont['color'];
-			ch = clone.childNodes
+			ch = clone.childNodes;
 			for (var k = 0;k<ch.length; k++ ){
 				if (ch[k].className == 'tiletitle')
 				     ch[k].innerHTML = cont['tiletitle']
@@ -106,17 +106,6 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
 				      ch[k].innerHTML = cont['ins']
 			}
 			contents.appendChild(clone);
-			/*
-            contents.appendChild(clone);
-			
-            document.getElementById("norm" + (i+1)).style.display="block";
-            document.getElementById("norm" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
-            document.getElementsByClassName("tiletitle")[i+1].setAttribute("id","title" + (i+1));
-            document.getElementsByClassName("instruction")[i+1].setAttribute("id","ins" + (i+1));
-            document.getElementById("title" + (i+1)).innerHTML=resp.data.tiletitle[i];
-            document.getElementById("ins" + (i+1)).innerHTML = resp.data.ins[i];
-            document.getElementById("norm" + (i+1)).style.backgroundColor = resp.data.color[i];
-			*/
         }
     });
 }
@@ -125,15 +114,15 @@ var bottom_button = function(){
     var data = new FormData();
     data.append("func", "bottom_button");
     POST("home.php", data, function(resp){
-        if(resp.data == "0") return;
         for(let i=0; i<resp.data.count; i++){
+			cont = resp.data.contents[i];
             let clone = document.getElementById("button_none").cloneNode(true);
-
             clone.style.display="inline-block";
             clone.setAttribute("id", "b" + (i+1));
-            document.getElementById("b" + (i+1)).setAttribute("onclick", "window.open('"+resp.data.link[i]+"', '_self');");
-            document.getElementById("b" + (i+1)).innerHTML = resp.data.spanInner[i];
-            buttons.appendChild(clone);
+            ch = clone.childNodes;
+			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
+			clone.innerHTML = cont['spanInner'];
+			buttons.appendChild(clone);
         }
     });
 }

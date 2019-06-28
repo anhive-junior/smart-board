@@ -30,24 +30,45 @@ function _headnote(){
 /////////
 $services['bottom_button'] = '_bottom_button';
 function _bottom_button(){
-	if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=2){
-		$data=array(
-			"link" => array("participants.html", "samworks.html", "playwork.html"),
-			"spanInner" => array("사용자", "앨범관리", "재생관리")
+	//entry criteria.. check condition, constraints  준비과정
+	if ( !isset($_SESSION['uselevel']) || !$_SESSION['uselevel'] >=2 ) outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
+	
+	// task
+		$data[] = array(
+				"link" => "participants.html",
+				"spanInner" => "사용자"
+			);
+		$data[] = array(
+			"link" => "samworks.html",
+			"spanInner" => "앨범관리"
 		);
+		$data[] = array(
+			"link" => "playwork.html",
+			"spanInner" => "재생관리"
+		);
+
+	//exteneded task
 		if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=3){
-			array_push($data["link"], "syswork.html");
-			array_push($data["spanInner"], "접속관리");
+			$data[] = array(
+				"link" => "syswork.html",
+				"spanInner" => "접속관리"
+			);
 			if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=4){
-				array_push($data["link"], "testwork.html");
-				array_push($data["spanInner"], "테스트");
-				array_push($data["link"], "validator/checker.html");
-				array_push($data["spanInner"], "검증");
+				$data[] = array(
+				"link" => "testwork.html",
+				"spanInner" => "테스트"
+				);
+				$data[] = array(
+				"link" => "validator/checker.html",
+				"spanInner" => "검증"
+				);
 			}
 		}
-		outputJSON($data, "success");
-	}
-	outputJSON("0", "success");
+		$arr = array("contents"=>$data, "count"=>count($data));
+		//validation 검증과정
+		
+		//exit criteria, return
+		outputJSON($arr, "success");
 };
 // contents send
 $services['level_contents'] = '_level_contents';
