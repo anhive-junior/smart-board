@@ -6,35 +6,28 @@ include_once("lib/get_config.php");
 include_once("lib/get_access.php");
 include_once("lib/lib_common.php");
 
-if (isset($_POST['init']) && $_POST['init'] == 1){
-	$data=array(
-		"photo" => array($photo, "profile"),
-		"sodata" => array($subject,$owner),
-		"footer" => $footnote
-		
+$services['level'] = '_level';
+function _level(){
+	if($_SESSION['uselevel']<=1 || !isset($_SESSION['uselevel'])){
+		$data = "0";
+	    outputJSON($data,"success");
+	}
+	$data=array( 
+	   "func" =>"rmvideo()",
+	   "value" => "삭제"
 	);
 	outputJSON($data, "success");
-	
-
 }
 
-if((isset($_POST['level']) && $_POST['level'] == 1) && $_SESSION['uselevel']>1){
-	$data=array( 
-	     "func" =>"rmvideo()",
-	     "value" => "삭제",
-	     "script" => "var rmvideo = function(msg){
-		var data = new FormData();
-		data.append('func','rmvideo');
-		data.append('video', _video.name);
-		
-		POST('s00_signage.php', data, 
-			function (resp) {  
-				document.getElementById('vlog').innerHTML=resp.data;
-				getslide('first');
-		});
-	}");
-	outputJSON($data, "success");
-}else{
-	$data = "0";
-	outputJSON($data,"success");
+$func= isset($_POST['func'])?$_POST["func"]:"test";
+
+
+if (!isset($services[$func])) 
+        outputJSON("Undefined service[$func].");
+try {
+    call_user_func( $services[$func]);
+    //s00_log2(4, print_r($services,true));
+} catch (Exception $e) {
+    outputJSON($e->getLine().'@'.__FILE__."\n".$e->getMessage());
+    s00_log(print_r($e->getTrace(),true));
 }

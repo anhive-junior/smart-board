@@ -18,18 +18,17 @@ include_once("lib/lib_common.php"); // outputJSON();
 $services['init'] = '_init';
 
 function _init(){
+	if ( !isset($_SESSION['uselevel']) ) 
+		outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
+	
 	$name = $_POST["name"];
-	error_log("name----------------------$name---------------------");
 	if (strpos($name, 'http') !== false) {
 		$uri = $name;
 		}else{
 			$filename = basename ($name);  //c
-			error_log("filename----------------------$filename---------------------");
 			$dir= isset($_GET['dir'])?$_GET['dir']:$_SESSION['slide'];
-			error_log("dir---------------------$dir---------------------");
 			$script_path = dirname(trim($_SERVER['SCRIPT_NAME']));//if ($script_path != "") $dir = $script_path."/".$dir;
 			$uri = $dir."/".$filename;
-			error_log("url----------------------$uri---------------------");
 			$cap = $config_caption."/".$filename.'.txt';
 		}
 		

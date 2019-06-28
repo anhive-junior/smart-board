@@ -15,16 +15,29 @@ include_once("lib/get_config.php");
 include_once("lib/get_access.php");
 include_once("lib/lib_common.php"); // outputJSON();
 
-$contents=isset($_GET['v'])?"video":"slide";
-
-if (isset($_POST['init']) && $_POST['init'] == 1){
+$services['headnote'] = '_headnote';
+function _headnote(){
+	$contents=isset($_GET['v'])?"video":"slide";
 	$data=array(
-		"photo" => array($photo, "profile"),
-		"subject" => $subject,
-		"owner" => $owner,
-		"footer" => $footnote,
+		"photo" => $_SESSION['photo'],
+		"subject" => $_SESSION['subject'],
+		"owner" => $_SESSION['owner'],
+		"footer" => $_SESSION['footnote'],
 		"content_name" => $contents
 	);
 	outputJSON($data, "success");
-} 
+};
+
+$func= isset($_POST['func'])?$_POST["func"]:"test";
+
+
+if (!isset($services[$func])) 
+        outputJSON("Undefined service[$func].");
+try {
+    call_user_func( $services[$func]);
+    //s00_log2(4, print_r($services,true));
+} catch (Exception $e) {
+    outputJSON($e->getLine().'@'.__FILE__."\n".$e->getMessage());
+    s00_log(print_r($e->getTrace(),true));
+}
 ?>
