@@ -9,17 +9,17 @@ smart-board 프로젝트는 라즈베리파이로 집에서 혹은 가게에서 
 
 ## 1. smart-board 적용 사례들
 
-#### 1.1. 가게 (Store)
+#### 1.1. 상점 (Store)
 
-가게에서는 메뉴판 혹은 고객들에게 어떠한 정보 전달을 하기 위해서 사용되고 있습니다.
+상점에서는 광고홍보용 사이니지 또는 식당에서 메뉴으로 사용되고 있습니다.
 
-#### 1.2. 가정용 액자 (with Family)
+#### 1.2. 가정(with Family)
 
 가정에서 사진을 전송하거나 보관할 때 사용하고 있습니다. \
 여러 기능을 가지고 있어서 언제 어디서든 사진을 변경하고 올릴 수 있습니다. \
 멀리 떨어져있는 가족에게 Smart-board를 이용해서 바쁜 삶속에서 사진을 통하여 안부를 확인하는 역할도 할 수 있죠.
 
-#### 1.3. 교육 (Education)
+#### 1.3. 학교 (Education)
 
 Smart-board를 만드는 교육을 통하여 프로그램이 어떻게 만들어지는지에 대해서 배웁니다. \
 쉬운 Copy & Paste 교육을 이용하기 때문에 어린 아이들도 쉽게 만들어볼 수 있습니다.
@@ -43,10 +43,10 @@ smart-board 프로그램에 대한 문제점과 오류에 대해서 이슈사항
 
 ## 만든이 (Author or Manager)
 
-* **Yongsoo Han** - *github, @ilovecho* -
 * **Ryujae Seok** - *github, @yhk1515* -
 * **Sangha Lee** - *github, @toriato*-
 * **Yonghoon Jung** - *github, @dydgns2017* -
+* **Yongsoo Han** - *github, @ilovecho* -
 
 ## 라이센스 (License)
 
