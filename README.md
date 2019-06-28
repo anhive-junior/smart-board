@@ -1,4 +1,4 @@
-![raspbian-version](https://img.shields.io/badge/raspbian->=2019--04--08-red.svg)
+![raspbian-version](https://img.shields.io/badge/raspbian->=2019--06--20-red.svg)
 ![php-version](https://img.shields.io/badge/php-%5E7.1.3-blue.svg)
 ![smart-board-version](https://img.shields.io/badge/smart--board-v0.05-orange.svg)
 ![license](https://img.shields.io/badge/license-MIT-green.svg)
