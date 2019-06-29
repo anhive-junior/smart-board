@@ -14,7 +14,7 @@ var POST = function(api, data, func ){
 			}
 			console.log(resp.status + ': ' + resp.data);
 			if (resp.status == 'error') {
-				alert(resp.data);
+				//alert(resp.data);
 				return;
 			}
 			func(resp);
