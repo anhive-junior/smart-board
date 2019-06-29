@@ -38,9 +38,9 @@
 		
 			<!-- head note -->
 			<div class='headnote' onclick="javascript:document.location.href='home.html'">
-				<img src="<?=$photo?>" alt="profile" style="height:15px;">
-				<span class="input_title"><?=$subject?></span> 
-				<span class="input_title"><?=$owner?></span>
+				<img id="headnote_img"  alt="profile" style="height:15px;">
+				<span class="input_title" id="subject"></span> 
+				<span class="input_title" id="owner"></span>
 			</div>
 			<div style="margin-top:10px;"><!-- upper line feed --></div>
 			
@@ -113,13 +113,13 @@
 				
 				<div id="class" style="font-size:.8em; text-align:left; margin-left:10px;width: 50%; margin: 0 auto;min-width: 350px;">
 					<div style="margin-top:10px;"><!-- upper line feed --></div>
-					(접속코드) : [일반사용자:<input type="text" id='access_code' style="width : 50px; text-align:center; color:red; font-weight:bold;" value="<?=$access_code?>" >] 
-					[관리자:<input type="text" id='sam_code' style="width : 80px; text-align:center; color:red; font-weight:bold;" value="<?=$sam_code?>" >] <br><br>
+					(접속코드) : [일반사용자:<input type="text" id='access_code' style="width : 50px; text-align:center; color:red; font-weight:bold;"  >] 
+					[관리자:<input type="text" id='sam_code' style="width : 80px; text-align:center; color:red; font-weight:bold;"  >] <br><br>
 					(원격접속) : <input type="text" id='surprisebox_code' style="width : 7.5em; text-align:center; color:red; font-weight:bold;" 
-					value="<?=$surprisebox_code?>" > #  
-					<input type="text" id='gate_server' style="width : 7em; text-align:center;" value="<?=$gate_server?>" > 
-					:  <input type="text" id='external_port' style="width : 2.5em; text-align:center;" value="<?=$external_port?>" > <br>
-					(무선접속) : <input type="text" id='ssid' style="width : 10em; text-align:center; color:red; font-weight:bold;" value="<?=$ssid?>" > /pw  <input type="text" id='wifi_password' style="width : 6em; text-align:center;" value="<?=$wifi_password?>" onblur="check8(this.value);" > <br>
+					 > #  
+					<input type="text" id='gate_server' style="width : 7em; text-align:center;"  > 
+					:  <input type="text" id='external_port' style="width : 2.5em; text-align:center;" " > <br>
+					(무선접속) : <input type="text" id='ssid' style="width : 10em; text-align:center; color:red; font-weight:bold;"  > /pw  <input type="text" id='wifi_password' style="width : 6em; text-align:center;"  onblur="check8(this.value);" > <br>
 					<div style="margin-top:10px;"><!-- upper line feed --></div>
 				</div>
 				<div style="text-align:center; background-color:#eee;margin-top:10px;">
@@ -130,7 +130,7 @@
 				
 				<div style="margin-top:7px;"><!-- upper line feed --></div>
 				<hr>
-<?php if (false) { ?>								
+<!--          if (false) 보여지는것-->
 				<div style="text-align:center;font-weight:bold;color:green;">홈 사이니지(관리용)
 					<div style="margin-top:7px;"><!-- upper line feed --></div>
 					<div style="color:blue;">AHHS-RP-3, v1.0</div>
@@ -144,11 +144,11 @@
 						</td></tr></table>
 					</div>
 				</div>
-<?php } ?>
+
 			</div>
 		</div>	
 	</div> 
-	<div class='footer' ><?=$footnote?></div>
+	<div class='footer' id="foot_note"></div>
 
 <script>
 
@@ -229,7 +229,7 @@
 		data.append('func', 'get_netinfo');
 
 		POST('syswork_sv.php', data, function(resp) {
-				document.getElementById('ap_use').value = use[resp.data.ap.ap_use];
+				document.getElementById('ap_useap_use').value = use[resp.data.ap.ap_use];
 				document.getElementById('ssid').value = resp.data.ap.ssid;
 				document.getElementById('sec_use').value = use[resp.data.ap.sec_use];
 				document.getElementById('password').value = resp.data.ap.wpa_passphrase;
@@ -347,6 +347,26 @@
 
     }
     get_code();
+	
+	var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+    var data = new FormData(); 
+    data.append("func", "headnote");
+    POST("syswork.php", data, function(resp){
+        document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
+        document.getElementById("subject").innerHTML = resp.data.subject;
+        document.getElementById("owner").innerHTML = resp.data.owner;
+        document.getElementById("foot_note").innerHTML = resp.data.footer;
+		document.getElementById("sam_code").setAttribute("value",resp.data.samcode);
+		document.getElementById("access_code").setAttribute("value",resp.data.accesscode);
+		document.getElementById("surprisebox_code").setAttribute("value",resp.data.surpriseboxcode);
+		document.getElementById("external_port").setAttribute("value",resp.data.externalport);
+		document.getElementById("gate_server").setAttribute("value",resp.data.gateserver);
+		document.getElementById("ssid").setAttribute("value",resp.data.ssid);
+		document.getElementById("wifi_password").setAttribute("value",resp.data.wifipassword);
+     });
+  }
+  headnote();
+
 	<!-- 여기까지 -->
 	
 </script>   

@@ -6,7 +6,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
 	<link rel="stylesheet" type="text/css" href="signage.base.css">
     <script type="text/javascript" src="signage.base.js"></script>
-    <title id = "title1"></title>
+    <title id = "ownertitle"></title>
 </head>
 <body > 
     <div class="container">
@@ -14,9 +14,9 @@
 		
 			<!-- head note -->
 			<div class='headnote' onclick="javascript:document.location.href='home.html'">
-				<img id="headnote_img" style="height:15px;">
-				<span class="input_title"></span> 
-				<span class="input_title"></span>
+				<img id="headnote_img" style="height:15px;" alt="profile">
+				<span class="input_title" id="subject"></span> 
+				<span class="input_title" id="owner"></span>
 			</div>
 			<div style="margin-top:10px;"><!-- upper line feed --></div>
 			
@@ -26,7 +26,7 @@
 					(제목) : <input type="text" id='subject' style="width : 280px;text-align:center;"  ><br>
 					(주제) : <input type="text" id='owner' style="width : 280px;text-align:center;" ><br>
 					<div style="text-align:center;">
-					<img class="img_shadow" id="photo" style="width:60%;"  onclick="document.getElementById('nfile').click();">
+					<img class="img_shadow" id="photo" alt="photo" style="width:60%;"  onclick="document.getElementById('nfile').click();">
 					</div>
 					<div style="display:none;">
 					(사진) : <input id="nfile" name="nfile" type="file" style="width:300px;position:relative;"/>
@@ -68,7 +68,7 @@
 			
 		</div>
 	</div>
-	<div class='footer' ></div>
+	<div class='footer' id="foot_note" ></div>
 </body>
 
 <script>
@@ -245,7 +245,7 @@
 	
 	var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
 	var data = new FormData(); 
-	data.append("init", 1);
+	data.append("func", "headnote");
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
 		if(request.readyState == 4){
@@ -258,14 +258,12 @@
 				};
 			}
 			console.log(resp.status + ':' + resp.data);
-			document.getElementById("title1").innerHTML = resp.data.sodata[1];
-			document.getElementById("headnote_img").setAttribute("src", resp.data.photo[0]);
-			document.getElementById("headnote_img").setAttribute("alt", resp.data.photo[1]);
+			document.getElementById("ownertitle").innerHTML = resp.data.owner;
+			document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
 			document.getElementById("title").setAttribute("value",resp.data.title);
-			document.getElementById("subject").setAttribute("value",resp.data.sodata[0]);
-			document.getElementById("owner").setAttribute("value",resp.data.sodata[1]);
-			document.getElementById("photo").setAttribute("src",resp.data.photo[0]);
-			document.getElementById("photo").setAttribute("alt",resp.data.photo[1]);
+			document.getElementById("subject").setAttribute("value",resp.data.subject);
+			document.getElementById("owner").setAttribute("value",resp.data.owner);
+			document.getElementById("photo").setAttribute("src",resp.data.photo);
 			document.getElementById("footnote").setAttribute("value",resp.data.footer);
 			
 			document.getElementById("sam_code").setAttribute("value",resp.data.samcode);
@@ -275,15 +273,9 @@
 			document.getElementById("gate_server").setAttribute("value",resp.data.gateserver);
 			document.getElementById("ssid").setAttribute("value",resp.data.ssid);
 			document.getElementById("wifi_password").setAttribute("value",resp.data.wifipassword);
-			
-			
-			for(var i = 0; i<resp.data.sodata.length; i++){
-				document.getElementsByClassName("input_title")[i].setAttribute("id","input_title" + (i+1));
-				document.getElementById("input_title" + (i+1)).innerHTML=resp.data.sodata[i];
-			}
-				
-				document.getElementsByClassName("footer")[0].setAttribute("id","footer1");
-				document.getElementById("footer1").innerHTML=resp.data.footer;
+			document.getElementById("subject").innerHTML = resp.data.subject;
+			document.getElementById("owner").innerHTML = resp.data.owner;
+			document.getElementById("footer_note").innerHTML = resp.data.footer;
 		}
 	};
 	request.open("POST", "samworks.php");
