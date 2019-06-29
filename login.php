@@ -11,8 +11,11 @@ include_once("lib/lib_common.php");
 $services['init'] = '_init';
 function _init(){
 	$anonymous = (file_exists("ANONYMOUS_USE"))? true : false;
-	if (!$anonymous) $_SESSION["scope"] = $_SESSION["pname"];
-	if(file_exists("/run/shm/participants.lst.freezing") && (isset($_POST['file']) && $_POST['file'] == 1)){ 
+	if (!$anonymous) {
+		global $pname;
+		$_SESSION["scope"] = $pname; 
+	}		
+	if(file_exists("/run/shm/participants.lst.freezing")){ 
 		$data = array("freezing" => "점검중");
 	}
 	$data["name"] = isset($_COOKIE['NAME'])?$_COOKIE['NAME']:'';

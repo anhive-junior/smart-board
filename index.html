@@ -13,8 +13,8 @@
             <div class='headnote' id="title"></div>
             <br>
             <div style="text-align:center;">
-                <span class="input_title" id="owner"></span> 
-                <span class="input_title"id="subject"></span>
+                <span class="input_title" id="subject"></span> 
+                <span class="input_title"id="owner"></span>
                 <br>
                 <br>
                 <img class="img_shadow" id="photo" alt="profile" style="width:50%">
@@ -73,7 +73,7 @@ var init = function(){
 			document.getElementById('ucode').value = resp.data.name;
 			document.getElementById('icode').value = resp.data.code;
 			if ( "freezing" in resp.data && resp.data.freezing == "점검중" ) // 점검중 띄우기
-				document.getElementById("jum1").innerHTML = "점검중입니다..";
+				document.getElementById("jum1").innerHTML = "점검중입니다.";
 		}
 	};
 	request.open("POST", "login.php");
