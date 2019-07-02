@@ -31,7 +31,8 @@ function _headnote(){
 $services['bottom_button'] = '_bottom_button';
 function _bottom_button(){
 	//entry criteria.. check condition, constraints  준비과정
-	if ( !isset($_SESSION['uselevel']) || !$_SESSION['uselevel'] >=2 ) outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
+	if ( !isset($_SESSION['uselevel']) || ($_SESSION['uselevel'] < 2) )
+		outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
 	
 	// task
 		$data[] = array(
