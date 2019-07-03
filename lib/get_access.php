@@ -13,7 +13,7 @@ if (!isset($_SESSION['access'])) {
 	$access_code     = $_SESSION['access_code'] = $config['access_code'];
 	$admin_code      = $_SESSION['admin_code'] = $config['admin_code'];
 	$sam_code        = $_SESSION['sam_code'] = $config['sam_code'];
-	$anhive_code     = $_SESSION['anhive_code'] = $config['factory_code'];
+	$factory_code     = $_SESSION['factory_code'] = $config['factory_code'];
 	$ssid            = $_SESSION['ssid'] = $config['ssid'];
 	$wifi_password   = $_SESSION['wifi_password'] = $config['wifi_password'];
 	$_SESSION['access'] = $pname;
@@ -25,7 +25,7 @@ if (!isset($_SESSION['access'])) {
 	$access_code     = $_SESSION['access_code'];
 	$admin_code      = $_SESSION['admin_code'];
 	$sam_code        = $_SESSION['sam_code'];
-	$anhive_code     = $_SESSION['anhive_code'];
+	$factory_code     = $_SESSION['factory_code'];
 	$ssid            = $_SESSION['ssid'];
 	$wifi_password   = $_SESSION['wifi_password'];
 }

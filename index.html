@@ -1,0 +1,181 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />   
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        <div class="contents">
+            <div class='headnote' id="title"></div>
+            <br>
+            <div style="text-align:center;">
+                <span class="input_title" id="subject"></span> 
+                <span class="input_title"id="owner"></span>
+                <br>
+                <br>
+                <img class="img_shadow" id="photo" alt="profile" style="width:50%">
+            </div>
+            <br>
+            <div>
+			<div id ="jum1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:orange;'></div>
+			<div id ="disk1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:red;'></div>
+            <form method='post' action='index.php' style="margin: 0 auto;  width:200px; ">
+                <table>
+                    <tr>
+					<td style="text-align:right;" >사용자: </td>
+					<td style="text-align:left;" >
+                        <input type='text' id="ucode" name='user_code' size='7' value="" style="font-size:1.2em;" autocomplete="off"><br>
+                    </td>
+					</tr>
+                    <tr>
+					<td style="text-align:right;" >접속코드:</td>
+					<td style="text-align:left;" > 
+                        <input type='text' id="icode" name='input_code' size='7'value="" style="font-size:1.2em;" autocomplete="off" >
+                    </td>
+					</tr>
+                    <tr>
+					<td colspan=2 style="text-align:center;" >
+                    <br>
+						<div class="button_base" style="text-align:center;background-color:white">
+							<span class="button_span" onclick="logged_in();" >로그인</span>  
+						</div>
+                    </td>
+					</tr>
+                </table>
+            </form>
+            </div>
+            <br>
+            <div id="respdata1" style="text-align:center;font-size:0.8em;">
+            </div>
+        </div>
+    </div>
+    <div class='footer' id="foot_note"></div>
+</body>
+<script>
+var init = function(){
+	var data = new FormData();
+	data.append("func", "init");
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch (e){
+				var resp = {
+					status: 'error',
+					data: 'Unknown error occurred: [' + request.responseText + ']'
+				};
+			}
+			document.getElementById('ucode').value = resp.data.name;
+			document.getElementById('icode').value = resp.data.code;
+			if ( "freezing" in resp.data && resp.data.freezing == "점검중" ) // 점검중 띄우기
+				document.getElementById("jum1").innerHTML = "점검중입니다.";
+		}
+	};
+	request.open("POST", "login.php");
+	request.send(data);
+}
+
+var logged_in = function(){
+	var data = new FormData();
+	data.append("func", "login");
+	data.append("user_code", document.getElementById("ucode").value);
+	data.append("input_code", document.getElementById("icode").value);
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch (e){
+				var resp = {
+					status: 'error',
+					data: 'Unknown error occurred: [' + request.responseText + ']'
+				};
+			}
+			// process
+			if ( resp.data.mesg == "login"){
+				var form = document.createElement('form');
+				form.method = "GET";
+				form.action = resp.data.location;
+
+				for(var i=0; i<resp.data.contents.length; i++){
+					var form_code = document.createElement('input');
+					form_code.type = 'hidden';
+					form_code.name = resp.data.contents[i].name;
+					form_code.value = resp.data.contents[i].value;
+					form.appendChild(form_code);
+				}
+				document.body.appendChild(form);
+				form.submit();
+			}
+			else {
+				document.getElementById("respdata1").innerHTML = resp.data.mesg;
+			}
+		}
+	};
+	request.open("POST", "login.php");
+	request.send(data);
+}
+
+var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+	var data = new FormData(); 
+	data.append("func", "headnote");
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){
+		if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch (e){
+				var resp = {
+					status: 'error',
+					data: 'Unknown error occurred: [' + request.responseText + ']'
+				};
+			}
+			console.log(resp.status + ':' + resp.data);
+			document.getElementById("title").innerHTML = resp.data.title;
+			document.title = resp.data.subject;
+			document.getElementById("subject").innerHTML = resp.data.subject;
+			document.getElementById("owner").innerHTML = resp.data.owner;
+			document.getElementById("photo").setAttribute("src",resp.data.photo);
+			document.getElementById("foot_note").innerHTML=resp.data.footer;
+		}
+	}
+	request.open("POST", "login.php");
+	request.send(data);
+}
+
+var disk_data = function(){
+    var data = new FormData(); 
+	data.append("func", "disk");
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function(){if(request.readyState == 4){
+			try {
+				var resp = JSON.parse(request.response);
+			} catch (e){
+				var resp = {
+					status: 'error',
+					data: 'Unknown error occurred: [' + request.responseText + ']'
+				};
+			}
+			console.log(resp.status + ':' + resp.data);
+			if( resp.data == "none"){
+				document.getElementById("disk1").style.display = "inline-block";
+			}else{
+				document.getElementById("disk1").innerHTML = resp.data;
+			}
+		}
+	}
+	request.open("POST", "login.php");
+	request.send(data);
+}
+init();
+headnote();
+disk_data();
+
+
+</script>
+</html>

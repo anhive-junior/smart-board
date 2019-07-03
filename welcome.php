@@ -6,10 +6,10 @@ error_log(__FILE__."::".session_id());
 $http_host = $_SERVER["HTTP_HOST"];
 $http_refe = $_SERVER["HTTP_REFERER"];
 
-if(preg_match( "/$http_host.*index.php/", $http_refe ))
-	error_log( "SUCCESS /$http_host.*index.php/, $http_refe" );
+if(preg_match( "/$http_host.signage/", $http_refe ))
+	error_log( "SUCCESS /$http_host.*signage/, $http_refe" );
 else
-	error_log( "FAIL /$http_host.*index.php/, $http_refe" );
+	error_log( "FAIL /$http_host.*signage/, $http_refe" );
 
 include_once("lib/captive.php");
 	
@@ -31,8 +31,9 @@ if ($mac == NULL) {
 }
 
 //student should be hold after freezing.
-if ( $_SESSION['uselevel'] < 2 && is_freezed($mac, $ip) ) 
-	header("location: index.php");
+if ( $_SESSION['uselevel'] < 2 && is_freezed($mac, $ip) ) {
+	die(header("location: index.html"));
+}
 
 //dst should be describe for jumping go to page after this process
 if (! isset( $_GET['dst'])) { 

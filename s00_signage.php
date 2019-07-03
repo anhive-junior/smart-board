@@ -271,6 +271,7 @@ function _getslide() {
       , "caption" => $caption
       , "mtime" => $mtime
       , "url" => $url
+      , "server_ip" => $_SERVER['HTTP_HOST'] . substr($url, 2)
       );
     
     outputJSON($arr, 'success');

@@ -82,10 +82,11 @@ function is_accessible($mac, $ip) {
 function is_freezed($mac, $ip) {
 	global $freezingtag;
 	//error_log ( file_exists($freezingtag)?"freezing exist":"allow ..to accsss");
-	
+	error_log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!! is freezed : $mac $ip");
 	if ( file_exists($freezingtag) ) {
-		if ( strpos(get_userlist(), $mac) !== false 
-			 || strpos(get_userlist(), $ip) !== false) { return false; }
+		// if ( strpos(get_userlist(), $mac) !== false
+			 // || strpos(get_userlist(), $ip) !== false) { return false; } 
+			 //점검중 띄우고 level 1일때 들어가면 안되는데, 이 부분 때문에 정상 동작을 안하네요. 저번에도 제가 물어봤었는데 까먹었네요. 이거 같이 검토하셔야할 것 같습니다.
 		return true;
 	} 
 	return false;
