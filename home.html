@@ -45,7 +45,7 @@
 
             <!-- head note -->
             <div class='headnote' onclick="javascript:document.location.href='home.html'">
-                <img id="headnote_img" alt="profile" style="height:15px" id="headnote_img">
+                <img id="headnote_img" alt="profile" style="height:15px">
                 <span class="input_title" id="subject"></span>
                 <span class="input_title" id="owner"></span>
             </div>
@@ -62,9 +62,11 @@
             </div>
 
             <div style="margin-top:5px;"><!-- upper line feed --></div>
+			
             <div class="button_base" id="buttons" style="text-align:center">
                 <span id='button_none' class="button_span" style="display:none"></span>
             </div>
+			
             <div style="margin-top:10px;"><!-- upper line feed --></div>
         </div>
     </div>
@@ -119,10 +121,11 @@ var bottom_button = function(){
             let clone = document.getElementById("button_none").cloneNode(true);
             clone.style.display="inline-block";
             clone.setAttribute("id", "b" + (i+1));
-            ch = clone.childNodes;
+			ch = clone.childNodes;
 			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
 			clone.innerHTML = cont['spanInner'];
 			buttons.appendChild(clone);
+			
         }
     });
 }

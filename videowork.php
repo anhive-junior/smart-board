@@ -12,7 +12,7 @@ function _level(){
 		$data = "0";
 	    outputJSON($data,"success");
 	}
-	$data=array( 
+	$data=array( 	
 	   "func" =>"rmvideo()",
 	   "value" => "삭제"
 	);
