@@ -17,35 +17,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
     <script type="text/javascript" src="signage.base.js"></script>
-	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title>AnHive, Upload Media File</title>
 </head>
 <body > 
     <div class="container">
         <div class="contents">
-		
-			<!-- head note -->
-			<div class='headnote' onclick="javascript:document.location.href='home.html'">
-				<span class="input_title">파일업로드</span> 
-			</div>
-			<div style="margin-top:10px;"><!-- upper line feed --></div>
+        
+            <!-- head note -->
+            <div class='headnote' onclick="javascript:document.location.href='home.html'">
+                <span class="input_title">파일업로드</span> 
+            </div>
+            <div style="margin-top:10px;"><!-- upper line feed --></div>
 
-			<div style="text-align:center;">
-				<input type='file' id='_file' class="medium-btn" style="width:70%;">
-				<input type='button' class="medium-btn" id='_submit' value='  Upload!  '>
-				<div class='progress_outer' style="border: 1px solid #CCC;">
-					<div id='_prog' class='progress' style="width:0%;background:#50ad4e;height:20px;"></div>
-				</div>
-			</div>
-			<div style="margin-top:10px;"><!-- upper line feed --></div>
+            <div style="text-align:center;">
+                <input type='file' id='_file' class="medium-btn" style="width:70%;">
+                <input type='button' class="medium-btn" id='_submit' value='  Upload!  '>
+                <div class='progress_outer' style="border: 1px solid #CCC;">
+                    <div id='_prog' class='progress' style="width:0%;background:#50ad4e;height:20px;"></div>
+                </div>
+            </div>
+            <div style="margin-top:10px;"><!-- upper line feed --></div>
 
-		</div>
-	</div>
-	<div class='footer' >사진등록</div>
-	
+        </div>
+    </div>
+    <div class='footer' >사진등록</div>
+    
     <script>
 
-	
+    
 var _submit = document.getElementById('_submit'), 
 _file = document.getElementById('_file');
 
@@ -69,8 +69,8 @@ var upload = function(){
     req.open('POST', 's00_file.php');
     req.send(data);
 }
-_submit.addEventListener('click', upload);	
-		
-	</script>
+_submit.addEventListener('click', upload);    
+        
+    </script>
 </body>
 </html>

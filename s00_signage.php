@@ -97,10 +97,10 @@ function getcommand($ctrl) {
     $msg["previous"]="p";
     $msg["playhold"]="h";
     $msg["next"]="n";
-	$msg["rotate_left"]="<LEFTSHIFT_DOWN>,";
-	$msg["rotate_right"]=">";
-	$msg["flipped"]="_";
-	$msg["mirrored"]="|";
+    $msg["rotate_left"]="<LEFTSHIFT_DOWN>,";
+    $msg["rotate_right"]=">";
+    $msg["flipped"]="_";
+    $msg["mirrored"]="|";
     $msg["larger"]="[UP]";
     $msg["smaller"]="[DOWN]";
     $msg["fittosize"]="[KPSLASH]";
@@ -387,14 +387,14 @@ function _sendcard() {
     if($_FILES['card']['error'] > 0){
         outputJSON('An error occurred when uploading.');
     }
-	
-	$dfs = disk_free_space(".");
+    
+    $dfs = disk_free_space(".");
     if (($dfs - $_FILES['card']['size']) < 1048576 * $_SESSION['reserve_space']) 
     {
         outputJSON('Not enough disk free space.');
     }
     
-	error_log($_SESSION['reserve_space'] . "MB is space remains ::::::::::::::::");
+    error_log($_SESSION['reserve_space'] . "MB is space remains ::::::::::::::::");
     
     // Check filesize
     if($_FILES['card']['size'] > 2000000000){
@@ -419,7 +419,7 @@ function _sendcard() {
     if (!file_exists("$config_slide/". $photo_md5_name)) 
         error_log("$config_slide/". $photo_md5_name." is not SAVED");
     // 원본 파일 권한 설정 775
-	chmod("$config_slide/".$photo_md5_name, 0775);	
+    chmod("$config_slide/".$photo_md5_name, 0775);    
     symlink( "$config_playlink/$photo_md5_name", 
                 "$config_playlist/$photo_md5_name"); 
     error_log( "SLIDE: [$config_slide/$photo_md5_name], PLAYLIST[$config_playlist/$photo_md5_name]"); 
@@ -451,53 +451,53 @@ function _sendcard() {
 // set slide caption
 $services['rmcard'] = '_rmcard';
 function _rmcard() {
-	if(!($_SESSION['uselevel']>1)) die("잘못된 접근입니다."); 
-	global $config_slide, $config_playlist, $config_thumbs, $config_info, $config_captions;
-	$rm_list=$_POST["rm_list"];
-	if($rm_list == true){
-		s00_log ("Start ".__FUNCTION__." - list ");
-		$lst = $_REQUEST['lst'];
-		error_log("rmlist :" .$lst);
-		$lst = str_replace("|","\n",$lst);
-		$list = preg_split('/\n/',$lst);
-		
-		foreach($list as $lst){
-			$cfile = "$config_captions/".basename($lst).".txt";
-			$pfile = "$config_playlist/".basename($lst);
-			$sfile = "$config_slide/".basename($lst);
-			$tfile = "$config_thumbs/".basename($lst).".png";
-			$ifile = "$config_info/".basename($lst).".json";
-			
-			if (file_exists($tfile)) unlink($tfile);
-			if (file_exists($cfile)) unlink($cfile);
-			if (file_exists($pfile)) unlink($pfile);
-			if (file_exists($ifile)) unlink($ifile);
-			if (file_exists($sfile)) unlink($sfile);
-		}
-		// Success!
-		outputJSON("Removed card : [checked card].", 'success');	
-	}
-	else{
-		s00_log ("Start ".__FUNCTION__);
-		// Upload file
-		// Check for errors
-		$card = isset($_POST['card'])?$_POST['card']:"";
-		if ($card=="") outputJSON("File name is missing!");
-		$cfile = "$config_captions/".basename($card).".txt";
-		$pfile = "$config_playlist/".basename($card);
-		$sfile = "$config_slide/".basename($card);
-		$tfile = "$config_thumbs/".basename($card).".png";
-		$ifile = "$config_info/".basename($card).".json";
+    if(!($_SESSION['uselevel']>1)) die("잘못된 접근입니다."); 
+    global $config_slide, $config_playlist, $config_thumbs, $config_info, $config_captions;
+    $rm_list=$_POST["rm_list"];
+    if($rm_list == true){
+        s00_log ("Start ".__FUNCTION__." - list ");
+        $lst = $_REQUEST['lst'];
+        error_log("rmlist :" .$lst);
+        $lst = str_replace("|","\n",$lst);
+        $list = preg_split('/\n/',$lst);
+        
+        foreach($list as $lst){
+            $cfile = "$config_captions/".basename($lst).".txt";
+            $pfile = "$config_playlist/".basename($lst);
+            $sfile = "$config_slide/".basename($lst);
+            $tfile = "$config_thumbs/".basename($lst).".png";
+            $ifile = "$config_info/".basename($lst).".json";
+            
+            if (file_exists($tfile)) unlink($tfile);
+            if (file_exists($cfile)) unlink($cfile);
+            if (file_exists($pfile)) unlink($pfile);
+            if (file_exists($ifile)) unlink($ifile);
+            if (file_exists($sfile)) unlink($sfile);
+        }
+        // Success!
+        outputJSON("Removed card : [checked card].", 'success');    
+    }
+    else{
+        s00_log ("Start ".__FUNCTION__);
+        // Upload file
+        // Check for errors
+        $card = isset($_POST['card'])?$_POST['card']:"";
+        if ($card=="") outputJSON("File name is missing!");
+        $cfile = "$config_captions/".basename($card).".txt";
+        $pfile = "$config_playlist/".basename($card);
+        $sfile = "$config_slide/".basename($card);
+        $tfile = "$config_thumbs/".basename($card).".png";
+        $ifile = "$config_info/".basename($card).".json";
 
-		if (file_exists($tfile)) unlink($tfile);
-		if (file_exists($cfile)) unlink($cfile);
-		if (file_exists($pfile)) unlink($pfile);
-		if (file_exists($ifile)) unlink($ifile);
-		if (file_exists($sfile)) unlink($sfile);
-		
-		// Success!
-		outputJSON("Removed card : [$card].", 'success');	
-	}
+        if (file_exists($tfile)) unlink($tfile);
+        if (file_exists($cfile)) unlink($cfile);
+        if (file_exists($pfile)) unlink($pfile);
+        if (file_exists($ifile)) unlink($ifile);
+        if (file_exists($sfile)) unlink($sfile);
+        
+        // Success!
+        outputJSON("Removed card : [$card].", 'success');    
+    }
 }    
 
 /////////////////////////////////////
@@ -1183,11 +1183,11 @@ function _set_code() {
             $_SESSION[$k] = $v;
         }
     }
-	error_log("$accees[$pname]['wifi_password']");
-	// if (strlen($access[$pname]['wifi_password']) <= 7){
-		// outputJSON("TEST", 'success');
-	// }
-	
+    error_log("$accees[$pname]['wifi_password']");
+    // if (strlen($access[$pname]['wifi_password']) <= 7){
+        // outputJSON("TEST", 'success');
+    // }
+    
     if ($changed)
         set_wifiinfo($access[$pname]['ssid'], 
                     $access[$pname]['wifi_password']) ;
@@ -1588,14 +1588,14 @@ function _usb_backup() {
     
     $image_cb = $_POST['image_cb']; //
     $video_cb = $_POST['video_cb']; //
-	$profile_cb = $_POST['profile_cb'];
+    $profile_cb = $_POST['profile_cb'];
     $usb_name = $_POST['usb_name']; // 
     $usb_path = $_POST['usb_path']; //
     
     //read and cleansing
     date_default_timezone_set('Asia/Seoul');
     $mtime = date('Y-m-d.H-m-s', time());
-	//dUSBROOT="/media"
+    //dUSBROOT="/media"
     $usb_dest = "";
     if (strpos($usb_path, "AnHivePF")!==false){
         $usb_dest = dUSBROOT."/$usb_name/$usb_path";
@@ -1605,20 +1605,20 @@ function _usb_backup() {
         $usb_dest = dUSBROOT."/$usb_name/$usb_path/AnHivePF";
     }
     if(!($profile_cb != "_" && $video_cb != "_" && $image_cb != "_")){
-		outputJSON("백업 대상이 없음..", 'success');
-	}
+        outputJSON("백업 대상이 없음..", 'success');
+    }
     if(!file_exists($usb_dest)) mkdir($usb_dest,0777, true);
     $cont_path = "/var/www/media";
     $cont_path_sign = "/var/www/signage";
-	$image_cb=($image_cb != "_")?1:0;
-	$video_cb=($video_cb != "_")?1:0;
-	$profile_cb=($profile_cb)?1:0;
-	//
-	if(!file_exists($cont_path . "/backup")) mkdir($cont_path . "/backup", 0777, true); // backup 디렉토리 생성
+    $image_cb=($image_cb != "_")?1:0;
+    $video_cb=($video_cb != "_")?1:0;
+    $profile_cb=($profile_cb)?1:0;
+    //
+    if(!file_exists($cont_path . "/backup")) mkdir($cont_path . "/backup", 0777, true); // backup 디렉토리 생성
     //chdir($media_path);
-	chdir($cont_path);
-	$rt = shell_exec("sudo /etc/hive/bin/usb_backup.sh backup $usb_dest $cont_path $cont_path_sign $image_cb $video_cb $profile_cb");
-	error_log("end of backup");
+    chdir($cont_path);
+    $rt = shell_exec("sudo /etc/hive/bin/usb_backup.sh backup $usb_dest $cont_path $cont_path_sign $image_cb $video_cb $profile_cb");
+    error_log("end of backup");
     outputJSON("backup completed", 'success');
 };
 
@@ -1632,21 +1632,21 @@ function _usb_restore() {
     
     $image_cb = $_POST['image_cb'];
     $video_cb = $_POST['video_cb'];
-	$profile_cb = $_POST['profile_cb'];
+    $profile_cb = $_POST['profile_cb'];
     $usb_name = $_POST['usb_name'];
     $usb_path = $_POST['usb_path'];
     
-	//free space check
-	$dfs = disk_free_space(".");
+    //free space check
+    $dfs = disk_free_space(".");
     if (($dfs - $_FILES['card']['size']) < 1048576 * $_SESSION['reserve_space']) 
     {
         outputJSON('Not enough disk free space.');
     }
-	
+    
     //read and cleansing
     date_default_timezone_set('Asia/Seoul');
     $mtime = date('Y-m-d.H-m-s');
-	
+    
     $usb_dest = "";
     if (strpos($usb_path, "AnHivePF")!==false){
         $usb_dest = dUSBROOT."/$usb_name/$usb_path";
@@ -1657,15 +1657,15 @@ function _usb_restore() {
     }
 
     $cont_path = "/var/www/media";
-	$cont_path_sign = "/var/www/signage";
-	$image_cb=($image_cb != "_")?1:0;
-	$video_cb=($video_cb != "_")?1:0;
-	$profile_cb=($profile_cb)?1:0;
+    $cont_path_sign = "/var/www/signage";
+    $image_cb=($image_cb != "_")?1:0;
+    $video_cb=($video_cb != "_")?1:0;
+    $profile_cb=($profile_cb)?1:0;
     if(file_exists($usb_dest . "/backup.tar.gz")){
-		chdir($cont_path);
-		$rt = shell_exec("sudo /etc/hive/bin/usb_backup.sh restore $usb_dest $cont_path $cont_path_sign $image_cb $video_cb $profile_cb");
-	}
-	
+        chdir($cont_path);
+        $rt = shell_exec("sudo /etc/hive/bin/usb_backup.sh restore $usb_dest $cont_path $cont_path_sign $image_cb $video_cb $profile_cb");
+    }
+    
     error_log("end of restore");
     outputJSON("backup restore", 'success');
 };
@@ -1681,10 +1681,10 @@ function _fileCopy(){
     $directory = $_POST['directory'];
     
     for($i=0;$i<$fileslength;$i++){
-		if(!(isset($_POST['fileSearch' . "$i"]))) { continue; }
+        if(!(isset($_POST['fileSearch' . "$i"]))) { continue; }
         $file = $_POST['fileSearch' . "$i"];
-		$file_md5=(pathinfo($file, PATHINFO_EXTENSION)=="jpg")?substr(md5($file),-14,12).".jpg":substr(md5($file),-14,12).".png";
-		
+        $file_md5=(pathinfo($file, PATHINFO_EXTENSION)=="jpg")?substr(md5($file),-14,12).".jpg":substr(md5($file),-14,12).".png";
+        
    
         $usbfile = $directory."/$file"; // 원본파일 
         $slidefile = $config_slide."/$file_md5"; //  slide 복사파일 
@@ -1696,13 +1696,13 @@ function _fileCopy(){
         if(!copy($usbfile, $slidefile)) { 
             throw new Exception ("파일복사 실패[$usbfile => $slidefile]");
         } 
-		chmod($slidefile, 0775);
+        chmod($slidefile, 0775);
         // /home/pi/media/thaumbs 썸네일 파일 생성
         make_thumb_from_image($slidefile, $thaumbsfile, 64,64);
                 
         // ~/media/captions 확장자명 .txt
         file_put_contents($captionfile, "");            
-		
+        
         // ~/media/info 확장자명 .json
         $json_file = $config_info."/$file_md5.json";
         $info = array("caption"=> "", 

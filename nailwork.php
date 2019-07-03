@@ -17,15 +17,15 @@ include_once("lib/lib_common.php"); // outputJSON();
 
 $services['headnote'] = '_headnote';
 function _headnote(){
-	$contents=isset($_GET['v'])?"video":"slide";
-	$data=array(
-		"photo" => $_SESSION['photo'],
-		"subject" => $_SESSION['subject'],
-		"owner" => $_SESSION['owner'],
-		"footer" => $_SESSION['footnote'],
-		"content_name" => $contents
-	);
-	outputJSON($data, "success");
+    $contents=isset($_GET['v'])?"video":"slide";
+    $data=array(
+        "photo" => $_SESSION['photo'],
+        "subject" => $_SESSION['subject'],
+        "owner" => $_SESSION['owner'],
+        "footer" => $_SESSION['footnote'],
+        "content_name" => $contents
+    );
+    outputJSON($data, "success");
 };
 
 $func= isset($_POST['func'])?$_POST["func"]:"test";

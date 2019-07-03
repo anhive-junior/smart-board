@@ -7,23 +7,23 @@ include_once("lib/lib_common.php"); // outputJSON();
 
 $services['show_level'] = '_show_level';
 function _show_level(){
-	if(!isset($_SESSION["uselevel"])){
-			$data = array("level" => 0);
-			outputJSON($data, 'success');
-	}
-	$data = array("level" => $_SESSION["uselevel"] );
-	outputJSON($data, "success");
+    if(!isset($_SESSION["uselevel"])){
+            $data = array("level" => 0);
+            outputJSON($data, 'success');
+    }
+    $data = array("level" => $_SESSION["uselevel"] );
+    outputJSON($data, "success");
 }
 
 $services['level_contents'] = '_level_contents';
 function _level_contents(){
-	if (!isset($_SESSION['uselevel']) || !$_SESSION['uselevel'] >= 2) outputJSON("uselevel error, or you have not privilige this function LINE : __LINE__", "error");
-	$data=array(
-		"openSmart" => "set_clsss('open')",
-		"closeSmart" => "set_clsss('close')",
-		"mesg" => '접속화면에 "점검중입니다." 메시지 표시함.<br>일반 사용자는 이용할 수 없음.',
-		);
-	outputJSON($data, "success");
+    if (!isset($_SESSION['uselevel']) || !$_SESSION['uselevel'] >= 2) outputJSON("uselevel error, or you have not privilige this function LINE : __LINE__", "error");
+    $data=array(
+        "openSmart" => "set_clsss('open')",
+        "closeSmart" => "set_clsss('close')",
+        "mesg" => '접속화면에 "점검중입니다." 메시지 표시함.<br>일반 사용자는 이용할 수 없음.',
+        );
+    outputJSON($data, "success");
 }
 
 $func= isset($_POST['func'])?$_POST["func"]:"test";

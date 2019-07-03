@@ -6,12 +6,12 @@ include_once("lib/lib_common.php"); // outputJSON();
 
 $services['show_level'] = '_show_level';
 function _show_level(){
-	if(!isset($_SESSION["uselevel"])){
-			$data = array("level" => 0);
-			outputJSON($data, 'success');
-	}
-	$data = array("level" => $_SESSION["uselevel"] );
-	outputJSON($data, "success");
+    if(!isset($_SESSION["uselevel"])){
+            $data = array("level" => 0);
+            outputJSON($data, 'success');
+    }
+    $data = array("level" => $_SESSION["uselevel"] );
+    outputJSON($data, "success");
 }
 
 $func= isset($_POST['func'])?$_POST["func"]:"test";

@@ -9,21 +9,21 @@ include_once("lib/lib_common.php");
 
 $services['headnote'] = '_headnote';
 function _headnote(){
-	$data=array(
-		"photo" => $_SESSION['photo'],
-		"subject" => $_SESSION['subject'],
-		"owner" => $_SESSION['owner'],
-		"footer" => $_SESSION['footnote'],
-		"title" => $_SESSION['title'],
-		"samcode" => $_SESSION['sam_code'],
-		"accesscode" => $_SESSION['access_code'],
-		"supriseboxcode" => $_SESSION['surprisebox_code'],
-		"externalport" => $_SESSION['external_port'],
-		"gateserver" => $_SESSION['gate_server'],
-		"ssid" => $_SESSION['ssid'],
-		"wifi_password" => $_SESSION['wifi_password']
-	);
-	outputJSON($data,"success");
+    $data=array(
+        "photo" => $_SESSION['photo'],
+        "subject" => $_SESSION['subject'],
+        "owner" => $_SESSION['owner'],
+        "footer" => $_SESSION['footnote'],
+        "title" => $_SESSION['title'],
+        "samcode" => $_SESSION['sam_code'],
+        "accesscode" => $_SESSION['access_code'],
+        "supriseboxcode" => $_SESSION['surprisebox_code'],
+        "externalport" => $_SESSION['external_port'],
+        "gateserver" => $_SESSION['gate_server'],
+        "ssid" => $_SESSION['ssid'],
+        "wifi_password" => $_SESSION['wifi_password']
+    );
+    outputJSON($data,"success");
 }
 
 

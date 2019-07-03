@@ -22,8 +22,8 @@ function wget_post( $url,  $data) {
 }
 
 function fresh_upnp() {
-	$r = wget_post("http://localhost/signage/s00_signage.php", 
-					array("func" => "set_code")); 
+    $r = wget_post("http://localhost/signage/s00_signage.php", 
+                    array("func" => "set_code")); 
 }
 
 fresh_upnp();

@@ -30,8 +30,8 @@ function bypass_captive($ip) {
     } catch (Exception $e) {
         throw $e;
     } 
-	
-	return $mac;
+    
+    return $mac;
 }
 
 function get_mac($ip) {
@@ -49,53 +49,53 @@ function get_mac($ip) {
     } catch (Exception $e) {
         throw $e;
     } 
-	
-	return $mac;
+    
+    return $mac;
 }
 function capture_user($user, $ip, $mac) {
-	global $capturelog;
+    global $capturelog;
     try {
 
-		$list = explode("\n", get_userlist()); 
-		$list_new = "";
-		$exist = false;
-		foreach ($list as $record) {
-			//$user = ;
-			if (trim($record) == "") continue;
-			list( $user_f, $mac_f, $ip_f) = explode("\t", $record);
-			$list_new .= ($mac.$ip != $mac_f.$ip_f)?"$record\n":"";
-		}
-		$list_new .= "$user\t$mac\t$ip\n";
-		file_put_contents($capturelog, $list_new);
+        $list = explode("\n", get_userlist()); 
+        $list_new = "";
+        $exist = false;
+        foreach ($list as $record) {
+            //$user = ;
+            if (trim($record) == "") continue;
+            list( $user_f, $mac_f, $ip_f) = explode("\t", $record);
+            $list_new .= ($mac.$ip != $mac_f.$ip_f)?"$record\n":"";
+        }
+        $list_new .= "$user\t$mac\t$ip\n";
+        file_put_contents($capturelog, $list_new);
     } catch (Exception $e) {
         error_log( $e->getMessage() );
     }
 }
 
 function is_accessible($mac, $ip) {
-	global $capturelog;
-	return 
-		(strpos( file_get_contents($capturelog), "$mac\t$ip")!==false)
-			?true:false;
+    global $capturelog;
+    return 
+        (strpos( file_get_contents($capturelog), "$mac\t$ip")!==false)
+            ?true:false;
 }
 
 function is_freezed($mac, $ip) {
-	global $freezingtag;
-	//error_log ( file_exists($freezingtag)?"freezing exist":"allow ..to accsss");
-	error_log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!! is freezed : $mac $ip");
-	if ( file_exists($freezingtag) ) {
-		// if ( strpos(get_userlist(), $mac) !== false
-			 // || strpos(get_userlist(), $ip) !== false) { return false; } 
-			 //점검중 띄우고 level 1일때 들어가면 안되는데, 이 부분 때문에 정상 동작을 안하네요. 저번에도 제가 물어봤었는데 까먹었네요. 이거 같이 검토하셔야할 것 같습니다.
-		return true;
-	} 
-	return false;
+    global $freezingtag;
+    //error_log ( file_exists($freezingtag)?"freezing exist":"allow ..to accsss");
+    error_log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!! is freezed : $mac $ip");
+    if ( file_exists($freezingtag) ) {
+        // if ( strpos(get_userlist(), $mac) !== false
+             // || strpos(get_userlist(), $ip) !== false) { return false; } 
+             //점검중 띄우고 level 1일때 들어가면 안되는데, 이 부분 때문에 정상 동작을 안하네요. 저번에도 제가 물어봤었는데 까먹었네요. 이거 같이 검토하셔야할 것 같습니다.
+        return true;
+    } 
+    return false;
 }
 
 function get_userlist() {
-	global $capturelog;
+    global $capturelog;
     //check IP Address and set to pass Server for 60 minutes
-	return file_get_contents($capturelog);
-}	
-	
+    return file_get_contents($capturelog);
+}    
+    
 ?>

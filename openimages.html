@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
     <script type="text/javascript" src="signage.base.js"></script>
-	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title>AnHive, Show Video</title>
     <style>
        body { margin:0; height:100%;width:100%}
     </style>
 </head>
 <body>
-	<div style="margin-top:10px;"><!-- upper line feed --></div>
-	<div style="text-align:center;">
-	<div id="file_name"></div>
-	<div id="date"></div>
-	<div id="memo"></div>
+    <div style="margin-top:10px;"><!-- upper line feed --></div>
+    <div style="text-align:center;">
+    <div id="file_name"></div>
+    <div id="date"></div>
+    <div id="memo"></div>
     <img id="img" style="width:90%;height:90%;"/><br>
-	<div style="margin-top:10px;"><!-- upper line feed --></div>
-	<input type="button" onclick="history.go(-1);" value="돌아가기">
-	<input type="button" id="btn_rmcard" style="display:none">
-	</div>
-	
+    <div style="margin-top:10px;"><!-- upper line feed --></div>
+    <input type="button" onclick="history.go(-1);" value="돌아가기">
+    <input type="button" id="btn_rmcard" style="display:none">
+    </div>
+    
 <script>
 function parseURLParams(url) { // URL, GET 데이터 읽어들이기
     var queryStart = url.indexOf("?") + 1,
@@ -46,49 +46,49 @@ function parseURLParams(url) { // URL, GET 데이터 읽어들이기
 var url = parseURLParams(document.URL).name[0];
 
 var rmcard = function(msg){
-		var data = new FormData();
-		data.append('func','rmcard');
-		data.append('card', msg);
-		
-		POST('s00_signage.php', data, 
-			function (resp) {
-				if( resp.status == 'success') {
-					alert('파일삭제 완료..');
-					history.go(-1);
-				} else {
-					alert('Error : 파일삭제가 되지 않았습니다.');
-				}
-		});
+        var data = new FormData();
+        data.append('func','rmcard');
+        data.append('card', msg);
+        
+        POST('s00_signage.php', data, 
+            function (resp) {
+                if( resp.status == 'success') {
+                    alert('파일삭제 완료..');
+                    history.go(-1);
+                } else {
+                    alert('Error : 파일삭제가 되지 않았습니다.');
+                }
+        });
 }
 
 var init = function(){ // rmcard 권한 및 초기 데이터 설정
-	var data = new FormData();
-	data.append("name", url);
-	data.append("func","init");
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function(){
-		if(request.readyState == 4){
-			try {
-				var resp = JSON.parse(request.response);
-			} catch(e) {
-				var resp ={
-					status : "error",
-					data : "Unknown error occurred : [" + request.responseText +"]"
-				};
-			}
-			console.log("init -" + resp.status + ':' + resp.data);
-			document.getElementById("btn_rmcard").value = resp.data.value;
-			document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
-			if(resp.data.value == "사진삭제") document.getElementById("btn_rmcard").style.display = "";
-			document.getElementById("file_name").innerHTML = resp.data.file_name;
-			document.getElementById("date").innerHTML = resp.data.date;
-			document.getElementById("memo").innerHTML = resp.data.memo;
-			document.getElementById("img").setAttribute("src", resp.data.img);
-		
-		}
-	};
-	request.open("POST", "openimages.php");
-	request.send(data);
+    var data = new FormData();
+    data.append("name", url);
+    data.append("func","init");
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(){
+        if(request.readyState == 4){
+            try {
+                var resp = JSON.parse(request.response);
+            } catch(e) {
+                var resp ={
+                    status : "error",
+                    data : "Unknown error occurred : [" + request.responseText +"]"
+                };
+            }
+            console.log("init -" + resp.status + ':' + resp.data);
+            document.getElementById("btn_rmcard").value = resp.data.value;
+            document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
+            if(resp.data.value == "사진삭제") document.getElementById("btn_rmcard").style.display = "";
+            document.getElementById("file_name").innerHTML = resp.data.file_name;
+            document.getElementById("date").innerHTML = resp.data.date;
+            document.getElementById("memo").innerHTML = resp.data.memo;
+            document.getElementById("img").setAttribute("src", resp.data.img);
+        
+        }
+    };
+    request.open("POST", "openimages.php");
+    request.send(data);
 }
 init();
 </script>

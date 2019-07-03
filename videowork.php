@@ -8,15 +8,15 @@ include_once("lib/lib_common.php");
 
 $services['level'] = '_level';
 function _level(){
-	if($_SESSION['uselevel']<=1 || !isset($_SESSION['uselevel'])){
-		$data = "0";
-	    outputJSON($data,"success");
-	}
-	$data=array( 	
-	   "func" =>"rmvideo()",
-	   "value" => "삭제"
-	);
-	outputJSON($data, "success");
+    if($_SESSION['uselevel']<=1 || !isset($_SESSION['uselevel'])){
+        $data = "0";
+        outputJSON($data,"success");
+    }
+    $data=array(     
+       "func" =>"rmvideo()",
+       "value" => "삭제"
+    );
+    outputJSON($data, "success");
 }
 
 $func= isset($_POST['func'])?$_POST["func"]:"test";

@@ -37,10 +37,10 @@ if (strcmp($func, 'upload') == 0) {
         outputJSON('File uploaded exceeds maximum upload size.');
     }
 
-	if (preg_match('/.mp4$|.mkv$|.mov$|.MOV$/', 
-				$_FILES["SelectedFile"]["name"]) $dir = $config_video;
-	else $dir = $config_slide;
-				
+    if (preg_match('/.mp4$|.mkv$|.mov$|.MOV$/', 
+                $_FILES["SelectedFile"]["name"]) $dir = $config_video;
+    else $dir = $config_slide;
+                
     $file = $_FILES["SelectedFile"]["name"];
     $file = str_replace(" ","",$file);
     
@@ -56,11 +56,11 @@ if (strcmp($func, 'upload') == 0) {
     // Check for errors
 
     $file= isset($_POST['name'])?$_POST["name"]:"";
-	if ($file == "") outputJSON('File missing error : [' . $dir .'/'. $file . '].');
+    if ($file == "") outputJSON('File missing error : [' . $dir .'/'. $file . '].');
     
-	error_log($dir .'/'. $file);
-	unlink($dir .'/'. $file);
-	
+    error_log($dir .'/'. $file);
+    unlink($dir .'/'. $file);
+    
     // Success!
     outputJSON('File delete : [' . $dir .'/'. $file . '].', 'success');
 } else{

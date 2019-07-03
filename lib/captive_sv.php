@@ -29,29 +29,29 @@ function _test() {
 // 
 function _extract() {
 
-	global $capturelog;
+    global $capturelog;
     try {
-		
-		$mac=(isset($_POST['mac'])&&strlen($_POST['mac'])>0)?$_POST['mac']:"";
-		$ip=(isset($_POST['ip'])&&strlen($_POST['ip'])>0)?$_POST['ip']:"";
-		if ($mac.$ip == "")  outputJSON( "mac address 또는 ip가 필요합니다.");
+        
+        $mac=(isset($_POST['mac'])&&strlen($_POST['mac'])>0)?$_POST['mac']:"";
+        $ip=(isset($_POST['ip'])&&strlen($_POST['ip'])>0)?$_POST['ip']:"";
+        if ($mac.$ip == "")  outputJSON( "mac address 또는 ip가 필요합니다.");
 
-		$list = explode("\n", get_userlist()); 
-		$list_new = "";
-		foreach ($list as $user) {
-			//$user = ;
-			if (trim($user) == "") continue;
-			list( $user_f, $mac_f, $ip_f) = explode("\t", $user);
-			//error_log($mac."/".$mac_f);
-			if ($mac.$ip != $mac_f.$ip_f) {
-				$list_new .= $user."\n";
-			} else {
-				exec("sudo iptables -D internet -t mangle -m mac --mac-source $mac -j RETURN");
-			}
-		}
-		//echo $list_new;
-		file_put_contents($capturelog, $list_new);
-		
+        $list = explode("\n", get_userlist()); 
+        $list_new = "";
+        foreach ($list as $user) {
+            //$user = ;
+            if (trim($user) == "") continue;
+            list( $user_f, $mac_f, $ip_f) = explode("\t", $user);
+            //error_log($mac."/".$mac_f);
+            if ($mac.$ip != $mac_f.$ip_f) {
+                $list_new .= $user."\n";
+            } else {
+                exec("sudo iptables -D internet -t mangle -m mac --mac-source $mac -j RETURN");
+            }
+        }
+        //echo $list_new;
+        file_put_contents($capturelog, $list_new);
+        
         outputJSON( "removed the mac[$mac],ip[$ip]", "success");
     } catch (Exception $e) {
         error_log( $e->getMessage() );
@@ -63,19 +63,19 @@ function _extract() {
 // 
 function _retrieve() {
 
-	global $capturelog;
+    global $capturelog;
     try {
-		$list = explode("\n", get_userlist()); 
-		$list_new = "";
-		$arr1 = array();
-		foreach ($list as $user) {
-			if (trim($user) == "") continue;
-			list( $user_f, $mac_f, $ip_f) = explode("\t", $user);
-			if ( strlen($user_f) > 16) $user_f = substr($user_f, 0, 15)."...";
-			array_push($arr1,
-				array( 'user' => $user_f,'mac' => $mac_f,'ip' => $ip_f));
-		}
-		
+        $list = explode("\n", get_userlist()); 
+        $list_new = "";
+        $arr1 = array();
+        foreach ($list as $user) {
+            if (trim($user) == "") continue;
+            list( $user_f, $mac_f, $ip_f) = explode("\t", $user);
+            if ( strlen($user_f) > 16) $user_f = substr($user_f, 0, 15)."...";
+            array_push($arr1,
+                array( 'user' => $user_f,'mac' => $mac_f,'ip' => $ip_f));
+        }
+        
         outputJSON( $arr1, 'success');
     } catch (Exception $e) {
         error_log( $e->getMessage() );
@@ -87,27 +87,27 @@ function _retrieve() {
 // 
 function _setstatus() {
 
-	global $freezingtag;
+    global $freezingtag;
 
     try {
-	
-		if (!isset($_POST['status'])) {
-			outputJSON( "status should defined to process of lest" );
-		}
-		$status = $_POST['status'];
-		
-		$r = null;
-		switch ($status) {
-			case "close":
-				 file_put_contents($freezingtag, "");
-				break;
-			case "open":
-				@unlink($freezingtag);
-				break;
-			default:
-				break;
-		}
-		
+    
+        if (!isset($_POST['status'])) {
+            outputJSON( "status should defined to process of lest" );
+        }
+        $status = $_POST['status'];
+        
+        $r = null;
+        switch ($status) {
+            case "close":
+                 file_put_contents($freezingtag, "");
+                break;
+            case "open":
+                @unlink($freezingtag);
+                break;
+            default:
+                break;
+        }
+        
         outputJSON( "set to '$status'", 'success');
     } catch (Exception $e) {
         error_log( $e->getMessage() );

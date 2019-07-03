@@ -18,34 +18,34 @@ include_once("lib/lib_common.php"); // outputJSON();
 $services['init'] = '_init';
 
 function _init(){
-	if ( !isset($_SESSION['uselevel']) ) 
-		outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
-	
-	$name = $_POST["name"];
-	if (strpos($name, 'http') !== false) {
-		$uri = $name;
-		}else{
-			$filename = basename ($name);  //c
-			$dir= isset($_GET['dir'])?$_GET['dir']:$_SESSION['slide'];
-			$script_path = dirname(trim($_SERVER['SCRIPT_NAME']));//if ($script_path != "") $dir = $script_path."/".$dir;
-			$uri = $dir."/".$filename;
-			$cap = $config_caption."/".$filename.'.txt';
-		}
-		
-	$id_date = date("Y/m/d H:i:s.", filemtime($uri));
-	$memo = "메모: ".(file_exists($cap)?file_get_contents($cap):"");
-	$img = $uri;
-	$data = array(
-	     "file_name" => $filename,
-		 "memo" => $memo,
-		 "date" => $id_date,
-		 "img" => $img
-		 );
-	if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
-	      $data += [ "func" => "rmcard(\"$img\")" ];
-		  $data += [ "value" => "사진삭제"];
-	};
-	outputJSON($data, "success");
+    if ( !isset($_SESSION['uselevel']) ) 
+        outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
+    
+    $name = $_POST["name"];
+    if (strpos($name, 'http') !== false) {
+        $uri = $name;
+        }else{
+            $filename = basename ($name);  //c
+            $dir= isset($_GET['dir'])?$_GET['dir']:$_SESSION['slide'];
+            $script_path = dirname(trim($_SERVER['SCRIPT_NAME']));//if ($script_path != "") $dir = $script_path."/".$dir;
+            $uri = $dir."/".$filename;
+            $cap = $config_caption."/".$filename.'.txt';
+        }
+        
+    $id_date = date("Y/m/d H:i:s.", filemtime($uri));
+    $memo = "메모: ".(file_exists($cap)?file_get_contents($cap):"");
+    $img = $uri;
+    $data = array(
+         "file_name" => $filename,
+         "memo" => $memo,
+         "date" => $id_date,
+         "img" => $img
+         );
+    if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
+          $data += [ "func" => "rmcard(\"$img\")" ];
+          $data += [ "value" => "사진삭제"];
+    };
+    outputJSON($data, "success");
 };
 
 

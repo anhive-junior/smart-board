@@ -62,11 +62,11 @@
             </div>
 
             <div style="margin-top:5px;"><!-- upper line feed --></div>
-			
+            
             <div class="button_base" id="buttons" style="text-align:center">
                 <span id='button_none' class="button_span" style="display:none"></span>
             </div>
-			
+            
             <div style="margin-top:10px;"><!-- upper line feed --></div>
         </div>
     </div>
@@ -93,21 +93,21 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
     data.append("func", "level_contents");
     POST("home.php", data, function(resp){
         for(let i=0; i<resp.data.count; i++){
-			cont = resp.data.contents[i];
+            cont = resp.data.contents[i];
             let clone = document.getElementById("content_none").cloneNode(true);
-			
+            
             clone.setAttribute("id","norm" + (i+1));
-			clone.style.display="block";
-			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
-			clone.style.backgroundColor = cont['color'];
-			ch = clone.childNodes;
-			for (var k = 0;k<ch.length; k++ ){
-				if (ch[k].className == 'tiletitle')
-				     ch[k].innerHTML = cont['tiletitle']
-				else if (ch[k].className == 'instruction')
-				      ch[k].innerHTML = cont['ins']
-			}
-			contents.appendChild(clone);
+            clone.style.display="block";
+            clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
+            clone.style.backgroundColor = cont['color'];
+            ch = clone.childNodes;
+            for (var k = 0;k<ch.length; k++ ){
+                if (ch[k].className == 'tiletitle')
+                     ch[k].innerHTML = cont['tiletitle']
+                else if (ch[k].className == 'instruction')
+                      ch[k].innerHTML = cont['ins']
+            }
+            contents.appendChild(clone);
         }
     });
 }
@@ -117,15 +117,15 @@ var bottom_button = function(){
     data.append("func", "bottom_button");
     POST("home.php", data, function(resp){
         for(let i=0; i<resp.data.count; i++){
-			cont = resp.data.contents[i];
+            cont = resp.data.contents[i];
             let clone = document.getElementById("button_none").cloneNode(true);
             clone.style.display="inline-block";
             clone.setAttribute("id", "b" + (i+1));
-			ch = clone.childNodes;
-			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
-			clone.innerHTML = cont['spanInner'];
-			buttons.appendChild(clone);
-			
+            ch = clone.childNodes;
+            clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
+            clone.innerHTML = cont['spanInner'];
+            buttons.appendChild(clone);
+            
         }
     });
 }

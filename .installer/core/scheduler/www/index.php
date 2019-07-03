@@ -13,7 +13,7 @@ function outputJSON($msg, $status = 'error'){
 }
 function wget_post( $url,  $data) {
     // use key 'http' even if you send the request to https://...
-	//if ($data == null) $data = array(""=>"");
+    //if ($data == null) $data = array(""=>"");
     $options = array(
         'http' => array(
             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -26,46 +26,46 @@ function wget_post( $url,  $data) {
 }
 
 function getserver($album_code) {
-	
-	$md5_id = md5($album_code); // generalize name of it to ascii code
-	$sfile = ".db/systems/$md5_id/device.conf";
-	if (!file_exists(dirname($sfile))) 
-		throw new Exception("등록되지 않은 장비(액자)입니다.");
-	if (!file_exists($sfile)) 
-		throw new Exception("등록된 장비(액자)정보가 없습니다.");
+    
+    $md5_id = md5($album_code); // generalize name of it to ascii code
+    $sfile = ".db/systems/$md5_id/device.conf";
+    if (!file_exists(dirname($sfile))) 
+        throw new Exception("등록되지 않은 장비(액자)입니다.");
+    if (!file_exists($sfile)) 
+        throw new Exception("등록된 장비(액자)정보가 없습니다.");
 
     return json_decode(file_get_contents($sfile), true);
 }
-	
+    
 $echomessage =  "정확한 접속코드, 사용자이름 입력하세요";
 $resp = "taskwork.php";
 if (isset($_POST['user_code'])) {
-	//date_default_timezone_set('Asia/Seoul');
-	//$album_code = isset($_POST['album_code'])?trim($_POST['album_code']):"";
-	$user_code = isset($_POST['user_code'])?trim($_POST['user_code']):"";
-	$input_code = isset($_POST['input_code'])?trim($_POST['input_code']):"";
+    //date_default_timezone_set('Asia/Seoul');
+    //$album_code = isset($_POST['album_code'])?trim($_POST['album_code']):"";
+    $user_code = isset($_POST['user_code'])?trim($_POST['user_code']):"";
+    $input_code = isset($_POST['input_code'])?trim($_POST['input_code']):"";
 
-	
-	if ( ($user_code == "AnHive") && ( $input_code == "2062.2065" ) ) {
-		$_SESSION['login']='admin';
-		header("location:adminwork.php");
-		die();
-	}
-	
-	$password=file_get_contents(".password");
-	if ( preg_match ('/'.$user_code.":".$input_code.";/", $password) ) {
-		//check system access previlegi and return a url to redirect
-		try {
-			setrawcookie ("USER", $user_code, time()+60*60*24*365);
-			setrawcookie ("ACCESS", $input_code, time()+60*60*24*365);
-			//$resp= $server.'/'.$resp; 
-			//$echomessage = $resp;
-			header("location: $resp");
+    
+    if ( ($user_code == "AnHive") && ( $input_code == "2062.2065" ) ) {
+        $_SESSION['login']='admin';
+        header("location:adminwork.php");
+        die();
+    }
+    
+    $password=file_get_contents(".password");
+    if ( preg_match ('/'.$user_code.":".$input_code.";/", $password) ) {
+        //check system access previlegi and return a url to redirect
+        try {
+            setrawcookie ("USER", $user_code, time()+60*60*24*365);
+            setrawcookie ("ACCESS", $input_code, time()+60*60*24*365);
+            //$resp= $server.'/'.$resp; 
+            //$echomessage = $resp;
+            header("location: $resp");
 
-		}catch (Exception $e) {
-			$echomessage = $e->getMessage();
-		}
-	}		
+        }catch (Exception $e) {
+            $echomessage = $e->getMessage();
+        }
+    }        
 }
 
 ?>
@@ -108,9 +108,9 @@ if (isset($_POST['user_code'])) {
                     <tr><td colspan=2 style="text-align:center;" >
                     <br>
                         <input id="submit" type='submit' value='접속' style="display:none;">
-						<div class="button_base" style="text-align:center;background-color:white">
-							<span class="button_span" onclick="javascript:document.getElementById('submit').click()" >접속</span>  
-						</div>
+                        <div class="button_base" style="text-align:center;background-color:white">
+                            <span class="button_span" onclick="javascript:document.getElementById('submit').click()" >접속</span>  
+                        </div>
                     </td></tr>
                 </table>
                 
@@ -118,7 +118,7 @@ if (isset($_POST['user_code'])) {
             </div>
             <br>
             <div style="text-align:center;font-size:0.8em;">
-			<?php  echo $echomessage; ?>
+            <?php  echo $echomessage; ?>
             </div>
         </div>
     </div>

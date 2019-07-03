@@ -47,76 +47,76 @@ function thebolle_upload($file="",
 
     $curl =  "/usr/bin/curl ";
     $cont =  (isset($file) && $file != "") 
-			? (" -F\"upfile=@".$file."\"") : "";
+            ? (" -F\"upfile=@".$file."\"") : "";
     $post = "";
     foreach($op as $k => $v) { $post .= " -F\"$k=$v\"";   }
     
     $shell = $curl.$cont.$post.' '.$service. " 2> /dev/null"; 
     //$r = $shell."<br>";
     $r = shell_exec($shell);
-	//error_log($r);
-	return $r;
+    //error_log($r);
+    return $r;
 }
 
 function upload () {
     $stm="";
-	//'samples'
-	$pkgname = (basename(getcwd())) 
-			 .(isset($_REQUEST['note'])&&$_REQUEST['note']!=""
-			 ?".".$_REQUEST['note']:"");
-	$pkgname .= ".tar.gz";
-	$m = getcwd();
-	$m .=  "<br>"
-			.shell_exec("tar -czpf $pkgname -T upload_pkg.lst"); 
-	$m .=  "<br>"
-			.thebolle_upload($pkgname);
-	if (!isset($_REQUEST['note']) || !$_REQUEST['note']!="") 		unlink($pkgname);
-	
-	$m .=  "<br><br>INSTALL INSTRUCTION<br>"
-		  ." download: <span style='color:blue;'>wget thebolle.com/archive/$pkgname -O $pkgname</span>"
-		  ."<br>"
-		  ." install : <span style='color:blue;'>sudo tar -xvzpf  $pkgname</span>"
-		  ."<br><br>"
-		  ."Created by AnHive.Co., Ltd.";		
-	
-	outputJSON($m, "success");
+    //'samples'
+    $pkgname = (basename(getcwd())) 
+             .(isset($_REQUEST['note'])&&$_REQUEST['note']!=""
+             ?".".$_REQUEST['note']:"");
+    $pkgname .= ".tar.gz";
+    $m = getcwd();
+    $m .=  "<br>"
+            .shell_exec("tar -czpf $pkgname -T upload_pkg.lst"); 
+    $m .=  "<br>"
+            .thebolle_upload($pkgname);
+    if (!isset($_REQUEST['note']) || !$_REQUEST['note']!="")         unlink($pkgname);
+    
+    $m .=  "<br><br>INSTALL INSTRUCTION<br>"
+          ." download: <span style='color:blue;'>wget thebolle.com/archive/$pkgname -O $pkgname</span>"
+          ."<br>"
+          ." install : <span style='color:blue;'>sudo tar -xvzpf  $pkgname</span>"
+          ."<br><br>"
+          ."Created by AnHive.Co., Ltd.";        
+    
+    outputJSON($m, "success");
 }
 
 function change(){
-	$lst = $_REQUEST['lst'];
-	if (trim($lst)=="") outputJSON("<br><font color='red'>지정된 파일이 없습니다</font>", "success");
-	$lst = str_replace("|","\n",$lst);
-	file_put_contents("upload_pkg.lst", $lst);
-	$m = file_get_contents("upload_pkg.lst");
-	$m=str_replace("\n", "<br>", $m);
-	outputJSON($m, "success");
+    $lst = $_REQUEST['lst'];
+    if (trim($lst)=="") outputJSON("<br><font color='red'>지정된 파일이 없습니다</font>", "success");
+    $lst = str_replace("|","\n",$lst);
+    file_put_contents("upload_pkg.lst", $lst);
+    $m = file_get_contents("upload_pkg.lst");
+    $m=str_replace("\n", "<br>", $m);
+    outputJSON($m, "success");
 }
 
 function scans($dir, $depth){
-	$m = "";
-	$lst = str_replace("\r", "", file_get_contents("upload_pkg.lst"));
-	$ch = array_flip(preg_split('/\n/',$lst));
-	//echo print_r($ch, true);
-	$files = scandir($dir);
-	$space=""; 
-	$path = ($dir==""||$dir==".")?"":$dir."/";
-	for($i=0; $i<$depth; $i++) $space .= ">";
-	foreach ($files as $f) {
-		if ($f=="." || $f=="..") continue;
-		if ($f==".git" || $f==".gitignore") continue;
-		$v =isset($ch[$path.$f])?"V":" ";
-		$m .= '<input type="button" value="'.$v.'" name="'.$path.$f.'" style="width:2em;" onclick="clicked(this, \'V\',\' \');changelist();"> '.
-			$space.$path.$f."($depth)"."<br>\n";
-		if (is_dir($path.$f)){
-			$m .= scans($path.$f, $depth+1);
-		}
-	}
-	return $m;
+    $m = "";
+    $lst = str_replace("\r", "", file_get_contents("upload_pkg.lst"));
+    $ch = array_flip(preg_split('/\n/',$lst));
+    //echo print_r($ch, true);
+    $files = scandir($dir);
+    $space=""; 
+    $path = ($dir==""||$dir==".")?"":$dir."/";
+    for($i=0; $i<$depth; $i++) $space .= ">";
+    foreach ($files as $f) {
+        if ($f=="." || $f=="..") continue;
+        if ($f==".git" || $f==".gitignore") continue;
+        $v =isset($ch[$path.$f])?"V":" ";
+        $m .= '<input type="button" value="'.$v.'" name="'.$path.$f.'" style="width:2em;" onclick="clicked(this, \'V\',\' \');changelist();"> '.
+            $space.$path.$f."($depth)"."<br>\n";
+        if (is_dir($path.$f)){
+            $m .= scans($path.$f, $depth+1);
+        }
+    }
+    return $m;
 }
 
 function pkglist() {
-	$m = scans(".", 0);
-	outputJSON($m, "success");
+    $m = scans(".", 0);
+    outputJSON($m, "success");
 }
 $mode = (isset($_REQUEST['m'])?$_REQUEST['m']:'--');
 if ($mode=='up') upload();
@@ -152,102 +152,102 @@ echo scans(".", 0);
 </body>
 <script>
 var getlist = function () {
-	
+    
         var data = new FormData();
         data.append('m', 'lst');
-		var request = new XMLHttpRequest();
-		request.onreadystatechange = function(){
-			if(request.readyState == 4){
-				try {
-					var resp = JSON.parse(request.response);
-				} catch (e){
-					var resp = {
-						status: 'error',
-						data: 'Unknown error occurred: [' + request.responseText + ']'
-					};
-				}
-				document.getElementById("packinglist").innerHTML = resp.data;
-			}
-		};
-		request.open('POST', 'upload_pkg.php');
-		request.send(data);
-		return request;
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if(request.readyState == 4){
+                try {
+                    var resp = JSON.parse(request.response);
+                } catch (e){
+                    var resp = {
+                        status: 'error',
+                        data: 'Unknown error occurred: [' + request.responseText + ']'
+                    };
+                }
+                document.getElementById("packinglist").innerHTML = resp.data;
+            }
+        };
+        request.open('POST', 'upload_pkg.php');
+        request.send(data);
+        return request;
 }
 
 var changelist = function() {
-	finput = document.getElementsByTagName("input");
-	val = "";
-	for (var i = 0;i< finput.length; i++) {
-		if (finput[i].type != 'button') continue;
-		if (finput[i].value != 'V') continue;
-		val += ((val.length>0)?"|":"")+finput[i].name;
-	}
-	document.getElementById("lst").value = val;
+    finput = document.getElementsByTagName("input");
+    val = "";
+    for (var i = 0;i< finput.length; i++) {
+        if (finput[i].type != 'button') continue;
+        if (finput[i].value != 'V') continue;
+        val += ((val.length>0)?"|":"")+finput[i].name;
+    }
+    document.getElementById("lst").value = val;
 }
 changelist();
 // round robin click;
 var clicked = function () {
-	obj = arguments[0];
-	for (var i = 1; i< arguments.length-1; i++) {
-		if ( obj.value==arguments[i]) {
-			obj.value = arguments[i+1];
-			return;
-		}
-	}
-	obj.value = arguments[1];
+    obj = arguments[0];
+    for (var i = 1; i< arguments.length-1; i++) {
+        if ( obj.value==arguments[i]) {
+            obj.value = arguments[i+1];
+            return;
+        }
+    }
+    obj.value = arguments[1];
 }
 
 var change = function () {
-	
+    
         var data = new FormData();
         data.append('m', 'ch');
-		changelist();
+        changelist();
         data.append('lst', document.getElementById("lst").value);
-		
-		var request = new XMLHttpRequest();
-		request.onreadystatechange = function(){
-			if(request.readyState == 4){
-				try {
-					var resp = JSON.parse(request.response);
-				} catch (e){
-					var resp = {
-						status: 'error',
-						data: 'Unknown error occurred: [' + request.responseText + ']'
-					};
-				}
-				document.getElementById("packinglist").innerHTML = resp.data;
-			}
-		};
-		request.open('POST', 'upload_pkg.php');
-		request.send(data);
-		return request;
+        
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if(request.readyState == 4){
+                try {
+                    var resp = JSON.parse(request.response);
+                } catch (e){
+                    var resp = {
+                        status: 'error',
+                        data: 'Unknown error occurred: [' + request.responseText + ']'
+                    };
+                }
+                document.getElementById("packinglist").innerHTML = resp.data;
+            }
+        };
+        request.open('POST', 'upload_pkg.php');
+        request.send(data);
+        return request;
 }
 
 var upload = function () {
-	
+    
         var data = new FormData();
         data.append('m', 'up');
-		data.append('note', document.getElementById("note").value);
-		
-		var request = new XMLHttpRequest();
-		request.onreadystatechange = function(){
-			if(request.readyState == 4){
-				try {
-					var resp = JSON.parse(request.response);
-				} catch (e){
-					var resp = {
-						status: 'error',
-						data: 'Unknown error occurred: [' + request.responseText + ']'
-					};
-					
-					console.log(e.stack);
-				}
-				document.getElementById("packinglist").innerHTML = resp.data;
-			}
-		};
-		request.open('POST', 'upload_pkg.php');
-		request.send(data);
-		return request;
+        data.append('note', document.getElementById("note").value);
+        
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if(request.readyState == 4){
+                try {
+                    var resp = JSON.parse(request.response);
+                } catch (e){
+                    var resp = {
+                        status: 'error',
+                        data: 'Unknown error occurred: [' + request.responseText + ']'
+                    };
+                    
+                    console.log(e.stack);
+                }
+                document.getElementById("packinglist").innerHTML = resp.data;
+            }
+        };
+        request.open('POST', 'upload_pkg.php');
+        request.send(data);
+        return request;
 }
  
 </script>

@@ -22,20 +22,20 @@ include_once("lib/get_access.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
     <script type="text/javascript" src="signage.base.js"></script>
-	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title>AnHive, List Media Files</title>
 </head>
 <body >
     <div class="container">
         <div class="contents">
-		
-			<!-- head note -->
-			<div class='headnote' onclick="javascript:document.location.href='home.html'">
-				<img src="<?=$photo?>" alt="profile" style="height:15px;">
-				<span class="input_title"><?=$subject?></span> 
-				<span class="input_title"><?=$owner?></span>
-			</div>
-			<div style="margin-top:10px;"><!-- upper line feed --></div>
+        
+            <!-- head note -->
+            <div class='headnote' onclick="javascript:document.location.href='home.html'">
+                <img src="<?=$photo?>" alt="profile" style="height:15px;">
+                <span class="input_title"><?=$subject?></span> 
+                <span class="input_title"><?=$owner?></span>
+            </div>
+            <div style="margin-top:10px;"><!-- upper line feed --></div>
 
 <?php 
 $dir= isset($_GET['dir'])? $_GET["dir"]: '../media/video';
@@ -70,7 +70,7 @@ foreach($fs2 as $fs3){
     $fs3 = trim($fs3);
     if ($fs3 == "") continue;
     list($mtime, $file, $size, $isdir) = explode("#", $fs3);
-	//echo "$file---$isdir<br>";
+    //echo "$file---$isdir<br>";
 
     $interval = (integer) (($time - $mtime)/60);
     $size = (integer) ($size/1024/1024);
@@ -87,7 +87,7 @@ foreach($fs2 as $fs3){
         //echo $ext;
         if(preg_match($ext,$fs3,$matches)){
             //echo "<a href=\"$dir/$file\">";
-			//echo "<img src=\"$dir/$file.png\" style=\"width:80px;\">";
+            //echo "<img src=\"$dir/$file.png\" style=\"width:80px;\">";
             echo "<a href=\"openvideo.php?name=$dir/$file\">";
             echo "[FILE] $file,  $size MB, ";
             if ($interval < 60) {
@@ -100,9 +100,9 @@ foreach($fs2 as $fs3){
                echo ((integer) ($interval/43200)).' months';
             }
             echo "</a>";
-			
-            echo " <input type=\"button\" onclick=\"udelete('$dir/$file');\" value=\"삭제\">";	
-	
+            
+            echo " <input type=\"button\" onclick=\"udelete('$dir/$file');\" value=\"삭제\">";    
+    
             echo "<br>";
             $mcount++;
             if ($mcount >= $batch)
@@ -115,8 +115,8 @@ foreach($fs2 as $fs3){
     }
 }
 ?>
-	</div>
-	<div class='footer' ><?=$footnote?></div>
+    </div>
+    <div class='footer' ><?=$footnote?></div>
 
 <script>
 var udelete = function(fname){
@@ -126,19 +126,19 @@ var udelete = function(fname){
     data.append('name', fname);
     data.append('dir', "");
     var req = new XMLHttpRequest();
-	
-	console.log("---");
+    
+    console.log("---");
 
     req.onreadystatechange = function(){
         if(req.readyState == 4){
-			try {
-				var resp = JSON.parse(req.response);
-			} catch (e){
-				var resp = {status: 'error',data: 'Unknown error occurred: [' + req.responseText + ']'};
-			}
-			console.log(resp.status + ': ' + resp.data);
-			location.reload();
-	}};
+            try {
+                var resp = JSON.parse(req.response);
+            } catch (e){
+                var resp = {status: 'error',data: 'Unknown error occurred: [' + req.responseText + ']'};
+            }
+            console.log(resp.status + ': ' + resp.data);
+            location.reload();
+    }};
 
     req.open('POST', 's00_file.php');
     req.send(data);

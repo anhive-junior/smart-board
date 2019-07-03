@@ -17,14 +17,14 @@ include_once("lib/lib_common.php");
     $name = $_GET["name"];
     if (strpos($name, 'http') !== false) {
         $url = $name;
-		outputJSON($url,"success");
+        outputJSON($url,"success");
     } else {
         //$filename = basename ($name);  //c
-		$filename = $name;  //c
+        $filename = $name;  //c
         $dir= isset($_GET['dir'])?$_GET['dir']:'';
         //$script_path = dirname(trim($_SERVER['SCRIPT_NAME']));
         //if ($script_path != "") $dir = $script_path."/".$dir;
         $uri = $dir."/".$filename;
-		outputJSON($url,"success");
+        outputJSON($url,"success");
     }
 ?>

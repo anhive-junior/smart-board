@@ -9,7 +9,7 @@ function output($msg){
 
 function wget_post( $url,  $data) {
     // use key 'http' even if you send the request to https://...
-	//if ($data == null) $data = array(""=>"");
+    //if ($data == null) $data = array(""=>"");
     $options = array(
         'http' => array(
             'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -27,15 +27,15 @@ $func= isset($_GET['func'])?$_GET["func"]:"none";
 
 if (strcmp($func, 'gen_playlist') == 0) {
     error_log ("Start ".__FUNCTION__);
-	//$time : 0 no limit in seconds
-	//$conut : 0 no limit in seconds
+    //$time : 0 no limit in seconds
+    //$conut : 0 no limit in seconds
 
     $m = wget_post("http://localhost/signage/s00_signage.php", 
-					array("func"	=> "renewal_playlist"));
-	output($m);
+                    array("func"    => "renewal_playlist"));
+    output($m);
 } else
 if (strcmp($func, 'none') == 0) {
-	output("Func is not defined!");
+    output("Func is not defined!");
 } else{
     // Success!
     output('Undefined function[' . $func.'].');

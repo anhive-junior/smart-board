@@ -18,28 +18,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
     <script type="text/javascript" src="signage.base.js"></script>
-	<link rel="stylesheet" type="text/css" href="signage.base.css">
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title>AnHive, List Media Files</title>
 </head>
 <body >
     <div class="container">
         <div class="contents">
-		
-			<!-- head note -->
-			<div class='headnote' onclick="javascript:document.location.href='home.html'">
-				<img id="headnote_img"  style="height:15px;" alt="profile">
-				<span class="input_title" id='subject'></span> 
-				<span class="input_title" id='owner'></span>
-			</div>
-			<div id = "file_head" style="margin-top:10px;"><!-- upper line feed --> 
-			    <div id='dir'style = "margin-left:5px"></div><br>
-				<img id="file_img" alt = "profile" style="height:80px; display:none; margin-left:5px;" >
-			</div>
+        
+            <!-- head note -->
+            <div class='headnote' onclick="javascript:document.location.href='home.html'">
+                <img id="headnote_img"  style="height:15px;" alt="profile">
+                <span class="input_title" id='subject'></span> 
+                <span class="input_title" id='owner'></span>
+            </div>
+            <div id = "file_head" style="margin-top:10px;"><!-- upper line feed --> 
+                <div id='dir'style = "margin-left:5px"></div><br>
+                <img id="file_img" alt = "profile" style="height:80px; display:none; margin-left:5px;" >
+            </div>
     
-		
+        
     
 </div>
-	<div class='footer'id="foot_note" ><br></div>
+    <div class='footer'id="foot_note" ><br></div>
 </body>
 </html>
 
@@ -58,7 +58,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
 
 var dircontent = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
-	data.append("func", "dircontent"); 
+    data.append("func", "dircontent"); 
     POST("listphotos.php", data, function(resp){
        document.getElementById("dir").innerHTML = "현재 directory"+resp.data;
     });
@@ -66,17 +66,17 @@ var dircontent = function(){ // headnote에 대한 데이터를 가지고 옵니
 
 var filecontent = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
-	data.append("func", "filecontent"); 
+    data.append("func", "filecontent"); 
     POST("listphotos.php", data, function(resp){
-	    for(let i=0;i<resp.data.count;i++){
-		    cont = resp.data.contents[i];
-			let clone = document.getElementById("file_img").cloneNode(true);
-			clone.style.display="inline-block";
+        for(let i=0;i<resp.data.count;i++){
+            cont = resp.data.contents[i];
+            let clone = document.getElementById("file_img").cloneNode(true);
+            clone.style.display="inline-block";
             clone.setAttribute("id", "file_img" + (i+1));
-			clone.setAttribute("src",cont['dfile']);
-			clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
-			file_head.appendChild(clone);
-		}
+            clone.setAttribute("src",cont['dfile']);
+            clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
+            file_head.appendChild(clone);
+        }
     });
 }
 
@@ -86,5 +86,5 @@ dircontent();
 filecontent();
 
 
-	
+    
 </script>

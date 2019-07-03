@@ -42,15 +42,15 @@
      (접속코드) : [일반사용자:<input type="text" id='access_code' style="width : 50px; text-align:center; color:red; font-weight:bold;" >] 
      [관리자:<input type="text" id='sam_code' style="width : 80px; text-align:center; color:red; font-weight:bold;"  >] <br><br>
      
-	 
-	 <div style="display:none">
-	 (원격접속) : <input type="text" id='surprisebox_code' style="width : 7.5em; text-align:center; color:red; font-weight:bold;"  > #  <input type="text" id='gate_server' style="width : 7em; text-align:center;"  > :  <input type="text" id='external_port' style="width : 2.5em; text-align:center;" > <br>
+     
+     <div style="display:none">
+     (원격접속) : <input type="text" id='surprisebox_code' style="width : 7.5em; text-align:center; color:red; font-weight:bold;"  > #  <input type="text" id='gate_server' style="width : 7em; text-align:center;"  > :  <input type="text" id='external_port' style="width : 2.5em; text-align:center;" > <br>
      <!-- 원격접속은 당분간 사용하지 않음. -->
-	 </div>
-	 
-	 
-	 
-	 (무선접속) : <input type="text" id='ssid' style="width : 10em; text-align:center; color:red; font-weight:bold;">  /pw  <input type="text" id='wifi_password' style="width : 6em; text-align:center;"  onblur="check8(this.value);" > <br>
+     </div>
+     
+     
+     
+     (무선접속) : <input type="text" id='ssid' style="width : 10em; text-align:center; color:red; font-weight:bold;">  /pw  <input type="text" id='wifi_password' style="width : 6em; text-align:center;"  onblur="check8(this.value);" > <br>
      <div style="margin-top:10px;"><!-- upper line feed --></div>
     </div>
     <div style="text-align:center; background-color:#eee;margin-top:10px;">
@@ -135,26 +135,26 @@ function check8(str) {
  var usb_backup = function(){
         var data = new FormData();
         data.append('func', 'usb_backup');
-		waiting('class', "백업중");
+        waiting('class', "백업중");
 
         dd = document.getElementsByName("targets");
         for (i=0;i <dd.length;i++) {
             if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
             data.append(dd[i].id, dd[i].value);
         }
-		POST('s00_signage.php', data, 
-		  function (resp){
-			closing(1000);
-			return; 
-		  }
-		);
+        POST('s00_signage.php', data, 
+          function (resp){
+            closing(1000);
+            return; 
+          }
+        );
  }
 
  var usb_restore = function(){
         
         var data = new FormData();
         data.append('func', 'usb_restore');
-		waiting('class', "복구중");
+        waiting('class', "복구중");
 
         dd = document.getElementsByName("targets");
         for (i=0;i <dd.length;i++) {
@@ -225,13 +225,13 @@ function check8(str) {
   data.append('func', 'get_code');
   if (typeof profile != 'undefined') data.append('profile', profile);
   POST('s00_signage.php', data, function (resp) {
-		dd = document.getElementById("class").childNodes;
-		for (i=0;i <dd.length;i++) {
-			if (dd[i].type != "text") continue;
-			dd[i].value = resp.data[dd[i].id];
-			data.append(dd[i].id, dd[i].value);
-		}
-	});
+        dd = document.getElementById("class").childNodes;
+        for (i=0;i <dd.length;i++) {
+            if (dd[i].type != "text") continue;
+            dd[i].value = resp.data[dd[i].id];
+            data.append(dd[i].id, dd[i].value);
+        }
+    });
   }
   get_code();
 
