@@ -32,11 +32,12 @@
             <div id="position1">
             <br>
             </div>
-            
             <a id="link1"></a><br>
-            <div class="videoitem"></div>
+			<div id = "videolist">
+                <div class="videoitem" id = "videoo" style="display:none"></div>
+			</div>
     </div>
-    <div class='footer' ></div>
+    <div class='footer' id="foote_note"></div>
 <script>
 var useusb = function (usb) {
     opener.showvideos(usb);
@@ -45,60 +46,27 @@ var useusb = function (usb) {
 var usbcheck = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
     data.append("func", "usbcheck");
-    //data.append("usbcheck", 1);
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch(e){
-                var resp = {
-                    status : 'error',
-                    data: 'Unknown error occurred : [' + request.responseText + ']'
-                };
-            }
-            console.log(resp.status + ':' + resp.data);
-            
-            document.getElementById("position1").innerHTML = "위치:[USB] [" + resp.data.position + "] or  <input type='button' id='usb1'>";
-            document.getElementById("usb1").setAttribute("onclick",resp.data.func);
-            document.getElementById("usb1").setAttribute("value",resp.data.value);
-            document.getElementsByClassName("footer")[0].setAttribute("id","footer1");
-            document.getElementById("footer1").innerHTML=resp.data.footer;
-        }
-    };
-    request.open("POST", "videolist.php");
-    request.send(data);
+	POST("videolist.php", data, function(resp){
+        document.getElementById("position1").innerHTML = "위치:[USB] or <input type='button' id='usb'>";
+	    document.getElementById("usb").setAttribute("onclick",resp.data.func);
+	    document.getElementById("usb").setAttribute("value",resp.data.value);
+    });
 }
 
 var filecheck = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
     data.append("func","filecheck");
-    //data.append("filecheck", 1);
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch(e){
-                var resp = {
-                    status : 'error',
-                    data: 'Unknown error occurred : [' + request.responseText + ']'
-                };
-            }
-            console.log(resp.status + ':' + resp.data);
-            
-            if(resp.data.link != "" && resp.data.position !=""){
-                    document.getElementById("link1").setAttribute("href",resp.data.link);
-                     document.getElementById("link1").innerHTML = "[DIRECTORY]" + resp.data.position;
-            }
-            document.getElementsByClassName("videoitem")[0].setAttribute("id",resp.data.id);
-            document.getElementById(resp.data.id).setAttribute("onclick" , resp.data.func);
-            document.getElementById(resp.data.id).innerHTML = resp.data.info;
-            
+	POST("videolist.php", data, function(resp){
+        for(let i=0; i<resp.data.count; i++){
+            cont = resp.data.contents[i];
+			let clone = document.getElementById("videoo").cloneNode(true);
+			clone.style.display = "block";
+			clone.setAttribute("id",cont['id']);
+			clone.setAttribute("onclick",cont['func'] + ";window.close();");
+			clone.innerHTML = cont['info'];	
+			document.getElementById("videolist").appendChild(clone);
         }
-    };
-    request.open("POST", "videolist.php");
-    request.send(data);
+    });
 }
 usbcheck();
 filecheck();
