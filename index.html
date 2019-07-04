@@ -76,7 +76,7 @@ var init = function(){
                 document.getElementById("jum1").innerHTML = "점검중입니다.";
         }
     };
-    request.open("POST", "login.php");
+    request.open("POST", "s00_login.php");
     request.send(data);
 }
 
@@ -117,7 +117,7 @@ var logged_in = function(){
             }
         }
     };
-    request.open("POST", "login.php");
+    request.open("POST", "s00_login.php");
     request.send(data);
 }
 
@@ -144,7 +144,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
             document.getElementById("foot_note").innerHTML=resp.data.footer;
         }
     }
-    request.open("POST", "login.php");
+    request.open("POST", "s00_login.php");
     request.send(data);
 }
 
@@ -169,7 +169,7 @@ var disk_data = function(){
             }
         }
     }
-    request.open("POST", "login.php");
+    request.open("POST", "s00_login.php");
     request.send(data);
 }
 init();

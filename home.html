@@ -79,7 +79,7 @@ var buttons = document.getElementById("buttons");
 var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
     data.append("func", "headnote");
-    POST("home.php", data, function(resp){
+    POST("s00_signage.php", data, function(resp){
         document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
         document.getElementById("subject").innerHTML = resp.data.subject;
         document.getElementById("owner").innerHTML = resp.data.owner;
@@ -87,11 +87,11 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
     });
 }
 
-var level_contents = function(){ // level에 따른 contents를 가지고 옴
+var home_level_contents = function(){ // level에 따른 contents를 가지고 옴
     var request = new XMLHttpRequest();
     var data = new FormData();
-    data.append("func", "level_contents");
-    POST("home.php", data, function(resp){
+    data.append("func", "home_level_contents");
+    POST("s00_signage.php", data, function(resp){
         for(let i=0; i<resp.data.count; i++){
             cont = resp.data.contents[i];
             let clone = document.getElementById("content_none").cloneNode(true);
@@ -112,10 +112,10 @@ var level_contents = function(){ // level에 따른 contents를 가지고 옴
     });
 }
 
-var bottom_button = function(){
+var home_bottom_button = function(){
     var data = new FormData();
-    data.append("func", "bottom_button");
-    POST("home.php", data, function(resp){
+    data.append("func", "home_bottom_button");
+    POST("s00_signage.php", data, function(resp){
         for(let i=0; i<resp.data.count; i++){
             cont = resp.data.contents[i];
             let clone = document.getElementById("button_none").cloneNode(true);
@@ -131,8 +131,8 @@ var bottom_button = function(){
 }
 
 headnote();
-level_contents();
-bottom_button();
+home_level_contents();
+home_bottom_button();
     
 </script>    
 </body>

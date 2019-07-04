@@ -1742,6 +1742,279 @@ function _display() {
     outputJSON($rt, 'success');
 };
 
+////////////////////////////////////////////
+////// headnote
+$services['headnote'] = '_headnote';
+function _headnote(){
+    s00_log("Start ".__FUNCTION__);
+    $data=array(
+        "photo" => $_SESSION['photo'],
+        "subject" => $_SESSION['subject'],
+        "owner" => $_SESSION['owner'],
+        "footer" => $_SESSION['footnote']
+    );
+    if(@$_POST["samwork"] === "true"){
+          $data += ["title" => $_SESSION['title']];
+          $data += ["samcode" => $_SESSION['sam_code']];
+          $data += ["accesscode" => $_SESSION['access_code']];
+          $data += ["supriseboxcode" => $_SESSION['surprisebox_code']];
+          $data += ["externalport" => $_SESSION['external_port']];
+          $data += ["gateserver" => $_SESSION['gate_server']];
+          $data += ["ssid" => $_SESSION['ssid']];
+          $data += ["wifi_password" => $_SESSION['wifi_password']];
+    }
+    outputJSON($data, "success");
+};
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+///////// home.html 서비스
+$services['home_bottom_button'] = '_home_bottom_button';
+function _home_bottom_button(){
+    //entry criteria.. check condition, constraints  준비과정
+    if ( !isset($_SESSION['uselevel']) || ($_SESSION['uselevel'] < 2) )
+        outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
+    
+    // task
+        $data[] = array(
+                "link" => "participants.html",
+                "spanInner" => "사용자"
+            );
+        $data[] = array(
+            "link" => "samworks.html",
+            "spanInner" => "앨범관리"
+        );
+        $data[] = array(
+            "link" => "playwork.html",
+            "spanInner" => "재생관리"
+        );
+
+    //exteneded task
+        if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=3){
+            $data[] = array(
+                "link" => "syswork.html",
+                "spanInner" => "접속관리"
+            );
+            if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=4){
+                $data[] = array(
+                "link" => "testwork.html",
+                "spanInner" => "테스트"
+                );
+                $data[] = array(
+                "link" => "validator/checker.html",
+                "spanInner" => "검증"
+                );
+            }
+        }
+        $arr = array("contents"=>$data, "count"=>count($data));
+        //validation 검증과정
+        
+        //exit criteria, return
+        outputJSON($arr, "success");
+};
+
+// contents send
+$services['home_level_contents'] = '_home_level_contents';
+function _home_level_contents(){
+    //entry criteria.. check condition, constraints  준비과정
+    if ( !isset($_SESSION['uselevel']) ) outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
+    
+    
+    //task default process 기본 작업과정
+    
+    $data[]=array(
+                "link" => "cardwork.html",
+                "tiletitle" => "사진(이미지) 보내기",
+                "ins" => "누구나 전송 가능",
+                "color" => "#f86924"
+    );
+    
+    //task extended process 확장 작업과정
+    if ($_SESSION['uselevel'] >= 2){
+
+        $data[]=array(
+                        "link" => "slidework.html",
+                        "tiletitle" =>"받은 사진 확인하기",
+                        "ins" =>  "하나씩 사진 정리하기",
+                        "color" =>"#92ABDB");
+                        
+        $data[]=array(
+                        "link" => "listwork.html",
+                        "tiletitle" =>"재생 목록 관리하기",
+                        "ins" =>  "슬라이드 쇼 대상건 등록",
+                        "color" =>"#A55FEB");
+        $data[]=array(
+                        "link" => "signwork.html",
+                        "tiletitle" =>"액자 리모트 컨트롤",
+                        "ins" =>  "슬라이드 쇼 관리하기",
+                        "color" =>"#ff9f00");
+                        
+        $data[]=array(
+                        "link" => "videowork.html",
+                        "tiletitle" =>"비디오 컨트롤",
+                        "ins" =>  "비디오 재생관리",
+                        "color" =>"#347235");    
+                
+    } 
+    $arr = array("contents"=>$data, "count"=>count($data));
+    //validation 검증과정
+    
+    //exit criteria,, return 끝
+    outputJSON($arr, "success");
+};
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+///////// show_level - 레벨 값을 불러옴
+$services['show_level'] = '_show_level';
+function _show_level(){
+    if(!isset($_SESSION["uselevel"])){
+        $data = array("level" => 0);
+        outputJSON($data, 'success');
+    }
+    $data = array("level" => $_SESSION["uselevel"] );
+    outputJSON($data, "success");
+}
+////////////////////////////////////////////////////////////////////////////
+////////// openimages - openimages.html에서 사용함.
+
+$services['openimages'] = '_openimages';
+function _openimages(){
+    if ( !isset($_SESSION['uselevel']) ) 
+        outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
+    
+    $name = $_POST["name"];
+    if (strpos($name, 'http') !== false) {
+    $uri = $name;
+    } else {
+        $filename = basename ($name);  //c
+        $dir= isset($_GET['dir'])?$_GET['dir']:$_SESSION['slide'];
+        $script_path = dirname(trim($_SERVER['SCRIPT_NAME']));//if ($script_path != "") $dir = $script_path."/".$dir;
+        $uri = $dir."/".$filename;
+        $cap = $config_caption."/".$filename.'.txt';
+    }
+    $id_date = date("Y/m/d H:i:s.", filemtime($uri));
+    $memo = "메모: ".(file_exists($cap)?file_get_contents($cap):"");
+    $img = $uri;
+    $data = array(
+         "file_name" => $filename,
+         "memo" => $memo,
+         "date" => $id_date,
+         "img" => $img
+         );
+    if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
+          $data += [ "func" => "rmcard(\"$img\")" ];
+          $data += [ "value" => "사진삭제"];
+    };
+    outputJSON($data, "success");
+};
+
+/////////////////////////////////////
+//// videolist
+
+$services['usbcheck'] = '_usbcheck';
+function _usbcheck(){
+    $usb = isset($_GET['usb'])?true:false;
+    error_log("usb use : ". (isset($_GET['usb'])?"true":"false") );
+    if ($usb==true) {
+        $data = array(
+             "func" => "useusb(false)", 
+             "value" => "RPi(ToDo)"
+             );
+        $_SESSION['dir']= isset($_GET['dir'])? $_GET["dir"]: '/media';//$dir = ($dir=="")?'/media':$dir;
+        error_log("dir is ".$dir);
+    }else {
+        $data =  array(
+             "position" => str_ireplace("/home/pi/","",getcwd()),
+             "func" => "useusb(true)",
+             "value"=> "USB(ToDo)",
+             "footer" => $_SESSION['footnote']
+             );
+        $_SESSION['dir']= isset($_GET['dir'])? $_GET["dir"]: '../media/video';
+    }
+ 
+    outputJSON($data,"success");
+}
+
+$services['filecheck'] = '_filecheck';
+function _filecheck(){
+    $usb = isset($_GET['usb'])?true:false;
+    $ext = isset($_GET['ext'])? $_GET["ext"]: '/(\.mp4|\.mov)/i';
+    $mcount = 0;
+    $tcount = 0;
+    $arraycount=0;
+    date_default_timezone_set('Asia/Seoul');
+    $dir= $_SESSION['dir'];
+    $files=scandir($dir);
+    $fs1="";
+    foreach($files as $fs){
+        if((substr($fs,0,1)!='.')&&($fs!='.')&&($fs!='..')&&($fs!='js')&&($fs!='css')&&($fs!='images')&&($fs!='img')){
+            $df = $dir.'/'.$fs;
+            $fs1.=filemtime($df).'#'.$fs.'#'.filesize($df).'#'.is_dir($df).'|';
+            }
+    }
+    $fs2=explode("|",$fs1);
+    $time = time();
+    arsort($fs2);
+    foreach($fs2 as $fs3){
+        //if ($tcount < $page*$batch) { $tcount++; continue;}
+        if(count($fs2) == $arraycount+1){
+            $arr = array("contents"=>$data, "count"=>count($data));
+            outputJSON($arr,"success");
+        }
+        $fs3 = trim($fs3);
+        if ($fs3 == "") continue;
+        list($mtime, $file, $size, $isdir) = explode("#", $fs3);
+       
+        $size = (integer) ($size/1024/1024);
+        
+        if ($isdir == "1") {
+            $options=($usb?"usb=1":"")."&dir=$dir/$file&ext=$ext";
+            $data[] = array(
+                 "link" =>"videolist.html?".$options,
+                 "position" => $file );
+            } 
+        else {
+            if(preg_match($ext,$fs3,$matches)){
+                if ($usb==true) {
+                    $data[] = array(
+                        "id" => $file,
+                        "func" => "opener.getvideo(this.id,".$dir.")",
+                        "value" => $file
+                    );
+                } else {
+                    //echo $file.':::../info/'.$dir.'/'.$file.'.json<br>';
+                    $json = $dir.'/../info/'.$file.'.json';
+                    if (file_exists($json)) {
+                        $info = json_decode(file_get_contents($dir.'/../info/'.$file.'.json'), true);
+                    } else {
+                            $info = array("origin"=> basename($file));
+                    }
+                    $data[] = array(
+                         "id" =>  $file,
+                         "func" => "opener.getvideo(this.id, '')",
+                         "info" =>  $info['origin']
+                         );
+                    }
+                    $mcount++;
+                }
+             }
+        $arraycount++;
+    }
+}
+
+/////////////////////////////////////
+///// participants
+$services['parti_level_contents'] = '_parti_level_contents';
+function _parti_level_contents(){
+    if (!isset($_SESSION['uselevel']) || !$_SESSION['uselevel'] >= 2) outputJSON("uselevel error, or you have not privilige this function LINE : __LINE__", "error");
+    $data=array(
+        "openSmart" => "set_clsss('open')",
+        "closeSmart" => "set_clsss('close')",
+        "mesg" => '접속화면에 "점검중입니다." 메시지 표시함.<br>일반 사용자는 이용할 수 없음.',
+        );
+    outputJSON($data, "success");
+}
+
 /////////////////////////////////////
 // execute services
 $func= isset($_POST['func'])?$_POST["func"]:"test";

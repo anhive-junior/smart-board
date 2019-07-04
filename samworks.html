@@ -151,11 +151,9 @@ function check8(str) {
  }
 
  var usb_restore = function(){
-        
         var data = new FormData();
         data.append('func', 'usb_restore');
         waiting('class', "복구중");
-
         dd = document.getElementsByName("targets");
         for (i=0;i <dd.length;i++) {
             if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
@@ -245,6 +243,7 @@ function check8(str) {
  var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
  var data = new FormData(); 
  data.append("func", "headnote");
+ data.append("samwork", "true");
  POST("samworks.php", data, function(resp){
    console.log(resp.status + ':' + resp.data);
    document.title = resp.data.owner;
@@ -261,7 +260,7 @@ function check8(str) {
    document.getElementById("external_port").setAttribute("value",resp.data.externalport);
    document.getElementById("gate_server").setAttribute("value",resp.data.gateserver);
    document.getElementById("ssid").setAttribute("value",resp.data.ssid);
-   document.getElementById("wifi_password").setAttribute("value",resp.data.wifipassword);
+   document.getElementById("wifi_password").setAttribute("value",resp.data.wifi_password);
    document.getElementById("subject").innerHTML = resp.data.subject;
    document.getElementById("owner").innerHTML = resp.data.owner;
    document.getElementById("foot_note").innerHTML = resp.data.footer;

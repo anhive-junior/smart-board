@@ -38,7 +38,7 @@
                         <span id="btn_send" class="button_span btn" style="width: 3.2em;" onclick="upvideo();" >등록</span>  
 
                            
-                        <span id="btn_cancel" class="button_span btn" style="width: 3.2em;"></span>
+                        <span id="btn_cancel" class="button_span btn" style="width: 3.2em;display:none;" onclick="rmvideo();">삭제</span>
 
                         <span id="btn_list" class="button_span btn" style="width: 3.2em;" onclick="showvideos();" >목록</span>
                     </div>
@@ -216,49 +216,28 @@
                 getslide('first');
         });
     }
+    var show_level = function(){
+        var data = new FormData(); 
+        data.append("func",'show_level');
+        POST("s00_signage.php", data, function(resp){
+            var btn_cancel = document.getElementById("btn_cancel");
+            if(resp.data.level > 1){
+                btn_cancel.style.display="";
+            }
+        });
+    }
     var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
        var data = new FormData(); 
        data.append("func", "headnote");
-       POST("home.php", data, function(resp){
+       POST("s00_signage.php", data, function(resp){
            document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
            document.getElementById("subject").innerHTML = resp.data.subject;
            document.getElementById("owner").innerHTML = resp.data.owner;
            document.getElementById("foot_note").innerHTML = resp.data.footer;
+           show_level();
        });
    }
 
-
-var level = function(){ // headnote에 대한 데이터를 가지고 옵니다.
-    var data = new FormData(); 
-    data.append("func",'level');
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch(e){
-                var resp = {
-                    status : 'error',
-                    data: 'Unknown error occurred : [' + request.responseText + ']'
-                };
-            }
-            console.log(resp.status + ':' + resp.data);
-            if(resp.data == "0"){
-                document.getElementById("btn_cancel").style.display = "none";
-            }else{
-                document.getElementById("btn_cancel").setAttribute("onclick",resp.data.func);  
-                document.getElementById("btn_cancel").innerHTML = resp.data.value;   
-                var script = document.createElement("script");
-                script.innerHTML = resp.data.script;
-                document.head.appendChild(script);                
-            }
-                
-        }
-    };
-    request.open("POST", "videowork.php");
-    request.send(data);
-}
-level();
 headnote();
 
 </script>
