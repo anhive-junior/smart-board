@@ -7,7 +7,7 @@ function output($msg){
     die ($msg);
 }
 
-function wget_post( $url,  $data) {
+function wget_post($url,  $data) {
     // use key 'http' even if you send the request to https://...
     //if ($data == null) $data = array(""=>"");
     $options = array(

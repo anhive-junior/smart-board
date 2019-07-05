@@ -60,13 +60,13 @@
     var headnote = function(){
         var data = new FormData();
         data.append("func", "headnote");
-        POST('home.php', data, function(resp) {
+        POST('s00_signage.php', data, function(resp) {
             document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
             document.getElementById("subject").innerHTML = resp.data.subject;
             document.getElementById("owner").innerHTML = resp.data.owner;
             document.getElementById("foot_note").innerHTML = resp.data.footer;
             // other function init
-            level_contents();
+            parti_level_contents();
             get_code();
             retrieve();
         });
@@ -75,15 +75,15 @@
         var data = new FormData();
         data.append('func','show_level');
         var request = new XMLHttpRequest();
-        POST("cardwork.php", data, function(resp){
+        POST("s00_signage.php", data, function(resp){
             console.log("level : " + resp.data.level);
             level = resp.data.level;
         });
     }; show_level();
-    var level_contents = function(){
+    var parti_level_contents = function(){
         var data = new FormData();
-        data.append('func', 'level_contents');
-        POST('participants.php', data ,function(resp){
+        data.append('func', 'parti_level_contents');
+        POST('s00_signage.php', data ,function(resp){
             document.getElementById("openSmart").setAttribute("onclick", resp.data.openSmart);
             document.getElementById("closeSmart").setAttribute("onclick", resp.data.closeSmart);
             document.getElementById("mesg").innerHTML = resp.data.mesg;

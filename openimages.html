@@ -61,36 +61,22 @@ var rmcard = function(msg){
         });
 }
 
-var init = function(){ // rmcard 권한 및 초기 데이터 설정
+var openimages = function(){ // rmcard 권한 및 초기 데이터 설정
     var data = new FormData();
     data.append("name", url);
-    data.append("func","init");
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch(e) {
-                var resp ={
-                    status : "error",
-                    data : "Unknown error occurred : [" + request.responseText +"]"
-                };
-            }
-            console.log("init -" + resp.status + ':' + resp.data);
-            document.getElementById("btn_rmcard").value = resp.data.value;
-            document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
-            if(resp.data.value == "사진삭제") document.getElementById("btn_rmcard").style.display = "";
-            document.getElementById("file_name").innerHTML = resp.data.file_name;
-            document.getElementById("date").innerHTML = resp.data.date;
-            document.getElementById("memo").innerHTML = resp.data.memo;
-            document.getElementById("img").setAttribute("src", resp.data.img);
-        
-        }
-    };
-    request.open("POST", "openimages.php");
-    request.send(data);
+    data.append("func","openimages");
+    POST("s00_signage.php", data, function(resp){
+        console.log("openimages -" + resp.status + ':' + resp.data);
+        document.getElementById("btn_rmcard").value = resp.data.value;
+        document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
+        if(resp.data.value == "사진삭제") document.getElementById("btn_rmcard").style.display = "";
+        document.getElementById("file_name").innerHTML = resp.data.file_name;
+        document.getElementById("date").innerHTML = resp.data.date;
+        document.getElementById("memo").innerHTML = resp.data.memo;
+        document.getElementById("img").setAttribute("src", resp.data.img);
+    }); 
 }
-init();
+openimages();
 </script>
 </body>
 </html>

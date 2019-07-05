@@ -78,7 +78,7 @@ var show_level = function(){ // level 값 가져오기
     var data = new FormData();
     data.append('func','show_level');
     var request = new XMLHttpRequest();
-    POST("cardwork.php", data, function(resp){
+    POST("s00_signage.php", data, function(resp){
         console.log("level : " + resp.data.level);
         if( resp.data.level>1 ) document.getElementById("btn_rmcard").style.display="";
     });
@@ -98,7 +98,7 @@ var rmcard = function(msg){
 var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
     var data = new FormData(); 
     data.append('func', 'headnote');
-    POST("home.php", data, function(resp){
+    POST("s00_signage.php", data, function(resp){
         console.log("headnote - " + resp.status + ':' + resp.data);
         document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
         document.getElementById("headnote_img").setAttribute("alt", resp.data.profile);

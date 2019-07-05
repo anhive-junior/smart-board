@@ -71,7 +71,7 @@
 var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
     var data = new FormData(); 
     data.append("func", "headnote");
-    POST("home.php", data, function(resp){
+    POST("s00_signage.php", data, function(resp){
         console.log(resp.status + ':' + resp.data);
         document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
         document.getElementById("subject").innerHTML=resp.data.subject;
@@ -84,43 +84,29 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
 var getlist = function () {
     var data = new FormData();
     data.append('func', 'getslidelist');
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch (e){
-                var resp = {
-                    status: 'error',
-                    data: 'Unknown error occurred:['+request.responseText+']'
-                };
-            }
-            var fdiv = document.getElementById("packinglist");
-            fdiv.innerHTML = "";
-            block = document.getElementById("block").innerHTML;
-            image = document.getElementById("image").innerHTML;
-            innerhtml = "";
-            for (i=0; i<resp.data.length; i++) {
-                slide = resp.data[i];
-                //console.log (slide.term+slide.thumb);
-                segment = (slide.block != "")?block:"";
-                segment += image;
-                segment = segment
-                        .replace("=0=term=0="  , slide.term       )
-                        .replace("=0=block=0="  , slide.block     )
-                        .replace("=0=thumb=0="  , slide.thumb     )
-                        .replace("=0=file=0="  , slide.file       )
-                        .replace("=0=view=0="  , slide.view       )
-                        .replace(/=0=photo=0=/gi   , slide.photo    )
-                        .replace("=0=elapse=0="  , slide.elapse   );
-                innerhtml += segment;
-            }
-            fdiv.innerHTML = innerhtml;
+    POST("s00_signage.php", data, function(resp){
+        var fdiv = document.getElementById("packinglist");
+        fdiv.innerHTML = "";
+        block = document.getElementById("block").innerHTML;
+        image = document.getElementById("image").innerHTML;
+        innerhtml = "";
+        for (i=0; i<resp.data.length; i++) {
+            slide = resp.data[i];
+            //console.log (slide.term+slide.thumb);
+            segment = (slide.block != "")?block:"";
+            segment += image;
+            segment = segment
+                    .replace("=0=term=0="  , slide.term       )
+                    .replace("=0=block=0="  , slide.block     )
+                    .replace("=0=thumb=0="  , slide.thumb     )
+                    .replace("=0=file=0="  , slide.file       )
+                    .replace("=0=view=0="  , slide.view       )
+                    .replace(/=0=photo=0=/gi   , slide.photo    )
+                    .replace("=0=elapse=0="  , slide.elapse   );
+            innerhtml += segment;
         }
-    };
-    request.open('POST', 's00_signage.php');
-    request.send(data);
-    return request;
+        fdiv.innerHTML = innerhtml;
+    });
 }
 
 var changeterm = function(obj) {

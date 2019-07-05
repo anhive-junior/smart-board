@@ -15,7 +15,6 @@ install:
 	touch /etc/hive/tasks/schedule.tasks
 	chown www-data:www-data /etc/hive/tasks/schedule.tasks
 	service timeworks start
-	ln -sf ./www /var/www/tasks
 
 packing:
 	 tar -cvf www/timework.core.tar.gz res/* tasks/* timeworks timeworks.c Makefile
