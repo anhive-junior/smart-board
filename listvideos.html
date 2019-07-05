@@ -1,0 +1,113 @@
+<!--
+/**
+ * AnHive Co., Ltd.
+ * LICENSE: This source file is subject to version 0.1 of the AnHive license. 
+ * If you did not receive a copy of the AnHive License and are unable to obtain it
+ * please send a note to anhive@gmail.com so we can mail you a copy immediately.
+ *
+ * @author     AnHive Co., Ltd <anhive@gmail.com>
+ * @copyright  2013-2015 AnHive Co., Ltd
+ * @license    http://www.anhive.com/license/1_01.txt  AnHive License 1.01
+ */
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />   
+    <script type="text/javascript" src="signage.base.js"></script>
+    <link rel="stylesheet" type="text/css" href="signage.base.css">
+    <title>AnHive, List Media Files</title>
+</head>
+<body >
+    <div class="container">
+        <div class="contents">
+        
+            <!-- head note -->
+            <div class='headnote' onclick="javascript:document.location.href='home.html'">
+                <img id="headnote_img" alt="profile" style="height:15px;">
+                <span class="input_title" id="subject"></span> 
+                <span class="input_title" id="owner"></span>
+            </div>
+            <div style="margin-top:10px;"><!-- upper line feed --></div>
+			<div id="position"> 
+			</div>
+			
+			<a id="uploadp"></a><br>
+			
+			<div id="dircheck">
+			    <a id="isdir"></a><br>
+			    <input id="button_info" type="button" value="삭제" style="display:none">
+			</div>
+            
+    </div>
+    <div class='footer' id="foot_note" ></div>
+
+<script>
+
+var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+    var data = new FormData(); 
+    data.append("func", "headnote");
+    POST("listvideos.php", data, function(resp){
+        document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
+        document.getElementById("subject").innerHTML = resp.data.subject;
+        document.getElementById("owner").innerHTML = resp.data.owner;
+        document.getElementById("foot_note").innerHTML = resp.data.footer;
+    });
+}
+
+var pathcheck = function(){
+    var data = new FormData();
+	data.append("func","pathcheck");
+    POST("listvideos.php", data, function(resp){
+        document.getElementById("position").innerHTML = "현재 path:[" + resp.data.path + "]";
+		document.getElementById("uploadp").setAttribute("href",resp.data.func);
+		document.getElementById("uploadp").innerHTML = "Upload to path[" + resp.data.directory + "]";
+    });
+}
+  
+               
+var fcheck = function(){
+    var data = new FormData();
+	data.append("func","fcheck");
+	POST("listvideos.php", data, function(resp){
+	    for(let i = 0; i < resp.data.count; i++){
+		    cont = resp.data.contents[i];
+			let clone = document.getElementById("isdir").cloneNode(true);
+			let clonebutton = document.getElementById("button_info").cloneNode(true);
+			var tag = "<br>";
+	        if(cont['isdir'] == "0"){
+                document.getElementById("isdir").setAttribute("href",cont['link']);
+                document.getElementById("isdir").innerHTML = "[DIRECTORY]" + cont['fileinfo'] + cont['filetime'];
+            }
+		    clone.setAttribute("href",cont['link']);
+			clonebutton.style.display = "inline-block";
+			clonebutton.setAttribute("onclick",cont['func']);
+		    clone.innerHTML = "[FILE]" + cont['fileinfo'] + cont['filesize'] + " MB" + cont['ftime'] 
+            document.getElementById("dircheck").appendChild(clone);
+			document.getElementById("dircheck").appendChild(clonebutton);	
+            var t = document.createElement( 'br' );
+            document.getElementById("dircheck").appendChild(t);			
+    		
+		}
+        		
+    });
+}
+
+var udelete = function(fname){
+
+    var data = new FormData();
+    data.append('func', 'delete');
+    data.append('name', fname);
+    data.append('dir', "");
+    POST("s00_file.php", data, function(resp){
+        location.reload();
+    });
+}
+pathcheck();
+headnote();
+fcheck();
+</script>
+</body>
+</html>

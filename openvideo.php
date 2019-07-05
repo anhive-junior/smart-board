@@ -1,19 +1,15 @@
-﻿<!--
-/**
- * AnHive Co., Ltd.
- * LICENSE: This source file is subject to version 0.1 of the AnHive license. 
- * If you did not receive a copy of the AnHive License and are unable to obtain it
- * please send a note to anhive@gmail.com so we can mail you a copy immediately.
- *
- * @author     AnHive Co., Ltd <anhive@gmail.com>
- * @copyright  2013-2015 AnHive Co., Ltd
- * @license    http://www.anhive.com/license/1_01.txt  AnHive License 1.01
- */
--->
-
-
-<?php
+﻿<?php
 include_once("lib/lib_common.php");
+$trace=true;
+
+function s00_log($msg) {
+    global $trace;
+    if ($trace) error_log($msg);
+}
+
+$services['showvideo'] = '_showvideo';
+function _showvideo(){
+	s00_log("Start ".__FUNCTION__);
     $name = $_GET["name"];
     if (strpos($name, 'http') !== false) {
         $url = $name;
@@ -24,7 +20,19 @@ include_once("lib/lib_common.php");
         $dir= isset($_GET['dir'])?$_GET['dir']:'';
         //$script_path = dirname(trim($_SERVER['SCRIPT_NAME']));
         //if ($script_path != "") $dir = $script_path."/".$dir;
-        $uri = $dir."/".$filename;
+        $url = $dir."/".$filename;
         outputJSON($url,"success");
     }
+}	
+$func= isset($_POST['func'])?$_POST["func"]:"test";
+
+if (!isset($services[$func])) 
+        outputJSON("Undefined service[$func].");
+try {
+    call_user_func( $services[$func]);
+    //s00_log2(4, print_r($services,true));
+} catch (Exception $e) {
+    outputJSON($e->getLine().'@'.__FILE__."\n".$e->getMessage());
+    s00_log(print_r($e->getTrace(),true));
+}
 ?>
