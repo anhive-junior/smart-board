@@ -7,115 +7,161 @@
     <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title></title>
 </head>
+
 <style type="text/css">
-    body { 
-        margin : 0;
-        padding : 0;
-        background-size: cover;
-        background : opacity: 0.3;
-     }
-     .login-box {
-        opacity: 0.8;
-        width : 450px;
-        height : 400px;
-        position: absolute;
-        top : 45%;
-        left: 50%;
-        transform : translate(-50%, -50%);
-        color : black;
-        background-color : white;
-        padding : 0 0;
-    }
-     .login-box:hover{
-        opacity: 1;
-     }
-     .login-box h1 {
-        display : table;
-        margin : auto;
-        font-size: 20px;
-        border-bottom: 3px solid #ff8000;
-        padding: 13px 0;
-     }
-     .textbox {
-        display : table;
-        margin : auto;
-        margin-top : 25px;
-        width : 300px;
-        overflow : hidden;
-        font-size : 20px;
-        padding : 8px 0;
-        border-bottom : 1px solid #95a5a6;
-     }
-     .textbox i{
-        width : 32px;
-        float : left;
-     }
+body {
+    padding : 0 0;
+    margin : 0 0;
+    overflow: hidden;
+    height : 100%;
+}
+.photo, #photo {
+    margin : 0 auto;
+    width : 100%;
+    height : 100%;
+    min-height : 1080px;
+    min-width : 500px;
+    max-width : 1960px;
+}
 
-     .textbox input {
-        border : none;
-        outline : none;
-        background: none;
-     }
-     .login-box .button {
-        display: table;
-        margin : auto;
-        margin-top : 40px;
-        width : 270px;
-        background-color : #ff8000;
-        color : white;
-        padding : 15px;
-        cursor: pointer;
-        font-size : 18px;
-        text-align: center;
-        font-weight: bold;
-     }
-     .login-box .button:hover {
-        background-color: green;
-     }
-    /* 점검중 및 디스크 용량 띄우기 */
+.login-box {
+    opacity: 0.8;
+    width : 100%;
+    max-width : 450px;
+    height : 400px;
+    position: absolute;
+    top : 45%;
+    left: 50%;
+    transform : translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    color : black;
+    background-color : white;
+    padding : 0 0;
+}
+ .login-box:hover{
+    opacity: 1;
+ }
+ .login-box h1 {
+    display : table;
+    margin : auto;
+    font-size: 20px;
+    border-bottom: 3px solid #ff8000;
+    padding: 13px 0;
+ }
+ .textbox {
+    display : table;
+    margin : auto;
+    margin-top : 25px;
+    max-width : 300px;
+    width : 100%;
+    overflow : hidden;
+    font-size : 20px;
+    padding : 8px 0;
+    border-bottom : 1px solid #95a5a6;
+ }
+ .textbox i{
+    width : 32px;
+    float : left;
+ }
+
+ .textbox input {
+    border : none;
+    outline : none;
+    background: none;
+ }
+ .login-box .button {
+    display: table;
+    margin : auto;
+    margin-top : 40px;
+    max-width : 270px;
+    width: 100%;
+    background-color : #ff8000;
+    color : white;
+    padding : 15px;
+    cursor: pointer;
+    font-size : 18px;
+    text-align: center;
+    font-weight: bold;
+ }
+ .login-box .button:hover {
+    background-color: green;
+ }
+/* 점검중 및 디스크 용량 띄우기 */
+.error, .jum {
+    position : absolute;
+    top  : 20%;
+    left : 50%;
+    transform : translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    text-align:center;
+    color:white;
+    font-size: 1.5em;
+    margin: 0 auto;
+    width : 100%;
+    max-width : 450px;
+    padding: 10px 0;
+}
+
+.error { z-index : 1; }
+.jum { z-index : 2; }
+
+@media only screen and (max-height: 900px){
     .error, .jum {
-        position : absolute;
-        top  : 20%;
+        top  : 15%;
         left : 50%;
-
-        transform : translate(-50%, -50%);
-        text-align:center;
-        color:white;
-        font-size: 1.5em;
-        margin: 0 auto;
-        width : 450px;
-        padding: 10px 0;
     }
+}
 
-    .error { z-index : 1; }
-    .jum { z-index : 2; }
-
-    @media only screen and (min-height : 100px) and (max-height: 900px){
-        .error, .jum {
-            top  : 15%;
-            left : 50%;
-        }
+@media only screen and (max-height: 700px){
+    .error, .jum {
+        top  : 8%;
+        left : 50%;
     }
-    
-    header {
-        color : black;
-        text-align : center;
-        font-weight: bold; 
-        background-color : white;
-        padding: 10px 10px;
-     }
-    
-    footer {
-        color : black; 
-        text-align : center;
-        font-weight: bold; 
-        margin-top : 80px; 
-        background-color : white;
-        padding: 10px 10px;
-     }
+}
+
+@media only screen and (max-height: 550px){
+    .error, .jum {
+        top  : 3%;
+        left : 50%;
+        width : 80%;
+    }
+    .photo, #photo {
+        width : 100%;
+        height : 100%;
+        max-height : 550px;
+        max-width : 300px;
+    }
+    .login-box {
+        width : 80%;
+    }
+    .textbox{
+        width : 80%;
+    }
+    .login-box .button {
+        width : 80%;
+    }
+}
+
+header {
+    color : black;
+    text-align : center;
+    font-weight: bold; 
+    background-color : white;
+    padding: 10px 10px;
+ }
+
+footer {
+    color : black; 
+    text-align : center;
+    font-weight: bold; 
+    margin-top : 80px; 
+    background-color : white;
+    padding: 10px 10px;
+ }
 </style>
 
 <body>
+<div class="photo"><img id="photo" src="" alt="profile"></div>
 <div id ="jum1" class="jum" style='background-color:orange;'></div>
 <div id ="disk1" class="error" style='background-color:red;'></div>
 <div class="login-box">
@@ -136,7 +182,7 @@
     <footer id="foot_note"></footer>
     </table>
 </div>
-<div id="respdata1" style="text-align:center;font-size:0.8em;"></div>
+<div id="respdata1" style="text-align:center;font-size:0.8em;background-color : white;"></div>
 </body>
 
 <script>
@@ -224,8 +270,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
             document.title = resp.data.subject;
             document.getElementById("subject").innerHTML = resp.data.subject;
             document.getElementById("owner").innerHTML = resp.data.owner;
-            document.body.style.background = 'url(' + resp.data.photo + ') no-repeat';
-            document.body.style.backgroundSize = "100% 1000px";
+            document.getElementById("photo").src = resp.data.photo;
             document.getElementById("foot_note").innerHTML=resp.data.footer;
         }
     }
