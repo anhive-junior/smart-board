@@ -7,54 +7,138 @@
     <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title></title>
 </head>
+<style type="text/css">
+    body { 
+        margin : 0;
+        padding : 0;
+        background-size: cover;
+        background : opacity: 0.3;
+     }
+     .login-box {
+        opacity: 0.8;
+        width : 450px;
+        height : 400px;
+        position: absolute;
+        top : 45%;
+        left: 50%;
+        transform : translate(-50%, -50%);
+        color : black;
+        background-color : white;
+        padding : 0 0;
+    }
+     .login-box:hover{
+        opacity: 1;
+     }
+     .login-box h1 {
+        display : table;
+        margin : auto;
+        font-size: 20px;
+        border-bottom: 3px solid #ff8000;
+        padding: 13px 0;
+     }
+     .textbox {
+        display : table;
+        margin : auto;
+        margin-top : 25px;
+        width : 300px;
+        overflow : hidden;
+        font-size : 20px;
+        padding : 8px 0;
+        border-bottom : 1px solid #95a5a6;
+     }
+     .textbox i{
+        width : 32px;
+        float : left;
+     }
+
+     .textbox input {
+        border : none;
+        outline : none;
+        background: none;
+     }
+     .login-box .button {
+        display: table;
+        margin : auto;
+        margin-top : 40px;
+        width : 270px;
+        background-color : #ff8000;
+        color : white;
+        padding : 15px;
+        cursor: pointer;
+        font-size : 18px;
+        text-align: center;
+        font-weight: bold;
+     }
+     .login-box .button:hover {
+        background-color: green;
+     }
+    /* 점검중 및 디스크 용량 띄우기 */
+    .error, .jum {
+        position : absolute;
+        top  : 20%;
+        left : 50%;
+
+        transform : translate(-50%, -50%);
+        text-align:center;
+        color:white;
+        font-size: 1.5em;
+        margin: 0 auto;
+        width : 450px;
+        padding: 10px 0;
+    }
+
+    .error { z-index : 1; }
+    .jum { z-index : 2; }
+
+    @media only screen and (min-height : 100px) and (max-height: 900px){
+        .error, .jum {
+            top  : 15%;
+            left : 50%;
+        }
+    }
+    
+    header {
+        color : black;
+        text-align : center;
+        font-weight: bold; 
+        background-color : white;
+        padding: 10px 10px;
+     }
+    
+    footer {
+        color : black; 
+        text-align : center;
+        font-weight: bold; 
+        margin-top : 80px; 
+        background-color : white;
+        padding: 10px 10px;
+     }
+</style>
+
 <body>
-    <div class="container">
-        <div class="contents">
-            <div class='headnote' id="title"></div>
-            <br>
-            <div style="text-align:center;">
-                <span class="input_title" id="subject"></span> 
-                <span class="input_title"id="owner"></span>
-                <br>
-                <br>
-                <img class="img_shadow" id="photo" alt="profile" style="width:50%">
-            </div>
-            <br>
-            <div>
-            <div id ="jum1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:orange;'></div>
-            <div id ="disk1"style='text-align:center;color:white;font-size:2em;margin: 0 auto; width:8em; background-color:red;'></div>
-            <form method='post' action='index.php' style="margin: 0 auto;  width:200px; ">
-                <table>
-                    <tr>
-                    <td style="text-align:right;" >사용자: </td>
-                    <td style="text-align:left;" >
-                        <input type='text' id="ucode" name='user_code' size='7' value="" style="font-size:1.2em;" autocomplete="off"><br>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td style="text-align:right;" >접속코드:</td>
-                    <td style="text-align:left;" > 
-                        <input type='text' id="icode" name='input_code' size='7'value="" style="font-size:1.2em;" autocomplete="off" >
-                    </td>
-                    </tr>
-                    <tr>
-                    <td colspan=2 style="text-align:center;" >
-                    <br>
-                        <div class="button_base" style="text-align:center;background-color:white">
-                            <span class="button_span" onclick="logged_in();" >로그인</span>  
-                        </div>
-                    </td>
-                    </tr>
-                </table>
-            </form>
-            </div>
-            <br>
-            <div id="respdata1" style="text-align:center;font-size:0.8em;">
-            </div>
-        </div>
+<div id ="jum1" class="jum" style='background-color:orange;'></div>
+<div id ="disk1" class="error" style='background-color:red;'></div>
+<div class="login-box">
+    <header id="title"></header>
+    <h1 style="margin-top:30px;">
+    <span id="subject"></span>&nbsp;<span id="owner"></span>
+    </h1>
+    <div class="textbox">
+    <i><img src="./images/user-solid.svg"></i>&nbsp;&nbsp;
+    <input type='text' id="ucode" name='user_code' size='7' value="" style="font-size:1.2em;" autocomplete="off" placeholder="사용자">
     </div>
-    <div class='footer' id="foot_note"></div>
+    <div class="textbox">
+    <i><img src="./images/key-solid.svg"></i>&nbsp;&nbsp;
+    <input type='password' id="icode" name='input_code' size='7'value="" style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
+    </div>
+    <div class="button" onclick="logged_in();" >로그인</div>
+    </td>
+    <footer id="foot_note"></footer>
+    </table>
+</div>
+<div id="respdata1" style="text-align:center;font-size:0.8em;"></div>
 </body>
+
 <script>
 var init = function(){
     var data = new FormData();
@@ -140,7 +224,8 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
             document.title = resp.data.subject;
             document.getElementById("subject").innerHTML = resp.data.subject;
             document.getElementById("owner").innerHTML = resp.data.owner;
-            document.getElementById("photo").setAttribute("src",resp.data.photo);
+            document.body.style.background = 'url(' + resp.data.photo + ') no-repeat';
+            document.body.style.backgroundSize = "100% 1000px";
             document.getElementById("foot_note").innerHTML=resp.data.footer;
         }
     }
