@@ -104,3 +104,21 @@ function getCookie(cookie_name) {
 	}
 	return unescape(cookie_valie);
 }
+
+// 알림창 띄우기
+function alerted(msg){ // alerte
+    var alert = document.getElementById("alert");
+    if(alert == null){
+        var div = "<div id='alert' style='visibility : hidden;'>";
+        div += "<h1><img src='./images/bullhorn.svg'></h1>";
+        div += "<h2 style='margin-top:40px;' id='alert_inner'></h2>";
+        div += "<input type=\"submit\" value=\"확인\" onclick=alerted('exit'); style='margin-top:10px;font-size:20px;'/></div>";
+        document.body.innerHTML += div;
+    }
+    if(msg == "exit"){
+        document.getElementById("alert").style.visibility = "hidden";
+        return;
+    }
+    document.getElementById("alert").style.visibility = "visible";
+    document.getElementById("alert_inner").innerHTML = msg;
+}

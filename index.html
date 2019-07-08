@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="signage.base.css">
     <title></title>
 </head>
-
 <style type="text/css">
 body {
     padding : 0 0;
@@ -86,24 +85,6 @@ body {
  .login-box .button:hover {
     background-color: green;
  }
-/* 점검중 및 디스크 용량 띄우기 */
-.error, .jum {
-    position : absolute;
-    top  : 20%;
-    left : 50%;
-    transform : translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    text-align:center;
-    color:white;
-    font-size: 1.5em;
-    margin: 0 auto;
-    width : 100%;
-    max-width : 450px;
-    padding: 10px 0;
-}
-
-.error { z-index : 1; }
-.jum { z-index : 2; }
 
 @media only screen and (max-height: 900px){
     .error, .jum {
@@ -162,8 +143,6 @@ footer {
 
 <body>
 <div class="photo"><img id="photo" src="" alt="profile"></div>
-<div id ="jum1" class="jum" style='background-color:orange;'></div>
-<div id ="disk1" class="error" style='background-color:red;'></div>
 <div class="login-box">
     <header id="title"></header>
     <h1 style="margin-top:30px;">
@@ -182,10 +161,26 @@ footer {
     <footer id="foot_note"></footer>
     </table>
 </div>
-<div id="respdata1" style="text-align:center;font-size:0.8em;background-color : white;"></div>
 </body>
-
 <script>
+
+function alerted(msg){ // alerte
+    var alert = document.getElementById("alert");
+    if(alert == null){
+        var div = "<div id='alert' style='visibility : hidden;'>";
+        div += "<h1><img src='./images/bullhorn.svg'></h1>";
+        div += "<h2 style='margin-top:40px;' id='alert_inner'></h2>";
+        div += "<input type=\"submit\" value=\"확인\" onclick=alerted('exit'); style='margin-top:10px;font-size:20px;'/></div>";
+        document.body.innerHTML += div;
+    }
+    if(msg == "exit"){
+        document.getElementById("alert").style.visibility = "hidden";
+        return;
+    }
+    document.getElementById("alert").style.visibility = "visible";
+    document.getElementById("alert_inner").innerHTML = msg;
+}
+
 var init = function(){
     var data = new FormData();
     data.append("func", "init");
@@ -203,7 +198,7 @@ var init = function(){
             document.getElementById('ucode').value = resp.data.name;
             document.getElementById('icode').value = resp.data.code;
             if ( "freezing" in resp.data && resp.data.freezing == "점검중" ) // 점검중 띄우기
-                document.getElementById("jum1").innerHTML = "점검중입니다.";
+                alerted("점검중입니다. <br> <h5 style='font-size : 15px; color : grey'>일반 사용자는 접속이 불가능합니다.</h5>");
         }
     };
     request.open("POST", "s00_login.php");
@@ -243,7 +238,7 @@ var logged_in = function(){
                 form.submit();
             }
             else {
-                document.getElementById("respdata1").innerHTML = resp.data.mesg;
+                alerted(resp.data.mesg);
             }
         }
     };
@@ -293,9 +288,9 @@ var disk_data = function(){
             }
             console.log(resp.status + ':' + resp.data);
             if( resp.data == "none"){
-                document.getElementById("disk1").style.display = "inline-block";
+                return;
             }else{
-                document.getElementById("disk1").innerHTML = resp.data;
+                alerted("<h2 style='color : red'>" + resp.data + "</h2><h5 style='font-size : 15px; color : grey'>저장공간이 부족합니다.</h5>");
             }
         }
     }

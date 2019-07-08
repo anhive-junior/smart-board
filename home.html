@@ -8,9 +8,24 @@
     <script type="text/javascript" src="signage.base.js"></script>
     <title>SweetHome</title>
     <style>
+    body {
+        padding : 0;
+        margin : 0;
+    }
+
+    .photo, #photo {
+    position : absolute;
+    z-index: -1;
+    opacity: 0.8;
+    margin : 0 auto;
+    width : 100%;
+    height : 100%;
+    }
+    
     table {
         text-align : center;
     }
+    
     .tile {
         margin: 3px;
         padding-top: 17px;
@@ -39,13 +54,13 @@
     }
     </style>
 </head>
-<body > 
+<body >
+    <div class="photo"><img id="photo" src="" alt="profile"></div>
     <div class="container">
         <div class="contents">
 
             <!-- head note -->
             <div class='headnote' onclick="javascript:document.location.href='home.html'">
-                <img id="headnote_img" alt="profile" style="height:15px">
                 <span class="input_title" id="subject"></span>
                 <span class="input_title" id="owner"></span>
             </div>
@@ -80,7 +95,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
     var data = new FormData(); 
     data.append("func", "headnote");
     POST("s00_signage.php", data, function(resp){
-        document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
+        document.getElementById("photo").setAttribute("src", resp.data.photo);
         document.getElementById("subject").innerHTML = resp.data.subject;
         document.getElementById("owner").innerHTML = resp.data.owner;
         document.getElementById("foot_note").innerHTML = resp.data.footer;

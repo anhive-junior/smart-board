@@ -91,7 +91,7 @@ function _disk(){
     error_log("Start : " . __FUNCTION__ . " LINE : " .  __LINE__);
     $freespace = disk_free_space(".")/1024;
     $data = "none";
-    if ( $freespace < 16 ) $data = "저장공간 부족";
+    if ( $freespace < 16 ) $data = "저장공간부족..!";
     outputJSON($data,"success");
 }
 
