@@ -272,6 +272,7 @@ function _getslide() {
       , "mtime" => $mtime
       , "url" => $url
       , "server_ip" => $_SERVER['HTTP_HOST'] . substr($url, 2)
+	  , "test" => $_SERVER['HTTP_HOST'].substr($url,2)
       );
     
     outputJSON($arr, 'success');
@@ -747,7 +748,19 @@ function _getslidelist(){
         
         $u = ( $section != "true")?"":$u;
         
-        $arr[] = array('term' => "TERM".$t, 'type' => is_file($f), 'elapse' => $e, 'block' => $u, 'photo' => $p, 'file' => $f, 'thumb' => $n, 'view' => $v, 'time' => $s);
+        $arr[] = array(
+		           'term' => "TERM".$t,
+		           'type' => is_file($f), 
+				   'elapse' => $e, 
+				   'block' => $u, 
+				   'photo' => $p,
+				   'file' => $f, 
+				   'thumb' => $n, 
+				   'view' => $v, 
+				   'time' => $s,
+				   'test_thumb' => $_SERVER['HTTP_HOST'].substr($n,2),
+				   'test_file' => $_SERVER['HTTP_HOST'].substr($f,2)
+				   );
         
     }
     outputJSON($arr, "success");

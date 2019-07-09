@@ -244,7 +244,7 @@ function check8(str) {
  var data = new FormData(); 
  data.append("func", "headnote");
  data.append("samwork", "true");
- POST("samworks.php", data, function(resp){
+ POST("s00_signage.php", data, function(resp){
    console.log(resp.status + ':' + resp.data);
    document.title = resp.data.owner;
    document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
