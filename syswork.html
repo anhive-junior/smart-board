@@ -229,11 +229,11 @@
         data.append('func', 'get_netinfo');
 
         POST('syswork_sv.php', data, function(resp) {
-                document.getElementById('ap_useap_use').value = use[resp.data.ap.ap_use];
+                // document.getElementById('ap_use').value = use[resp.data.ap.ap_use];
                 document.getElementById('ssid').value = resp.data.ap.ssid;
-                document.getElementById('sec_use').value = use[resp.data.ap.sec_use];
-                document.getElementById('password').value = resp.data.ap.wpa_passphrase;
-                document.getElementById('wpa').value = wpa[resp.data.ap.wpa];
+                // document.getElementById('sec_use').value = use[resp.data.ap.sec_use];
+                // document.getElementById('password').value = resp.data.ap.wpa_passphrase;
+                // document.getElementById('wpa').value = wpa[resp.data.ap.wpa];
                 // document.getElementById('external_ip').value = resp.data.it.external_ip;
                 // document.getElementById('external_port').value = resp.data.it.external_port;
         });
@@ -244,11 +244,11 @@
         var data = new FormData();
         data.append('func', 'set_netinfo');
         
-        data.append('ap_use',         g(use,     document.getElementById('ap_use').value)    );
+        // data.append('ap_use',         g(use,     document.getElementById('ap_use').value)    );
         data.append('ssid',                 document.getElementById('ssid').value        );
-        data.append('sec_use',         g(use,     document.getElementById('sec_use').value)    );;
-        data.append('wpa_passphrase',         document.getElementById('password').value    );
-        data.append('wpa',             g(wpa,     document.getElementById('wpa').value)        );
+        // data.append('sec_use',         g(use,     document.getElementById('sec_use').value)    );
+        // data.append('wpa_passphrase',         document.getElementById('password').value    );
+        // data.append('wpa',             g(wpa,     document.getElementById('wpa').value)        );
         data.append('int_use',         g(use,     document.getElementById('int_use').value)    );
         data.append('interface',             document.getElementById('interface').value);
         data.append('operation',             document.getElementById('operation').value);
@@ -347,11 +347,12 @@
 
     }
     get_code();
+    <!-- 여기까지 -->
     
     var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
     data.append("func", "headnote");
-    POST("syswork.php", data, function(resp){
+    POST("s00_signage.php", data, function(resp){
         document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
         document.getElementById("subject").innerHTML = resp.data.subject;
         document.getElementById("owner").innerHTML = resp.data.owner;
@@ -366,8 +367,6 @@
      });
   }
   headnote();
-
-    <!-- 여기까지 -->
     
 </script>   
     

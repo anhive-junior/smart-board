@@ -132,7 +132,7 @@
     var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
     data.append("func", "headnote");
-    POST("home.php", data, function(resp){
+    POST("s00_signage.php", data, function(resp){
         document.getElementById("ownertitle").innerHTML = resp.data.owner;
         document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
         document.getElementById("subject").innerHTML = resp.data.subject;

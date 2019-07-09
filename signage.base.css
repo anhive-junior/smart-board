@@ -8,98 +8,98 @@ body  {line-height: 1; font-family: NG, sans-serif; -webkit-text-size-adjust: no
 body  {line-height: 1; font-family: sans-serif; -webkit-text-size-adjust: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 */
 a:hover, a:visited, a:link, a:active{
-	text-decoration: none;
-}	
+    text-decoration: none;
+}   
 
 .img_shadow { 
-	border:2px solid #fff; 
-	background: no-repeat; 
-	box-shadow: 7px 7px 3px #ccc; 
-	-moz-box-shadow: 7px 7px 3px #ccc; 
-	-webkit-box-shadow: 7px 7px 3px #ccc; 
-	-khtml-box-shadow: 7px 7px 3px #ccc; 
+    border:2px solid #fff; 
+    background: no-repeat; 
+    box-shadow: 7px 7px 3px #ccc; 
+    -moz-box-shadow: 7px 7px 3px #ccc; 
+    -webkit-box-shadow: 7px 7px 3px #ccc; 
+    -khtml-box-shadow: 7px 7px 3px #ccc; 
 }
 
 .img_angle { 
-	border:2px solid #fff; 
-	background: no-repeat; 
+    border:2px solid #fff; 
+    background: no-repeat; 
 }
 
 .headnote {
-	padding-top: 0.2em;
-	padding-bottom:0.2em;
+    padding-top: 0.2em;
+    padding-bottom:0.2em;
 
-	border-top: solid 2px #a0a0a0;
-	border-bottom: solid 2px #a0a0a0;	
+    border-top: solid 2px #a0a0a0;
+    border-bottom: solid 2px #a0a0a0;   
 
-	background:#c0c0c0;
-	text-align:center;
+    background:#c0c0c0;
+    text-align:center;
 }
 .input_title {
-	text-align : center; border:none;
-	font-weight:bold; color:blue; font-size:1.2em;
-	//background:#a0a0a0;
-	background-color: Transparent;
+    text-align : center; border:none;
+    font-weight:bold; color:blue; font-size:1.2em;
+    //background:#a0a0a0;
+    background-color: Transparent;
 }    
 
 .footer {
-	margin-top: 4px;
+    margin-top: 4px;
 
-	padding-top: 0.2em;
-	padding-bottom:0.2em;
-	border-top: solid 2px #a0a0a0;
-	border-bottom: solid 2px #a0a0a0;
-	
-	background:#b0b0b0;
-	text-align:center;
-	font-size:0.8em;
+    padding-top: 0.2em;
+    padding-bottom:0.2em;
+    border-top: solid 2px #a0a0a0;
+    border-bottom: solid 2px #a0a0a0;
+    
+    background:#b0b0b0;
+    text-align:center;
+    font-size:0.8em;
 }
 
 input {
-	margin:1px;
+    margin:1px;
 }
 
 input[type=button] {
-	text-align:center;
-	font-size:1em;
+    text-align:center;
+    font-size:1em;
 }
 
 
 .button_base {
-	background: #eee; 
-	padding: 4px 0px 4px 0px ; 
-	margin:0px 10px 0px 10px;
-	font-size:0.8em;
+    background: #eee; 
+    padding: 4px 0px 4px 0px ; 
+    margin:0px 10px 0px 10px;
+    font-size:0.8em;
 }
 .button_span {
-	cursor: pointer;
-	display:inline-block; width: 4.8em;
+    cursor: pointer;
+    display:inline-block; width: 4.8em;
 
-	margin: 2px;
-	padding:8px 8px 8px 8px;
-	
-	//font-family: NG, sans-serif; 
-	font-size: 1.3em;
-	//font-weight: bold;
-	color:white; 
-	
-	border: solid 1px #ddd;
-	background-color:#bbb; 
-	border-radius: 6px;
-	border-color:#ddd #ddd #444 #444
+    margin: 2px;
+    padding:8px 8px 8px 8px;
+    
+    //font-family: NG, sans-serif; 
+    font-size: 1.3em;
+    //font-weight: bold;
+    color:white; 
+    
+    border: solid 1px #ddd;
+    background-color:#bbb; 
+    border-radius: 6px;
+    border-color:#ddd #ddd #444 #444
 }
 .button_span:active { background:green; }
 
 .checkinput {
-	width:1.2em;
-	text-align:center;
-	cursor:pointer;
-	background-color:#444;
-	color:#eee;
+    width:1.2em;
+    text-align:center;
+    cursor:pointer;
+    background-color:#444;
+    color:#eee;
 }
 
 .img_btn {
-	//background-color:red; 
+    //background-color:red; 
 }
 
 .img_btn:active { background-color:green; }
@@ -110,6 +110,46 @@ body.wait *, body.wait
     cursor: progress !important;
 }
 .contents {
-	width:100%;
+    width:100%;
 }
-	
+    
+
+
+/* 알림창 */
+
+#alert {
+    position: fixed;
+    top : 50%;
+    left: 50%;
+    transform : translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+
+    box-shadow: 0 32px 48px 0 rgba(0, 0, 0, 0.5);
+    width: 500px;
+    height : auto;
+    background: white;
+    padding: 10px;
+    text-align:center;
+}
+#alert input[type=submit] {
+    margin-bottom: 25px;
+    width: 50%;
+    background-color: dodgerblue;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+#alert input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+#alert h1 {
+    margin: 0 auto;
+    margin-top : -35px;
+    font-size: 50px;
+    width : 50px;
+}
+
+/****************************/

@@ -1766,7 +1766,7 @@ function _headnote(){
         "owner" => $_SESSION['owner'],
         "footer" => $_SESSION['footnote']
     );
-    if(@$_POST["samwork"] === "true"){
+    if(@$_POST["samwork"] === "true" || @$_POST["syswork"] === "true"){
           $data += ["title" => $_SESSION['title']];
           $data += ["samcode" => $_SESSION['sam_code']];
           $data += ["accesscode" => $_SESSION['access_code']];
