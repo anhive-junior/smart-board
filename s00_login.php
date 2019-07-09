@@ -69,6 +69,7 @@ function _login(){
         $arr = array("contents"=>$data, "location"=> "welcome.php", "mesg" => "login");
         outputJSON($arr, "success");
     } else {
+        $mesg = array("mesg" => $mesg);
         outputJSON($mesg,  "success");
     }
 }

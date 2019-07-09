@@ -125,8 +125,9 @@ body.wait *, body.wait
     -webkit-transform: translate(-50%, -50%);
 
     box-shadow: 0 32px 48px 0 rgba(0, 0, 0, 0.5);
-    width: 500px;
-    height : auto;
+    width: 70%;
+    max-width : 500px;
+    height : auto%;
     background: white;
     padding: 10px;
     text-align:center;
