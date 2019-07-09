@@ -1784,6 +1784,7 @@ function _headnote(){
 ///////// home.html 서비스
 $services['home_bottom_button'] = '_home_bottom_button';
 function _home_bottom_button(){
+    s00_log("Start ".__FUNCTION__);
     //entry criteria.. check condition, constraints  준비과정
     if ( !isset($_SESSION['uselevel']) || ($_SESSION['uselevel'] < 2) )
         outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
@@ -1829,6 +1830,7 @@ function _home_bottom_button(){
 // contents send
 $services['home_level_contents'] = '_home_level_contents';
 function _home_level_contents(){
+    s00_log("Start ".__FUNCTION__);
     //entry criteria.. check condition, constraints  준비과정
     if ( !isset($_SESSION['uselevel']) ) outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
     
@@ -1880,6 +1882,7 @@ function _home_level_contents(){
 ///////// show_level - 레벨 값을 불러옴
 $services['show_level'] = '_show_level';
 function _show_level(){
+    s00_log("Start ".__FUNCTION__);
     if(!isset($_SESSION["uselevel"])){
         $data = array("level" => 0);
         outputJSON($data, 'success');
@@ -1892,6 +1895,7 @@ function _show_level(){
 
 $services['openimages'] = '_openimages';
 function _openimages(){
+    s00_log("Start ".__FUNCTION__);
     if ( !isset($_SESSION['uselevel']) ) 
         outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
     
@@ -1926,6 +1930,7 @@ function _openimages(){
 
 $services['usbcheck'] = '_usbcheck';
 function _usbcheck(){
+    s00_log("Start ".__FUNCTION__);
     $usb = isset($_GET['usb'])?true:false;
     error_log("usb use : ". (isset($_GET['usb'])?"true":"false") );
     if ($usb==true) {
@@ -1950,6 +1955,7 @@ function _usbcheck(){
 
 $services['filecheck'] = '_filecheck';
 function _filecheck(){
+    s00_log("Start ".__FUNCTION__);
     $usb = isset($_GET['usb'])?true:false;
     $ext = isset($_GET['ext'])? $_GET["ext"]: '/(\.mp4|\.mov)/i';
     $mcount = 0;
@@ -2019,6 +2025,7 @@ function _filecheck(){
 ///// participants
 $services['parti_level_contents'] = '_parti_level_contents';
 function _parti_level_contents(){
+    s00_log("Start ".__FUNCTION__);
     if (!isset($_SESSION['uselevel']) || !$_SESSION['uselevel'] >= 2) outputJSON("uselevel error, or you have not privilige this function LINE : __LINE__", "error");
     $data=array(
         "openSmart" => "set_clsss('open')",
