@@ -171,12 +171,7 @@ html, body {
     padding : 8px 0;
     border-bottom : 1px solid #95a5a6;
  }
- .textbox i{
-    max-width : 32px;
-    width : 80%;
-    float : left;
- }
-
+ 
  .textbox input {
     border : none;
     outline : none;

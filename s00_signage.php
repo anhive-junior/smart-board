@@ -1839,9 +1839,8 @@ function _home_level_contents(){
     
     $data[]=array(
                 "link" => "cardwork.html",
-                "tiletitle" => "사진(이미지) 보내기",
-                "ins" => "누구나 전송 가능",
-                "color" => "#f86924"
+                "tiletitle" => "사진 전송",
+                "color" => "#ff7979"
     );
     
     //task extended process 확장 작업과정
@@ -1849,26 +1848,22 @@ function _home_level_contents(){
 
         $data[]=array(
                         "link" => "slidework.html",
-                        "tiletitle" =>"받은 사진 확인하기",
-                        "ins" =>  "하나씩 사진 정리하기",
-                        "color" =>"#92ABDB");
+                        "tiletitle" =>"앨범 보기",
+                        "color" =>"#f9ca24");
                         
         $data[]=array(
                         "link" => "listwork.html",
-                        "tiletitle" =>"재생 목록 관리하기",
-                        "ins" =>  "슬라이드 쇼 대상건 등록",
-                        "color" =>"#A55FEB");
+                        "tiletitle" =>"목록 편집",
+                        "color" =>"#a29bfe");
         $data[]=array(
                         "link" => "signwork.html",
-                        "tiletitle" =>"액자 리모트 컨트롤",
-                        "ins" =>  "슬라이드 쇼 관리하기",
-                        "color" =>"#ff9f00");
+                        "tiletitle" =>"리모트 관리",
+                        "color" =>"#4cd137");
                         
         $data[]=array(
                         "link" => "videowork.html",
-                        "tiletitle" =>"비디오 컨트롤",
-                        "ins" =>  "비디오 재생관리",
-                        "color" =>"#347235");    
+                        "tiletitle" =>"영상 관리",
+                        "color" =>"#1e90ff");    
                 
     } 
     $arr = array("contents"=>$data, "count"=>count($data));

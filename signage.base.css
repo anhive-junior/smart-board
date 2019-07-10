@@ -73,20 +73,14 @@ input[type=button] {
 }
 .button_span {
     cursor: pointer;
-    display:inline-block; width: 4.8em;
-
-    margin: 2px;
-    padding:8px 8px 8px 8px;
-    
-    //font-family: NG, sans-serif; 
+    display: block; 
+    width: 100%;
+    padding : 7% 0;
     font-size: 1.3em;
-    //font-weight: bold;
-    color:white; 
-    
-    border: solid 1px #ddd;
+    font-weight: bold;
+    color:white;     
     background-color:#bbb; 
-    border-radius: 6px;
-    border-color:#ddd #ddd #444 #444
+    border-bottom : solid 4px #7f8fa6;
 }
 .button_span:active { background:green; }
 
@@ -154,3 +148,10 @@ body.wait *, body.wait
 }
 
 /****************************/
+
+/* 아이콘 */
+i {
+    max-width : 32px;
+    width : 80%;
+    float : left;
+}
