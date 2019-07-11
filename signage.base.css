@@ -9,7 +9,23 @@ body  {line-height: 1; font-family: sans-serif; -webkit-text-size-adjust: none; 
 */
 a:hover, a:visited, a:link, a:active{
     text-decoration: none;
-}   
+}
+
+header {
+    position: absolute;
+    top : 0%;
+    color : rgba(44, 62, 80,1.0);
+    text-align : center;
+    font-weight: bold; 
+    font-size : 24px;
+    background-color : rgba(236, 240, 241, 0.5);
+    border-bottom: 5px solid rgba(241, 144, 102, 0.5);
+    padding: 13px 0;
+    width : 100%;
+    left : 50%;
+    transform : translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+}
 
 .img_shadow { 
     border:2px solid #fff; 
@@ -25,16 +41,6 @@ a:hover, a:visited, a:link, a:active{
     background: no-repeat; 
 }
 
-.headnote {
-    padding-top: 0.2em;
-    padding-bottom:0.2em;
-
-    border-top: solid 2px #a0a0a0;
-    border-bottom: solid 2px #a0a0a0;   
-
-    background:#c0c0c0;
-    text-align:center;
-}
 .input_title {
     text-align : center; border:none;
     font-weight:bold; color:blue; font-size:1.2em;

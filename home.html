@@ -70,22 +70,6 @@ html, body {
     cursor : pointer;
 }
 
-header {
-    position: absolute;
-    top : 0%;
-    color : rgba(44, 62, 80,1.0);
-    text-align : center;
-    font-weight: bold; 
-    font-size : 24px;
-    background-color : rgba(236, 240, 241, 0.5);
-    border-bottom: 5px solid rgba(241, 144, 102, 0.5);
-    padding: 13px 0;
-    width : 100%;
-    left : 50%;
-    transform : translate(-50%, 0);
-    -webkit-transform: translate(-50%, 0);
- }
-
  footer {
     position: absolute;
     bottom : 0;
@@ -124,7 +108,7 @@ header {
 </head>
 <body>
 <div id="photo">
-    <header>
+    <header onclick="javascript:document.location.href='home.html'">
         <span id="subject"></span>
         <span id="owner"></span>
     </header>

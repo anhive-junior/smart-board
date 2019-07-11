@@ -1790,41 +1790,31 @@ function _home_bottom_button(){
         outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
     
     // task
-        $data[] = array(
-                "link" => "participants.html",
-                "spanInner" => "사용자"
-            );
-        $data[] = array(
-            "link" => "samworks.html",
-            "spanInner" => "앨범관리"
+    $data[] = array(
+        "link" => "participants.html",
+        "spanInner" => "사용자"
         );
-        $data[] = array(
-            "link" => "playwork.html",
-            "spanInner" => "재생관리"
-        );
+    $data[] = array(
+        "link" => "samworks.html",
+        "spanInner" => "앨범관리"
+    );
+    $data[] = array(
+        "link" => "playwork.html",
+        "spanInner" => "재생관리"
+    );
 
     //exteneded task
-        if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=3){
-            $data[] = array(
-                "link" => "syswork.html",
-                "spanInner" => "접속관리"
-            );
-            if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=4){
-                $data[] = array(
-                "link" => "testwork.html",
-                "spanInner" => "테스트"
-                );
-                $data[] = array(
-                "link" => "validator/checker.html",
-                "spanInner" => "검증"
-                );
-            }
-        }
-        $arr = array("contents"=>$data, "count"=>count($data));
-        //validation 검증과정
+    if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=3){
+        $data[] = array(
+            "link" => "syswork.html",
+            "spanInner" => "접속관리"
+        );
+    }
+    $arr = array("contents"=>$data, "count"=>count($data));
+    //validation 검증과정
         
-        //exit criteria, return
-        outputJSON($arr, "success");
+    //exit criteria, return
+    outputJSON($arr, "success");
 };
 
 // contents send

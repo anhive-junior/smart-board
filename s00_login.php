@@ -48,9 +48,6 @@ function _login(){
     } else if ( $_SESSION["admin_code"] == $input_code ) {
         if (  $freespace < 16 ) @unlink ( "emergency.dumy" );
         $_SESSION['uselevel']=3;
-    } else if ( $_SESSION["factory_code"] == $input_code ) {
-        if (  $freespace < 16 ) @unlink ( "emergency.dumy" );
-        $_SESSION['uselevel']=4;
     } else {
         $mesg = "접속코드를 확인해주세요!";
     }
@@ -191,11 +188,10 @@ html, body {
     text-align: center;
     font-weight: bold;
  }
- .login-box .button:hover {
+.login-box .button:hover {
     background-color: green;
  }
-
-header {
+.login-header {
     color : black;
     text-align : center;
     font-weight: bold; 
@@ -222,7 +218,7 @@ footer {
 <body>
 <div id="photo"></div>
 <div class="login-box">
-    <header id="title" style="margin-top:15px;"></header>
+    <div class="login-header" id="title" style="margin-top:15px;"></div>
     <h1 style="margin-top:15px;">
     <span id="subject"></span>&nbsp;<span id="owner"></span>
     </h1>
