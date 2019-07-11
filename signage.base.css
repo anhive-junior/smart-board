@@ -11,9 +11,15 @@ a:hover, a:visited, a:link, a:active{
     text-decoration: none;
 }
 
+html, body {
+    padding : 0;
+    margin : 0;
+    width: 100%;
+    height : 100%;
+    background-color: #f5f6fa;
+}
+
 header {
-    position: absolute;
-    top : 0%;
     color : rgba(44, 62, 80,1.0);
     text-align : center;
     font-weight: bold; 
@@ -22,10 +28,17 @@ header {
     border-bottom: 5px solid rgba(241, 144, 102, 0.5);
     padding: 13px 0;
     width : 100%;
-    left : 50%;
-    transform : translate(-50%, 0);
-    -webkit-transform: translate(-50%, 0);
 }
+
+ footer {
+    color : black; 
+    text-align : center;
+    font-size : 1.em;
+    font-weight: bold; 
+    background-color : white;
+    width : 100%;
+    padding : 15px 0px;
+ }
 
 .img_shadow { 
     border:2px solid #fff; 
@@ -79,8 +92,8 @@ input[type=button] {
 }
 .button_span {
     cursor: pointer;
-    display: block; 
-    width: 100%;
+    display: inline-block; 
+    width: 30%;
     padding : 7% 0;
     font-size: 1.3em;
     font-weight: bold;
@@ -109,11 +122,20 @@ body.wait *, body.wait
 {
     cursor: progress !important;
 }
+
 .contents {
     width:100%;
 }
-    
-
+.container {
+    width : 100%;
+    text-align: center;
+}
+@media screen and (min-width: 800px){
+    .container {
+        margin : 0 auto;
+        width : 65%;
+    }
+}
 
 /* 알림창 */
 

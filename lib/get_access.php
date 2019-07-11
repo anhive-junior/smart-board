@@ -7,12 +7,14 @@ if (!isset($_SESSION['access'])) {
     $config = $config[$pname];
 
     $access_code     = $_SESSION['access_code'] = $config['access_code'];
+    $sam_code = $_SESSION['sam_code'] = $config['sam_code'];
     $admin_code      = $_SESSION['admin_code'] = $config['admin_code'];
     $ssid            = $_SESSION['ssid'] = $config['ssid'];
     $wifi_password   = $_SESSION['wifi_password'] = $config['wifi_password'];
     $_SESSION['access'] = $pname;
 } else {
     $access_code     = $_SESSION['access_code'];
+    $sam_code = $_SESSION['sam_code'] = $config['sam_code'];
     $admin_code      = $_SESSION['admin_code'];
     $ssid            = $_SESSION['ssid'];
     $wifi_password   = $_SESSION['wifi_password'];

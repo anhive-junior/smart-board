@@ -9,12 +9,7 @@
     <title>SweetHome</title>
 <style>
 html, body {
-    padding : 0;
-    margin : 0;
-    width: 100%;
-    height : 100%;
     overflow: hidden;
-    background-color: #f5f6fa;
 }
 
 #photo {
@@ -69,7 +64,10 @@ html, body {
     margin-left: 50px;
     cursor : pointer;
 }
-
+ header {
+    position: absolute;
+    width : 100%;
+ } 
  footer {
     position: absolute;
     bottom : 0;
@@ -79,6 +77,7 @@ html, body {
     font-weight: bold; 
     background-color : white;
     width : 100%;
+    padding: 5px 0px;
     opacity: 0.3;
  }
 
@@ -131,7 +130,7 @@ html, body {
             <i class="closebtn" onclick="config_button()">
                 <img src="./images/close_btn.svg" title="닫기" alt="닫기">
             </i>
-            <span id='button_none' class="button_span" style="display:none"></span>
+            <span id='button_none' class="button_span" style="display:none;width: 100%;"></span>
         </div>
     </div>
     <footer id="foot_note"></footer>

@@ -199,7 +199,7 @@ html, body {
     padding: 10px 10px;
  }
 
-footer {
+.login-footer {
     color : black; 
     text-align : center;
     font-weight: bold; 
@@ -230,8 +230,8 @@ footer {
     <i><img src="./images/key-solid.svg" title="접속코드" alt="code"></i>&nbsp;&nbsp;
     <input type='password' id="icode" name='input_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
     </div>
-    <div class="button" onclick="logged_in();" >로그인</div>
-    <footer id="foot_note"></footer>
+    <div class="button" onclick="loader('Login...');logged_in();" >로그인</div>
+    <div class="login-footer" id="foot_note"></div>
 </div>
 <script>
 function loader(msg){
@@ -335,7 +335,6 @@ var logged_in = function(){
             }
         }
     };
-    loader("Login...");
     request.open("POST", window.location.href);
     request.send(data);
 }
