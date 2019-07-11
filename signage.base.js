@@ -121,4 +121,28 @@ function alerted(msg){ // alerte
     }
     document.getElementById("alert").style.visibility = "visible";
     document.getElementById("alert_inner").innerHTML = msg;
+    loader("exit");
+}
+
+// 로딩창 띄우기
+function loader(msg){
+    var load = document.getElementById("load");
+    if(load == null){
+        var div = "<div id='load' class='bg'>";
+        div += "<div class='loader_box'>";
+        div += "<div class='loader'><p>🐝</p></div>";
+        div += "<div id='load_txt'></div>";
+        div += "</div>";
+        div += "</div>";
+        document.body.innerHTML += div;
+    }
+    if (msg == undefined){
+        msg = "Loading..";
+    }
+    else if(msg == "exit"){
+        document.getElementById("load").style.visibility = "hidden";
+        return;
+    }
+    document.getElementById("load").style.visibility = "visible";
+    document.getElementById("load_txt").innerHTML = msg;
 }

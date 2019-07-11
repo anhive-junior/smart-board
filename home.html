@@ -57,7 +57,6 @@ html, body {
     min-height: calc(100vh - 80px);
     z-index: 1;
     padding-top : 80px;
-    transition: 0.6s;
     overflow : hidden;
     background-color : #f5f6fa;
 }
@@ -89,7 +88,7 @@ header {
 
  footer {
     position: absolute;
-    bottom : 5px;
+    bottom : 0;
     color : black; 
     text-align : center;
     font-size : 1.em;
@@ -214,15 +213,13 @@ var home_bottom_button = function(){
             clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
             clone.innerHTML = cont['spanInner'];
             buttons.appendChild(clone);
-            
         }
     });
 }
-
 headnote();
 home_level_contents();
 home_bottom_button();
-    
+
 </script>    
 </body>
 </html>
