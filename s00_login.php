@@ -35,9 +35,9 @@ function _login(){
     $_SESSION['uselevel']=0;
     $destination="home.html";
     $cookie_expire = time()+60*60*24*365;
-    if ( $user_code  == '' /* isset($_POST['user_code']) */ ) {
+    if ( !isset($user_code) ) {
         $mesg = "사용자와 접속코드를 입력하세요!"."-- :)";
-    } else if ( $input_code == '' /* isset($_POST['input_code']) */ ) {
+    } else if ( !isset($input_code) ) {
         $mesg = "접속코드를 입력하세요";
     } else if ( $_SESSION['access_code'] == $input_code ) {
         $_SESSION['uselevel']=1;

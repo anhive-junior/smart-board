@@ -125,7 +125,7 @@ html, body {
     <i><img src="./images/key-solid.svg" title="접속코드" alt="code"></i>&nbsp;&nbsp;
     <input type='password' id="icode" name='input_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
     </div>
-    <div class="button" onclick="loader('Login...');logged_in();" >로그인</div>
+    <div class="button" onclick="logged_in();" >로그인</div>
     <div class="login-footer" id="foot_note"></div>
 </div>
 <script>
@@ -187,6 +187,8 @@ var init = function(){
             document.getElementById('icode').value = resp.data.code;
             if ( "freezing" in resp.data && resp.data.freezing == "점검중" ) // 점검중 띄우기
                 alerted("점검중입니다. <br> <h5 style='font-size : 15px; color : grey'>일반 사용자는 접속이 불가능합니다.</h5>");
+            else if ( document.URL.substr(document.URL.indexOf("?")+1) == "banned" )
+                alerted("<h2 style='color : red; margin-bottom : -20px'>강제 퇴장 되셨습니다.</h1> <br> <h5 style='font-size : 15px; color : grey'>자세한 것은 운영자에게 문의하시길 바랍니다.</h5>");
         }
     };
     request.open("POST", "s00_login.php");
@@ -198,6 +200,7 @@ var logged_in = function(){
     data.append("func", "login");
     data.append("user_code", document.getElementById("ucode").value);
     data.append("input_code", document.getElementById("icode").value);
+    loader('Login...');
     var request = new XMLHttpRequest();
     request.onreadystatechange = function(){
         if(request.readyState == 4){

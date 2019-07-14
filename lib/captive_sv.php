@@ -25,13 +25,40 @@ function _test() {
      }
 };
 
+
+
 //////////////////////////////////////////
-// 
+// 강퇴 체크 기능
+function _banned(){
+    // banned check user
+    session_start();
+    global $capturelog;
+    try {
+        $mac=(isset($_SESSION['mac'])&&strlen($_SESSION['mac'])>0)?$_SESSION['mac']:"";
+        $ip=(isset($_SESSION['ip'])&&strlen($_SESSION['ip'])>0)?$_SESSION['ip']:"";
+        if ($mac.$ip == "")  outputJSON( "mac address 또는 ip가 필요합니다.");
+        $list = explode("\n", get_userlist()); 
+        foreach ($list as $user) {
+            if (trim($user) == "") continue;
+            list( $user_f, $mac_f, $ip_f) = explode("\t", $user);
+            if ($mac.$ip == $mac_f.$ip_f) {
+                outputJSON("stay session", "success");
+            }
+        }
+        session_destroy();
+        outputJSON("banned", "success");
+    } catch (Exception $e) {
+        error_log( $e->getMessage() );
+        outputJSON( $e->getMessage() );
+    }
+}
+
+//////////////////////////////////////////
+// 강퇴기능
 function _extract() {
 
     global $capturelog;
     try {
-        
         $mac=(isset($_POST['mac'])&&strlen($_POST['mac'])>0)?$_POST['mac']:"";
         $ip=(isset($_POST['ip'])&&strlen($_POST['ip'])>0)?$_POST['ip']:"";
         if ($mac.$ip == "")  outputJSON( "mac address 또는 ip가 필요합니다.");
@@ -45,13 +72,10 @@ function _extract() {
             //error_log($mac."/".$mac_f);
             if ($mac.$ip != $mac_f.$ip_f) {
                 $list_new .= $user."\n";
-            } else {
-                exec("sudo iptables -D internet -t mangle -m mac --mac-source $mac -j RETURN");
             }
         }
         //echo $list_new;
-        file_put_contents($capturelog, $list_new);
-        
+        file_put_contents($capturelog, $list_new);        
         outputJSON( "removed the mac[$mac],ip[$ip]", "success");
     } catch (Exception $e) {
         error_log( $e->getMessage() );
@@ -123,7 +147,9 @@ $services = array_merge(
             array  ('extract'=>'_extract'
                    ,'retrieve'=>'_retrieve'
                    ,'setstatus'=>'_setstatus'
-                   ,'test'=>'_test' ));
+                   ,'test'=>'_test' 
+                   ,'banned' => '_banned'
+               ));
 
 
 /////////////////////////////////////

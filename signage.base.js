@@ -49,62 +49,6 @@ var _clicked = function () {
 	obj.value = arguments[1];
 } 
 
-var _getChild = function (obj, pro, value) {
-
-	if (obj.getAttribute(pro) == value) return obj;
-	var cur = obj;
-	var sub=null;
-	var result = null;
-	do {
-		sub= (sub==null)?cur.firstChild:sub.nextSibling;
-		if ("INPUT:TEXTAREA:DIV".indexOf( sub.nodeName ) >= 0
-			&& sub.getAttribute(pro) == value) return sub;
-		if (sub.hasChildNodes()) {
-			result = searchChild(sub, pro, value);
-			if (result != null) break;
-		}
-	} while(sub != cur.lastChild);
-	
-	return result;
-} 
-
-var _setForm = function(target, formtype) {
-	var t = document.getElementById(target);
-		t.innerHTML = document.getElementById(formtype).innerHTML;
-}
-
-var _setNext = function(target, formtype) {
-	// target is target object
-	var fdiv = document.createElement('div');
-		fdiv.setAttribute('style', 'padding:4px; margin-left:20px; background-color:#ddd;');
-		fdiv.innerHTML = document.getElementById(formtype).innerHTML;
-	target.parentNode.insertBefore(fdiv, target.nextSibling);
-}
-
-function setCookie(cookie_name, cookie_valie, cookie_delay){
-	var expire = new Date();
-	expire.setDate(expire.getDate() + cookie_delay);
-	cookies = cookie_name + '=' + escape(cookie_valie) + '; path=/ '; 
-	if(typeof cookie_delay != 'undefined') 
-		cookies += ';expires=' + expire.toGMTString() + ';';
-	document.cookie = cookies;
-}
- 
-// 쿠키 가져오기
-function getCookie(cookie_name) {
-	cookie_name = cookie_name + '=';
-	var cookieData = document.cookie;
-	var start = cookieData.indexOf(cookie_name);
-	var cookie_valie = '';
-	if(start != -1){
-		start += cookie_name.length;
-		var end = cookieData.indexOf(';', start);
-		if(end == -1)end = cookieData.length;
-		cookie_valie = cookieData.substring(start, end);
-	}
-	return unescape(cookie_valie);
-}
-
 // 알림창 띄우기
 function alerted(msg){ // alerte
     var alert = document.getElementById("alert");
@@ -146,3 +90,25 @@ function loader(msg){
     document.getElementById("load").style.visibility = "visible";
     document.getElementById("load_txt").innerHTML = msg;
 }
+
+// limit time 최대 접속시간,
+
+function limit_time(){
+	var time = 120000; // 2분
+	setTimeout(function() {
+	  window.open("/", "_self");
+	}, time);
+}
+limit_time();
+
+// 퇴장 기능
+function banned(){
+	var data = new FormData();
+	data.append("func", "banned");
+	POST("lib/captive_sv.php", data, function(resp){
+		if( resp.data == "banned") {
+			window.open("index.html?banned", "_self");
+		}
+	});
+}
+setInterval("banned()", 1000);

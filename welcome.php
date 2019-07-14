@@ -19,7 +19,7 @@ $mac = NULL;
 $user = NULL;
 if (true) { 
     $ip = $_SERVER['REMOTE_ADDR'];
-    $mac = bypass_captive($ip);
+    $mac = get_mac($ip);
     error_log ("\$mac=".$mac);
     //$mac = get_mac($ip);
     $_SESSION["device"] = $_SERVER['REMOTE_ADDR'];  //set device info
