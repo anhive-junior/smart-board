@@ -426,7 +426,9 @@ function _sendcard() {
     error_log( "SLIDE: [$config_slide/$photo_md5_name], PLAYLIST[$config_playlist/$photo_md5_name]"); 
     
     $caption = isset($_POST['caption'])?$_POST['caption']:"";
+	error_log("cation--------------$caption------------------");
     $cfile = "$config_caption/$photo_md5_name.txt";
+	error_log("file----------------$cfile---------------------");
     file_put_contents($cfile, $caption);
     make_thumb_from_image("$config_slide/$photo_md5_name", 
                 "$config_thumbs/$photo_md5_name.png", 64,64);
@@ -439,7 +441,7 @@ function _sendcard() {
                   "user_md5"=>get_userindex(),
                   "thumbs"=>"thumbs",
                   "origin"=>$_FILES["card"]["name"]);        
-    file_put_contents($json_file, json_encode($info));                
+    file_put_contents($json_file, json_encode($info, JSON_UNESCAPED_UNICODE));                
                 
     if (! (isset($_POST['test']) && ($_POST['test']== "on") ) )
         submit_RPi(getcommand("restart"));
@@ -453,7 +455,7 @@ function _sendcard() {
 $services['rmcard'] = '_rmcard';
 function _rmcard() {
     if(!($_SESSION['uselevel']>1)) die("잘못된 접근입니다."); 
-    global $config_slide, $config_playlist, $config_thumbs, $config_info, $config_captions;
+    global $config_slide, $config_playlist, $config_thumbs, $config_info, $config_caption;
     $rm_list=$_POST["rm_list"];
     if($rm_list == true){
         s00_log ("Start ".__FUNCTION__." - list ");
@@ -463,11 +465,12 @@ function _rmcard() {
         $list = preg_split('/\n/',$lst);
         
         foreach($list as $lst){
-            $cfile = "$config_captions/".basename($lst).".txt";
+            $cfile = "$config_caption/".basename($lst).".txt";
             $pfile = "$config_playlist/".basename($lst);
             $sfile = "$config_slide/".basename($lst);
             $tfile = "$config_thumbs/".basename($lst).".png";
             $ifile = "$config_info/".basename($lst).".json";
+			
             
             if (file_exists($tfile)) unlink($tfile);
             if (file_exists($cfile)) unlink($cfile);
@@ -1880,6 +1883,7 @@ function _show_level(){
 
 $services['openimages'] = '_openimages';
 function _openimages(){
+	global $config_caption;
     s00_log("Start ".__FUNCTION__);
     if ( !isset($_SESSION['uselevel']) ) 
         outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
@@ -1893,9 +1897,11 @@ function _openimages(){
         $script_path = dirname(trim($_SERVER['SCRIPT_NAME']));//if ($script_path != "") $dir = $script_path."/".$dir;
         $uri = $dir."/".$filename;
         $cap = $config_caption."/".$filename.'.txt';
+		
     }
     $id_date = date("Y/m/d H:i:s.", filemtime($uri));
     $memo = "메모: ".(file_exists($cap)?file_get_contents($cap):"");
+
     $img = $uri;
     $data = array(
          "file_name" => $filename,
