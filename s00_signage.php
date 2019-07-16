@@ -2023,10 +2023,15 @@ function _parti_level_contents(){
 /////////////////////////////////////
 // execute services
 $func= isset($_POST['func'])?$_POST["func"]:"test";
-
+$security = array("rmcard","rmvideo");
 
 if (!isset($services[$func])) 
-        outputJSON("Undefined service[$func].");
+    outputJSON("Undefined service[$func].");
+
+for($i=0;$i<count($security);$i++){
+    if($func == $security[$i] && $_SESSION['uselevel']<2)
+	    outputJSON("사용자 권한이 없습니다","success");
+}
 try {
     call_user_func( $services[$func]);
     //s00_log2(4, print_r($services,true));
