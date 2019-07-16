@@ -1,4 +1,3 @@
-<?php session_start();?>
 <?php 
 include_once("captive.php");
 
@@ -31,7 +30,7 @@ function _test() {
 // 강퇴 체크 기능
 function _banned(){
     // banned check user
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) session_start();
     global $capturelog;
     try {
         $mac=(isset($_SESSION['mac'])&&strlen($_SESSION['mac'])>0)?$_SESSION['mac']:"";

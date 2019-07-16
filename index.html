@@ -119,11 +119,11 @@ html, body {
     </h1>
     <div class="textbox">
     <i><img src="./images/user-solid.svg" title="사용자" alt="user"></i>&nbsp;&nbsp;
-    <input type='text' id="ucode" name='user_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="사용자">
+    <input type='text' onkeypress="key_event();" id="ucode" name='user_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="사용자">
     </div>
     <div class="textbox">
     <i><img src="./images/key-solid.svg" title="접속코드" alt="code"></i>&nbsp;&nbsp;
-    <input type='password' id="icode" name='input_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
+    <input type='password' onkeypress="key_event();" id="icode" name='input_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
     </div>
     <div class="button" onclick="logged_in();" >로그인</div>
     <div class="login-footer" id="foot_note"></div>
@@ -185,14 +185,27 @@ var init = function(){
             }
             document.getElementById('ucode').value = resp.data.name;
             document.getElementById('icode').value = resp.data.code;
-            if ( "freezing" in resp.data && resp.data.freezing == "점검중" ) // 점검중 띄우기
-                alerted("점검중입니다. <br> <h5 style='font-size : 15px; color : grey'>일반 사용자는 접속이 불가능합니다.</h5>");
-            else if ( document.URL.substr(document.URL.indexOf("?")+1) == "banned" )
-                alerted("<h2 style='color : red; margin-bottom : -20px'>강제 퇴장 되셨습니다.</h1> <br> <h5 style='font-size : 15px; color : grey'>자세한 것은 운영자에게 문의하시길 바랍니다.</h5>");
+            if ( "freezing" in resp.data && resp.data.freezing == "점검중" ){ // 점검중 띄우기
+                alerted("점검중입니다. <br><br> <span style='font-size : 15px; color : grey'>일반 사용자는 접속이 불가능합니다.</span>");
+            }
+
+            if ( document.URL.substr(document.URL.indexOf("?")+1) == "banned" ){
+                alerted("<span style='color : red; font-size : 25px'>강제 퇴장 되셨습니다.</span> <br><br> <span style='font-size : 15px; color : grey'>자세한 것은 운영자에게 문의하시길 바랍니다.</span>");
+            }
+
+            else if( document.URL.substr(document.URL.indexOf("?")+1) == "timeout" ){
+                alerted("<span style='color : red; font-size : 25px'>시간 초과</span> <br><br> <span style='font-size : 15px; color : grey'>접속 시간이 초과되셨습니다.</span>");
+            }
         }
     };
     request.open("POST", "s00_login.php");
     request.send(data);
+}
+
+function key_event(){
+    if ( window.event.keyCode == 13 ){
+        logged_in();
+    }
 }
 
 var logged_in = function(){
