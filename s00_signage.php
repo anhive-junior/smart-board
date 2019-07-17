@@ -454,7 +454,6 @@ function _sendcard() {
 // set slide caption
 $services['rmcard'] = '_rmcard';
 function _rmcard() {
-    if(!($_SESSION['uselevel']>1)) die("잘못된 접근입니다."); 
     global $config_slide, $config_playlist, $config_thumbs, $config_info, $config_caption;
     $rm_list=$_POST["rm_list"];
     if($rm_list == true){
