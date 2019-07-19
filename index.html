@@ -108,6 +108,7 @@ html, body {
         font-size : 20px;
     }
  }
+
 </style>
 </head>
 <body>
@@ -118,11 +119,11 @@ html, body {
     <span id="subject"></span>&nbsp;<span id="owner"></span>
     </h1>
     <div class="textbox">
-    <i><img src="./images/user-solid.svg" title="사용자" alt="user"></i>&nbsp;&nbsp;
+    <i style="max-width:32px;width:80%;float:left;"><img src="./images/user-solid.svg" title="사용자" alt="user"></i>&nbsp;&nbsp;
     <input type='text' onkeypress="key_event();" id="ucode" name='user_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="사용자">
     </div>
     <div class="textbox">
-    <i><img src="./images/key-solid.svg" title="접속코드" alt="code"></i>&nbsp;&nbsp;
+    <i style="max-width:32px;width:80%;float:left;"><img src="./images/key-solid.svg" title="접속코드" alt="code"></i>&nbsp;&nbsp;
     <input type='password' onkeypress="key_event();" id="icode" name='input_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
     </div>
     <div class="button" onclick="logged_in();" >로그인</div>
