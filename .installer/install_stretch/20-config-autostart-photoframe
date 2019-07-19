@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# for autostart in stretch
-if [ -f /etc/xdg/lxsession/LXDE-pi/autostart.bak ]; then
-   echo "this file already fix"
-else
-   sudo cp /etc/xdg/lxsession/LXDE-pi/autostart /etc/xdg/lxsession/LXDE-pi/autostart.bak
-   sudo sh -c "echo '/etc/hive/signage/feh.sh' >> /etc/xdg/lxsession/LXDE-pi/autostart"
-fi
