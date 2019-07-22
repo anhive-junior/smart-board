@@ -31,11 +31,23 @@ Smart-board를 만드는 교육을 통하여 프로그램이 어떻게 만들어
 ## smart-board 설치하기 (install smart-board)
 
 smart-board를 설치하려면 라즈베리파이 OS인 라즈비안을 먼저 설치 하여야합니다.\
-라즈비안이 설치가 되어있는 상태라면 위키를 이용하여 smart-board 설치하시길 바랍니다.
+라즈비안이 설치가 되어있는 상태라면 깃허브 위키를 이용하여 smart-board 설치하시길 바랍니다.
 
 - [라즈비안 설치하기](https://github.com/anhive-junior/smart-board/wiki/%EB%9D%BC%EC%A6%88%EB%B9%84%EC%95%88-OS-%EC%84%A4%EC%B9%98)
 - [smart-board 설치하기](https://github.com/anhive-junior/smart-board/wiki/Install-Smart-Board)
 
+## 자동 설치 스크립트 이용하기 (auto install smart-board)
+
+자동으로 smart-board를 설치하려면 밑의 스크립트를 터미널에서 이용하시면 됩니다. 단, 라즈비안 OS가 설치되어있어야 합니다.
+
+```
+cd ~
+git clone https://github.com/anhive-junior/smart-board
+```
+
+```
+bash ~/smart-board/.installer/installer_sb.sh
+```
 
 ## 기여 (Contribute)
 
