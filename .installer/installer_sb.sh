@@ -87,3 +87,8 @@ fi
 [ -f ./installing.sh ] && rm ./installing.sh
 [ -f $install_script ] && rm $install_script
 [ -f $download_file ] && rm $download_file
+
+whiptail --title "Install SmartBoard" --yesno "    You must reboot for all systems to take effect." 8 60
+if [ $? == 0 ]; then
+    sudo reboot
+fi
