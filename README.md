@@ -36,19 +36,10 @@ smart-board를 설치하려면 라즈베리파이 OS인 라즈비안을 먼저 �
 - [라즈비안 설치하기](https://github.com/anhive-junior/smart-board/wiki/%EB%9D%BC%EC%A6%88%EB%B9%84%EC%95%88-OS-%EC%84%A4%EC%B9%98)
 - [smart-board 설치하기](https://github.com/anhive-junior/smart-board/wiki/Install-Smart-Board)
 
-## 자동 설치 스크립트 이용하기 (auto install smart-board)
+## 일괄 설치 프로그램 이용하기 (auto install smart-board)
 
-자동으로 smart-board를 설치하려면 밑의 스크립트를 터미널에서 이용하시면 됩니다.\
-단, 라즈비안 OS가 설치되어있어야 합니다.
-
-```
-cd ~
-git clone https://github.com/anhive-junior/smart-board
-```
-
-```
-bash ~/smart-board/.installer/installer_sb.sh
-```
+#### [일괄 설치 프로그램](https://github.com/anhive-junior/smart-board/wiki/Smart-board-%EC%9D%BC%EA%B4%84-%EC%84%A4%EC%B9%98-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8)
+> 자동으로 smart-board를 설치하려면 일괄 설치 프로그램을 이용하십시오. 일괄 설치 프로그램은 Smart-board 프로그램을 한 스크립트로 모아서 설치하는 것으로 써, Smart-board 프로그램을 빠르게 설치 해야할 시에 유용합니다. 단, 라즈비안 OS가 설치되어있어야 합니다.
 
 ## 기여 (Contribute)
 
