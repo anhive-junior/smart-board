@@ -12,7 +12,7 @@ fi
 # setting location
 wiki_location="https://raw.githubusercontent.com/wiki/anhive-junior/smart-board/Install-Smart-Board.md"
 download_file="./data_smartboard"
-install_script="./install.sh"
+install_script="./data_install.sh"
 count=0
 scripts_name=(
     ""
@@ -54,7 +54,7 @@ skip=false
 IFS=$'\n'
 for i in $(cat $install_script)
 do
-    if [ "$i" = "$check" ]; then
+    if [ "$i" == "$check" ]; then
         [ -f ./installing.sh ] && bash ./installing.sh && rm ./installing.sh
         count=$((count+1))
         whiptail --title "Install SmartBoard" --yesno "${scripts_name[$count]}" 7 $((${#scripts_name[$count]} + 5))
@@ -72,6 +72,7 @@ do
     fi
 
     if [ "$i" == "$check wifi" ]; then
+        [ -f ./installing.sh ] && bash ./installing.sh && rm ./installing.sh
         break
     fi
 done
@@ -84,6 +85,7 @@ if ( whiptail --title "Install SmartBoard" --yesno "you want to activate the Ras
     sudo ./set_ap.sh enable
 fi
 
+cd $HOME/smart-board/.installer
 [ -f ./installing.sh ] && rm ./installing.sh
 [ -f $install_script ] && rm $install_script
 [ -f $download_file ] && rm $download_file
