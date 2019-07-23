@@ -2032,13 +2032,10 @@ $security = array("rmcard","rmvideo");
 
 if (!isset($services[$func])) 
     outputJSON("Undefined service[$func].");
+if(in_array($func,$security) && $_SESSION['uselevel'] < 2)
+	outputJSON("사용자 권한이 없습니다","success");
 
-for($i=0;$i<count($security);$i++){
-    if($func == $security[$i] && $_SESSION['uselevel']<2)
-		outputJSON("사용자 권한이 없습니다","success");
-}
-
-try {
+try {	
     call_user_func( $services[$func]);
     //s00_log2(4, print_r($services,true));
 } catch (Exception $e) {

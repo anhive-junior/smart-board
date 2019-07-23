@@ -40,7 +40,7 @@ function _login(){
     } else if ( !isset($input_code) ) {
         $mesg = "접속코드를 입력하세요";
     } else if ( $_SESSION['access_code'] == $input_code ) {
-        $_SESSION['uselxevel']=1;
+        $_SESSION['uselevel']=1;
         $destination="cardwork.html";
     } else if ( $_SESSION['sam_code'] == $input_code /* && !$anonymous */ ) {
         if (  $freespace < 16 ) @unlink ( "emergency.dumy" );

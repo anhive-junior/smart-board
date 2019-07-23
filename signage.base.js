@@ -47,7 +47,7 @@ var _clicked = function () {
 		}
 	}
 	obj.value = arguments[1];
-} 
+}
 
 // 알림창 띄우기
 function alerted(msg){ // alerte
