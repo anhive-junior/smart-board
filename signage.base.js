@@ -50,8 +50,11 @@ var _clicked = function () {
 } 
 
 // 알림창 띄우기
-function alerted(msg, func="default"){ // alerte
+function alerted(msg, func){ // alerte
     var alert = document.getElementById("alert");
+    if ( func == undefined ){
+        func = "default";
+    }
     if(alert == null){
         var div = "<div id='alert' style='visibility : hidden;'>";
         div += "<h1><img src='./images/bullhorn.svg'></h1>";
@@ -115,10 +118,9 @@ function loader(msg){
 function limit_time(){
     var time = 120000; // 2분
     setTimeout(function() {
-      window.open("/", "_self");
+      window.open("index.html?timeout", "_self");
     }, time);
 }
-limit_time();
 
 // 퇴장 기능
 function banned(){

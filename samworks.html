@@ -13,16 +13,16 @@
         <div class="contents">
             <header onclick="javascript:document.location.href='home.html'">
                 <img id="headnote_img" style="height:15px;">
-                <span id="subject"></span> 
-                <span id="owner"></span>
+                <span id="subject_"></span> 
+                <span id="owner_"></span>
             </header>
   <div style="margin-top:10px;"><!-- upper line feed --></div>
    
    <div style="">
     <div id="profile" style="font-size:.8em; text-align:left; margin-left:10px;width: 50%; margin: 0 auto;min-width: 350px;">
      (소유) : <input type="text" id='title' style="width : 280px;text-align:center;" ><br>
-     (제목) : <input type="text" id='subject_c' style="width : 280px;text-align:center;"  ><br>
-     (주제) : <input type="text" id='owner_c' style="width : 280px;text-align:center;" ><br>
+     (제목) : <input type="text" id='subject' style="width : 280px;text-align:center;"  ><br>
+     (주제) : <input type="text" id='owner' style="width : 280px;text-align:center;" ><br>
      <div style="text-align:center;">
      <img class="img_shadow" id="photo" alt="photo" style="width:60%;"  onclick="document.getElementById('nfile').click();">
      </div>
@@ -166,41 +166,27 @@ function check8(str) {
  }
  
  
-    var set_subject = function(profile){
-        
-        var data = new FormData();
-        data.append('func', 'set_subject');
-        
-        dd = document.getElementById("profile").childNodes;
-        for (i=0;i <dd.length;i++) {
-            if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
-            data.append(dd[i].id, dd[i].value);
-        }
-        data.append('nfile', document.getElementById('nfile').files[0] );
-        
-  POST('s00_signage.php', data, 
-   function (resp) {
-    return; 
-   }
-  );
+  var set_subject = function(profile){
+    var data = new FormData();
+    data.append('func', 'set_subject');
+    dd = document.getElementById("profile").childNodes;
+    for (i=0;i <dd.length;i++) {
+        if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
+        data.append(dd[i].id, dd[i].value);
     }
+    if (document.getElementById('nfile').files[0] != undefined)
+      data.append('nfile', document.getElementById('nfile').files[0] );
+    POST('s00_signage.php', data, function (resp) {
+    return; });
+  }
     
-    var get_subject = function(profile){
-        
-        var data = new FormData();
-        data.append('func', 'get_subject');
-  if (typeof profile != 'undefined') data.append('profile', profile);
-        
-  POST('s00_signage.php', data, function (resp) {
-                dd = document.getElementById("profile").childNodes;
-                for (i=0;i <dd.length;i++) {
-                    if (dd[i].type != "text") continue;
-                    dd[i].value = resp.data[dd[i].id];
-                    data.append(dd[i].id, dd[i].value);
-                }
-                document.getElementById('photo').src = resp.data.photo+"?"+Math.random();
-        });
-    }
+  var get_subject = function(profile){
+    var data = new FormData();
+    data.append('func', 'get_subject');
+    POST('s00_signage.php', data, function (resp) {
+        if(resp.data == "true") document.location.reload();
+    });
+  }
     
     var set_code = function(){
         var data = new FormData();
@@ -247,8 +233,8 @@ function check8(str) {
    document.title = resp.data.owner;
    document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
    document.getElementById("title").setAttribute("value",resp.data.title);
-   document.getElementById("subject_c").setAttribute("value",resp.data.subject);
-   document.getElementById("owner_c").setAttribute("value",resp.data.owner);
+   document.getElementById("subject").setAttribute("value",resp.data.subject);
+   document.getElementById("owner").setAttribute("value",resp.data.owner);
    document.getElementById("photo").setAttribute("src",resp.data.photo);
    document.getElementById("footnote").setAttribute("value",resp.data.footer);
    
@@ -259,8 +245,8 @@ function check8(str) {
    document.getElementById("gate_server").setAttribute("value",resp.data.gateserver);
    document.getElementById("ssid").setAttribute("value",resp.data.ssid);
    document.getElementById("wifi_password").setAttribute("value",resp.data.wifi_password);
-   document.getElementById("subject").innerHTML = resp.data.subject;
-   document.getElementById("owner").innerHTML = resp.data.owner;
+   document.getElementById("subject_").innerHTML = resp.data.subject;
+   document.getElementById("owner_").innerHTML = resp.data.owner;
    document.getElementById("foot_note").innerHTML = resp.data.footer;
  });
 }

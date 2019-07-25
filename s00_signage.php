@@ -1162,16 +1162,9 @@ function _set_subject() {
 $services['get_subject'] = '_get_subject';
 function _get_subject() { 
     s00_log ("Start ".__FUNCTION__);
-    
-    $pname = isset($_POST['profile'])?$_POST['profile']
-                :file_get_contents("custom/default");
-    $sfile = "custom/".$pname."/profile.conf";
-    if (!file_exists($sfile)) file_put_contents($sfile,"");
-    $profile = json_decode(file_get_contents($sfile), true);
-    $profile = $profile[$pname];
-    //file_put_contents($sfile, json_encode($profile));
-    
-    outputJSON($profile, 'success');
+    unset($_SESSION['profile']);
+    include_once("lib/get_config.php");
+    outputJSON("true", 'success');
 };
 
 /////////////////////////////////////
@@ -1768,7 +1761,7 @@ function _headnote(){
         "owner" => $_SESSION['owner'],
         "footer" => $_SESSION['footnote']
     );
-    if(@$_POST["samwork"] === "true" || @$_POST["syswork"] === "true"){
+    if(@$_POST["samwork"] === "true" || @$_POST["syswork"] === "true" && $_SESSION['uselevel']>1){
           $data += ["title" => $_SESSION['title']];
           $data += ["samcode" => $_SESSION['sam_code']];
           $data += ["accesscode" => $_SESSION['access_code']];

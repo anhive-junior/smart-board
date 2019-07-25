@@ -1,6 +1,6 @@
 <?php
 session_start(); 
-session_unset(); 
+session_unset();
 error_log(__FILE__."::".session_id());
 
 include_once("lib/get_config.php");
