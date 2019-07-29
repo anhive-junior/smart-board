@@ -40,14 +40,6 @@ header {
     padding : 15px 0px;
  }
 
-.img_shadow { 
-    border:2px solid #fff; 
-    background: no-repeat; 
-    box-shadow: 7px 7px 3px #ccc; 
-    -moz-box-shadow: 7px 7px 3px #ccc; 
-    -webkit-box-shadow: 7px 7px 3px #ccc; 
-    -khtml-box-shadow: 7px 7px 3px #ccc; 
-}
 
 .img_angle { 
     border:2px solid #fff; 
@@ -57,7 +49,7 @@ header {
 .input_title {
     text-align : center; border:none;
     font-weight:bold; color:blue; font-size:1.2em;
-    //background:#a0a0a0;
+    /* background:#a0a0a0; */
     background-color: Transparent;
 }    
 
@@ -112,7 +104,7 @@ input[type=button] {
 }
 
 .img_btn {
-    //background-color:red; 
+    /* background-color:red;  */
 }
 
 .img_btn:active { background-color:green; }
@@ -149,7 +141,7 @@ body.wait *, body.wait
     box-shadow: 0 32px 48px 0 rgba(0, 0, 0, 0.5);
     width: 70%;
     max-width : 500px;
-    height : auto%;
+    height : auto;
     background: white;
     padding: 10px;
     text-align:center;
@@ -179,9 +171,7 @@ body.wait *, body.wait
 
 /* /아이콘 */
 /* i {
-    max-width : 32px;
-    width : 80%;
-    float : left;
+    max-width : 32px; width : 80%; float : left;
 } */
 
 

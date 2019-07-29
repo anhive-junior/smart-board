@@ -8,59 +8,142 @@
     <script type="text/javascript" src="signage.base.js"></script>
     <title></title>
     <style>
-    .img_block{    position: relative;    
-            width:100%;
-            height: 100%;
-            margin:0 auto;
-            display:inline-block;
-    }
-    .img_tag{position: absolute;top: 32px;right: 16px;width: 72px;
-        color:green; }
-    .img_tag:active {background: red;}
     .container {
         width : 100%;
         text-align: center;
     }
+    .img_frame {
+        width : 80%;
+        position: relative;
+        margin : 0 auto;
+        background-color: #d2a873;
+        padding: 15px;
+        border-top: 15px solid #ab824d;
+        border-left: 15px solid #cea26a;
+        border-right: 15px solid #cea26a;
+        border-bottom: 15px solid #d09e5f;
+    }
+    .img_frame .in_frame {
+        position : relative;
+        width : 100%;
+        border-top: 15px solid #ecf0f1;
+        border-left: 15px solid #f5f6f7;
+        border-right: 15px solid #ecf0f1;
+        border-bottom: 15px solid #ecf0f1;
+        box-sizing : border-box;
+    }
+    .in_frame #photo {
+        width : 100%;
+        max-height: 650px;
+        background-color : white;
+        margin-bottom : -3px;
+    }
+    .button {
+        position : relative;
+        max-width : 38px;
+        width : 80%; 
+        margin : 1.5%;
+        border-bottom : 5px #78e08feb solid; 
+        background-color : white; 
+        cursor: pointer; 
+        padding: 10px 30px 30px 30px;
+        font-size: 13px; 
+        font-weight: bold;
+        font-style: normal;
+    }
+    .button > div {
+        position : absolute;
+        top : 85%;
+       	left : 50%;
+        transform: translate(-50%, -85%);
+        -webkit-transform: translate(-50%, -85%);
+        width : 100%;
+    }
+    #fname {
+        position : relative;
+        width: 100%;
+        opacity: 0.7;
+        font-weight : bold;
+        line-height : 27px;
+    }
+    #vlog {
+        position : relative;
+        width: 100%;
+        opacity: 0.7;
+        font-weight : bold;
+        line-height : 27px;
+    }
+    #caption {
+        font-size : 13px;
+        border-radius: 3%;
+        outline : none;
+        border : none;
+        border-bottom : 5px solid #f39c12;
+        text-align : center;
+        width : 85%;
+        min-height : 25px;
+        padding : 0 0 10px 0;
+        overflow : hidden;
+        background : none;
+    }
     @media screen and (min-width: 800px){
         .container {
             margin : 0 auto;
-            width : 65%;
-        }
-        .img_block{
-            width: 70%;
-            height: 70%;
+            width : 45%;
         }
     }
     </style>    
 </head>
 <body > 
-<header onclick="javascript:document.location.href='home.html'">
-    <img id="headnote_img" style="height:15px;">
-    <span id="subject"></span> 
-    <span id="owner"></span>
-</header>
 <div class="container">
-    <div class='progress_outer' style="border: 1px solid #CCC;">
-    <div id="_prog" class='progress' style="text-align:center; background-color:#afbf00;margin:3px;padding-top:5px;padding-bottom:5px;">???</div>
+    <header onclick="javascript:document.location.href='home.html'">
+        <img id="headnote_img" style="height:15px;">
+        <span id="subject"></span>
+        <span id="owner"></span>
+    </header>
+    <!-- uppear -->
+    <div style="margin-top : 15px;"></div>
+
+    <div id="fname">???</div>
+    <div class="img_frame">
+        <div class="in_frame">
+            <img id="photo" alt="photo" onclick="document.getElementById('_file').click();">
+        </div>
     </div>
-    <div id="img_blk" class="img_block" style="">
-        <figure class="img_base">
-            <img class="img_shadow" id="photo" src="" alt="photo" style="width:100%;" onclick="document.getElementById('_file').click();">
-            <textarea id="caption" style="width:80%;height:4em;" ></textarea><br>
-        </figure>
+    <div id="vlog">최근등록 파일</div>
+
+    <!-- uppear -->
+    <div style="margin-top : 20px; margin-bottom : 20px;"></div>
+
+    <div style="position : relative; text-align : center; display : block; width : 100%; margin : 0 auto; height : 100px;">
+        <p style="clear:both;font-weight:bold;text-align:left; margin-left : 8%; font-size: 20px;">
+            <i style="max-width: 20px; width: 80%; float: left">
+                <img src="images/memo.svg">
+            </i>
+            &nbsp;Memo
+        </p>
+        <textarea id="caption" rows="1" type="text" placeholder="여기에 글을 쓰신 후 등록하면 글이 액자에 등록됩니다."></textarea>
     </div>
-    <div class="button_base" style="text-align:center;background-color:#eee;">
-        <span id="btn_send" class="button_span btn" onclick="sendcard();" >보내기</span>  
-        <span id="btn_rmcard" class="button_span btn" onclick="rmcard()" style="display:none">회수</span>
-        <span id="btn_list" class="button_span btn" onclick="shownails();" >재생목록</span>
+    <div style="display : flex; justify-content: center;">
+        <i id="btn_rmcard" onclick="sendcard()" class="button">
+            <img src="images/check_btn.svg">
+            <div>보내기</div>
+        </i>
+        <i id="btn_rmcard" onclick="rmcard()" class="button" style="display: block; border-color : #eb4d4b;">
+            <img src="images/minus.svg">
+            <div>회수</div>
+        </i>
+        <i id="btn_list" onclick="shownails()" class="button" style="border-color : #a4b0be;">
+            <img src="images/list.svg">
+            <div>목록 확인</div>
+        </i>
     </div>
 
     <div style="visibility: hidden;">
         <input type='file' id='_file' class="medium-btn" style="width:70%;">                    
     </div>
-    <div id="vlog" style="text-align:center; background-color:#afbf00;margin:3px;padding-top:5px;padding-bottom:5px;">최근등록 파일</div>
+    <footer id="foot_note"></footer>
 </div>
-<footer id="foot_note"></footer>
 </body>
 
 <script>
@@ -91,8 +174,7 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
     data.append('func', 'headnote');
     POST("s00_signage.php", data, function(resp){
         console.log("headnote - " + resp.status + ':' + resp.data);
-        document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
-        document.getElementById("headnote_img").setAttribute("alt", resp.data.profile);
+        document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
         document.getElementById("subject").innerHTML=resp.data.subject;
         document.getElementById("owner").innerHTML=resp.data.owner;
         document.getElementById("foot_note").innerHTML=resp.data.footer;
@@ -103,7 +185,7 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
 
 
     var _photo = document.getElementById('photo');
-    var _fname = document.getElementById('_prog');
+    var _fname = document.getElementById('fname');
     var _caption = document.getElementById('caption');
     var _vlog = document.getElementById('vlog');
     
@@ -136,60 +218,27 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
 
     var sendcard = function(){
         
-        //if(_file.files.length === 0){
-        //    document.getElementById('vlog').innerHTML = 
-        //    "새 사진등록은 사진 클릭!";
-        //    return;
-        //}
-        var background_org = "#afbf00";
+        if(_file.files.length === 0){
+           alerted("새 사진등록은 사진 클릭!");
+           return;
+        }
         
         var data = new FormData();
         data.append('func', 'sendcard');
         data.append('card', _file.files[0]);
         data.append('caption', _caption.value);
         
-        var loadingdiv = document.getElementById('img_blk').appendChild(document.createElement("div"))
-        loadingdiv.innerHTML = "등록중";
-        loadingdiv.setAttribute("style", "position: absolute; top: "+(document.body.clientHeight - 60)/2+"px; left: "+(document.body.clientWidth - 300)/2+"px; width:300px; height:60px; color: red; background-color:yellow; font-size:3em;");
-        
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function(){
-            if(request.readyState == 4){
-                try {
-                    //console.log(request.response);
-                    var resp = JSON.parse(request.response);
-                } catch (e){
-                    var resp = {
-                        status: 'error',
-                        data: 'Unknown error occurred: [' + request.responseText + ']'
-                    };
-                } 
-                console.log(resp.status + ': ' + resp.data);
-                if (resp.status == 'error') {
-                    alert(resp.data);
-                    setTimeout( loadingdiv.remove(), 1000);
-                    return;
-                }
-
-                loadingdiv.innerHTML = resp.data.msg;
-                setTimeout( loadingdiv.remove(), 5000);
-                
-               _vlog.innerHTML=resp.data.msg;
-                getslide("first");
-                _fname.style.background = background_org;
-                //alert(resp.data.msg);
+        loader("등록중...");
+        POST("s00_signage.php", data, function(resp){
+            console.log(resp.status + ': ' + resp.data);
+            if (resp.status == 'error') {
+                alerted(resp.data);
+                return;
             }
-        };
-        
-        _fname.style.background = "#50ad4e";
-        request.upload.addEventListener('progress', function(e){
-            _prog.style.width=Math.ceil(e.loaded/e.total* 100) + '%';
-            _prog.innerHTML=Math.ceil(e.loaded/e.total* 100) + '%';
-        }, false);
-        
-        request.open('POST', 's00_signage.php');
-        request.send(data);
-        return request;
+            alerted(resp.data.msg);
+            _vlog.innerHTML=resp.data.msg;
+            getslide("first");
+        });
     }
     
     var shownails = function () {
