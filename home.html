@@ -15,7 +15,7 @@ html, body {
 #photo {
     background-size: cover;
     background-position: center;
-    height : 40%;
+    height : 45%;
     width : 100%;
     z-index: -1;
 }
@@ -31,18 +31,19 @@ html, body {
 
 
 .tile {
-    height : 20%;
     cursor : pointer;
     color:#fff;
     background: #efefef;
-    line-height: 11vh; /*********/
+    line-height: 13vh; /*********/
 }
 
 .tiletitle{
-    /*border-bottom: dotted 1px #e4e4e4;*/
     font-size:1.7em;
     font-weight:bold; 
     color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .config {
@@ -64,11 +65,19 @@ html, body {
     margin-left: 50px;
     cursor : pointer;
 }
- header {
+.icon {
+    max-width : 38px;
+    width : 80%;
+    background : none;
+    font-size: 13px; 
+    font-weight: bold;
+    margin-right : 15px;
+}
+header {
     position: absolute;
     width : 100%;
- } 
- footer {
+} 
+footer {
     position: absolute;
     bottom : 0;
     color : black; 
@@ -79,7 +88,7 @@ html, body {
     width : 100%;
     padding: 5px 0px;
     opacity: 0.3;
- }
+}
 
 @media screen and (min-width: 800px){
     #photo {
@@ -175,8 +184,10 @@ var home_level_contents = function(){ // level에 따른 contents를 가지고 �
             clone.style.backgroundColor = cont['color'];
             ch = clone.childNodes;
             for (var k = 0;k<ch.length; k++ ){
-                if (ch[k].className == 'tiletitle')
-                     ch[k].innerHTML = cont['tiletitle']
+                if (ch[k].className == 'tiletitle'){
+                    ch[k].innerHTML = "<img src =" + cont['icon'] + " class=icon>";
+                    ch[k].innerHTML += cont['tiletitle']
+                }
             }
             contents.appendChild(clone);
         }

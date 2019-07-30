@@ -133,6 +133,7 @@ body.wait *, body.wait
 
 #alert {
     position: fixed;
+    z-index: 10;
     top : 50%;
     left: 50%;
     transform : translate(-50%, -50%);
@@ -217,7 +218,7 @@ body.wait *, body.wait
 }
 
 .bg #load_txt {
-    position: relative;
+    position: absolute;
     display : inline-block;
     background-color : rgba(76, 209, 55,1.0);
     border-bottom : solid 6px rgba(68, 189, 50,1.0);
@@ -225,9 +226,9 @@ body.wait *, body.wait
     padding : 15px 15px;
     color : white;
     font-weight : bold;
-    top : 60%;
-    margin : 0 auto;
-    margin-top : 30px;
+    top : 50%;
+    transform : translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
 }
 
 /* Safari */

@@ -1825,29 +1825,28 @@ function _home_level_contents(){
     $data[]=array(
                 "link" => "cardwork.html",
                 "tiletitle" => "사진 전송",
+                "icon" => "images/photo-camera.svg",
                 "color" => "#ff7979"
     );
     
     //task extended process 확장 작업과정
     if ($_SESSION['uselevel'] >= 2){
-
-        $data[]=array(
-                        "link" => "slidework.html",
-                        "tiletitle" =>"앨범 보기",
-                        "color" =>"#f9ca24");
                         
         $data[]=array(
                         "link" => "listwork.html",
                         "tiletitle" =>"목록 편집",
+                        "icon" => "images/picture.svg",
                         "color" =>"#a29bfe");
         $data[]=array(
                         "link" => "signwork.html",
                         "tiletitle" =>"리모트 관리",
+                        "icon" => "images/remote-control.svg",
                         "color" =>"#4cd137");
                         
         $data[]=array(
                         "link" => "videowork.html",
                         "tiletitle" =>"영상 관리",
+                        "icon" => "images/video.svg",
                         "color" =>"#1e90ff");    
                 
     } 

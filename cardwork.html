@@ -59,6 +59,12 @@
         -webkit-transform: translate(-50%, -85%);
         width : 100%;
     }
+    .arrow_btn {
+        position : absolute;
+        top : 40%;
+        transform: translate(-40%, 0);
+        -webkit-transform: translate(-0%, 0);
+    }
     #fname {
         position : relative;
         width: 100%;
@@ -94,7 +100,7 @@
     }
     </style>    
 </head>
-<body > 
+<body>
 <div class="container">
     <header onclick="javascript:document.location.href='home.html'">
         <img id="headnote_img" style="height:15px;">
@@ -108,9 +114,14 @@
     <div class="img_frame">
         <div class="in_frame">
             <img id="photo" alt="photo" onclick="document.getElementById('_file').click();">
+            <img class="arrow_btn" src="images/back.svg" onclick="getslide('previous');" style="width:50px;left : -65px;" alt="previous">
+            <img class="arrow_btn" src="images/forward.svg" onclick="getslide('next');" style="width:50px;right : -65px;" alt="next">
         </div>
     </div>
     <div id="vlog">최근등록 파일</div>
+    <img id="rotate_270" class="img_btn" src="images/rotate_270.png" onclick="setslide('rotate_left');" style="width:72px;" alt='rotate_left'>
+    <img id="rotate_90" class="img_btn" src="images/rotate_90.png" onclick="setslide('rotate_right');" style="width:72px;" alt='rotate_right'>
+    <img id="exclude_img"  class="img_btn" src="images/exclude.png" onclick="exclude(_photo.alt);" style="width:72px;" alt='exclude'>
 
     <!-- uppear -->
     <div style="margin-top : 20px; margin-bottom : 20px;"></div>
@@ -127,23 +138,22 @@
     <div style="display : flex; justify-content: center;">
         <i id="btn_rmcard" onclick="sendcard()" class="button">
             <img src="images/check_btn.svg">
-            <div>보내기</div>
+            <div>등록</div>
         </i>
         <i id="btn_rmcard" onclick="rmcard()" class="button" style="display: block; border-color : #eb4d4b;">
             <img src="images/minus.svg">
-            <div>회수</div>
+            <div>삭제</div>
         </i>
-        <i id="btn_list" onclick="shownails()" class="button" style="border-color : #a4b0be;">
+        <i id="btn_list" onclick="showlistwork()" class="button" style="border-color : #a4b0be;">
             <img src="images/list.svg">
-            <div>목록 확인</div>
+            <div>목록 편집</div>
         </i>
     </div>
-
     <div style="visibility: hidden;">
-        <input type='file' id='_file' class="medium-btn" style="width:70%;">                    
+        <input type='file' id='_file' class="medium-btn">
     </div>
     <footer id="foot_note"></footer>
-</div>
+    </div>
 </body>
 
 <script>
@@ -187,6 +197,7 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
     var _photo = document.getElementById('photo');
     var _fname = document.getElementById('fname');
     var _caption = document.getElementById('caption');
+    var _caption_txt = _caption.textLength;
     var _vlog = document.getElementById('vlog');
     
     var getslide = function(msg){
@@ -195,20 +206,24 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
         data.append('func', 'getslide');
         data.append('photo', _photo.alt);
         data.append('action', msg);
-        d = new Date();
         
         POST('s00_signage.php', data, 
             function (resp) {  
-                _photo.src = resp.data.url;
+                _photo.src = resp.data.url+"?"+Math.random();
                 _photo.alt = resp.data.photo;  
                 _caption.value = resp.data.caption; 
                 _fname.innerHTML = resp.data.mtime;
+                _vlog.innerHTML = msg+" card.";
         });
     }
     
     _file = document.getElementById('_file');
     _file.onchange = function (event) {
+        if ( typeof event.target.files[0] === "undefined" )
+            return;
         var URL = window.URL || window.webkitURL;
+        if ( _photo.src.match(/^\w+:/g) == "blob:" )
+           URL.revokeObjectURL(_photo.src) 
         console.log(this.value);
         _fname.innerHTML = this.value;
         _photo.src = URL.createObjectURL(event.target.files[0]);
@@ -216,11 +231,45 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
         _caption.placeholder = this.value;
     }
 
+    var setslide = function(msg){
+        var _body = document.getElementsByTagName('body')[0];
+        //_body.className = 'wait';
+    
+        var data = new FormData();
+        data.append('func', 'setslide');
+        data.append('action', msg);
+        data.append('photo', _photo.alt);
+        
+        POST('s00_signage.php', data, 
+            function (resp) {  
+                _vlog.innerHTML=resp.data;
+                getslide("current");
+                //_body.className = '';
+        });
+    }
+
+    var exclude = function(fname){
+        getslide("next");
+        var data = new FormData();
+        data.append('func', 'exclude');
+        data.append('card', fname);
+        
+        POST('s00_signage.php', data, 
+            function (resp) {  
+                _vlog.innerHTML = resp.data;
+                getslide("next");
+        });
+    }
+
     var sendcard = function(){
         
         if(_file.files.length === 0){
-           alerted("새 사진등록은 사진 클릭!");
-           return;
+            if( _caption_txt != _caption.textLength ){
+                setcaption(document.getElementById('caption').value);
+                return;
+            }
+            alerted("새 사진등록은 사진 클릭!");
+            return;
         }
         
         var data = new FormData();
@@ -241,13 +290,27 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
         });
     }
     
-    var shownails = function () {
-        window.open( "nailwork.html", "_self");
+    var setcaption = function(msg){
+        loader();
+        var data = new FormData();
+        data.append('func', 'setcaption');
+        data.append('caption', msg);
+        data.append('photo', _photo.alt);
+        
+        POST('s00_signage.php', data, 
+            function (resp) {  
+                _vlog.innerHTML=resp.data;
+                getslide("current");
+                alerted("메모가 변경되었습니다.")
+        });
+    }
+
+    var showlistwork = function () {
+        window.open( "listwork.html", "_self");
     }
     
     headnote();
     getslide("first");
-    
 
 </script>
 </html>

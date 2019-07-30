@@ -55,12 +55,15 @@ function alerted(msg, func){ // alerte
         func = "default";
     }
     if(alert == null){
-        var div = "<div id='alert' style='visibility : hidden;'>";
-        div += "<h1><img src='./images/bullhorn.svg'></h1>";
-        div += "<h2 style='margin-top:40px;' id='alert_inner'></h2>";
-        div += "<input id=\"alert_exit\" type=\"submit\" value=\"확인\" style='margin-top:10px;font-size:20px;'/>";
-        div += "<input id=\"alert_cancle\" type=submit value=\"취소\" onclick=alerted('cancle'); style='display:none;background-color: #e17055;font-size:20px;'/></div>";
-        document.body.innerHTML += div;
+        var div = document.createElement("div");
+        div.setAttribute("id", "alert");
+        div.setAttribute("style", "visibility : hidden;");
+        document.body.prepend(div);
+        var div = document.getElementById("alert");
+        div.innerHTML = "<h1><img src='./images/bullhorn.svg'></h1>";
+        div.innerHTML += "<h2 style='margin-top:40px;' id='alert_inner'></h2>";
+        div.innerHTML += "<input id=\"alert_exit\" type=\"submit\" value=\"확인\" style='margin-top:10px;font-size:20px;'/>";
+        div.innerHTML += "<input id=\"alert_cancle\" type=submit value=\"취소\" onclick=alerted('cancle'); style='display:none;background-color: #e17055;font-size:20px;'/>";
     }
     if(msg == "exit"){
         document.getElementById("alert").style.visibility = "hidden";
@@ -93,23 +96,28 @@ function alerted(msg, func){ // alerte
 function loader(msg){
     var load = document.getElementById("load");
     if(load == null){
-        var div = "<div id='load' class='bg'>";
-        div += "<div class='loader_box'>";
-        div += "<div class='loader'><p>🐝</p></div>";
-        div += "<div id='load_txt'></div>";
-        div += "</div>";
-        div += "</div>";
-        document.body.innerHTML += div;
+        var div = document.createElement("div");
+        div.setAttribute("id", "load");
+        div.setAttribute("class", "bg");
+        document.body.prepend(div);
+        var div = document.getElementById("load");
+        div.innerHTML = "<div class='loader_box'>";
+        div.innerHTML += "<div class='loader'><p>🐝</p></div>";
+        div.innerHTML += "<div id='load_txt'></div>";
+        div.innerHTML += "</div>";
     }
-    if (msg == undefined){
+    if (typeof msg === "undefined"){
         msg = "Loading..";
+        document.getElementById("load").style.display = "block";
+        document.getElementById("load_txt").innerHTML = msg;
     }
     else if(msg == "exit"){
-        document.getElementById("load").style.visibility = "hidden";
-        return;
+        document.getElementById("load").style.display = "none";
+    } 
+    else {
+        document.getElementById("load").style.display = "block";
+        document.getElementById("load_txt").innerHTML = msg;
     }
-    document.getElementById("load").style.visibility = "visible";
-    document.getElementById("load_txt").innerHTML = msg;
 }
 
 // limit time 최대 접속시간,
