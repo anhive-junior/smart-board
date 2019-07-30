@@ -69,6 +69,7 @@ html, body {
     outline : none;
     background: none;
  }
+
  .login-box .button {
     display: table;
     margin : auto;
@@ -133,13 +134,15 @@ html, body {
 function loader(msg){
     var load = document.getElementById("load");
     if(load == null){
-        var div = "<div id='load' class='bg'>";
-        div += "<div class='loader_box'>";
-        div += "<div class='loader'><p>🐝</p></div>";
-        div += "<div id='load_txt'></div>";
-        div += "</div>";
-        div += "</div>";
-        document.body.innerHTML += div;
+        var div = document.createElement("div");
+        div.setAttribute("id", "load");
+        div.setAttribute("class", "bg");
+        document.body.prepend(div);
+        var div = document.getElementById("load");
+        div.innerHTML = "<div class='loader_box'>";
+        div.innerHTML += "<div class='loader'><p>🐝</p></div>";
+        div.innerHTML += "<div id='load_txt'></div>";
+        div.innerHTML += "</div>";
     }
     if (msg == undefined){
         msg = "Loading..";
