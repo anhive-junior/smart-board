@@ -72,6 +72,8 @@
     var _fname = document.getElementById('_prog');
     var _caption = document.getElementById('caption');
     var _vlog = document.getElementById('vlog');
+    var btn_cancel = document.getElementById("btn_cancel");
+    if( show_level() > 1) btn_cancel.style.display=""; 
 
     _file = document.getElementById('_file');
     _file.onchange = function (event) {
@@ -215,16 +217,7 @@
                 getslide('first');
         });
     }
-    var show_level = function(){
-        var data = new FormData(); 
-        data.append("func",'show_level');
-        POST("s00_signage.php", data, function(resp){
-            var btn_cancel = document.getElementById("btn_cancel");
-            if(resp.data.level > 1){
-                btn_cancel.style.display="";
-            }
-        });
-    }
+
     var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
        var data = new FormData(); 
        data.append("func", "headnote");
@@ -233,7 +226,6 @@
            document.getElementById("subject").innerHTML = resp.data.subject;
            document.getElementById("owner").innerHTML = resp.data.owner;
            document.getElementById("foot_note").innerHTML = resp.data.footer;
-           show_level();
        });
    }
 

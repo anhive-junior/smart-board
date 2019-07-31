@@ -48,6 +48,17 @@ var _clicked = function () {
     obj.value = arguments[1];
 } 
 
+// level 값 가져오기
+var show_level = function(){
+    var data = new FormData();
+    data.append('func','show_level');
+    var request = new XMLHttpRequest();
+    POST("s00_signage.php", data, function(resp){
+        console.log("level : " + resp.data.level);
+        return resp.data.level;
+    });
+}
+
 // 알림창 띄우기
 function alerted(msg, func){ // alerte
     var alert = document.getElementById("alert");
@@ -121,7 +132,6 @@ function loader(msg){
 }
 
 // limit time 최대 접속시간,
-
 function limit_time(){
     var time = 600000; // 10분
     setTimeout(function() {
@@ -140,4 +150,5 @@ function banned(){
         }
     });
 }
-setInterval("banned()", 1000);
+// setInterval("banned()", 1000);
+// 퇴장기능 임시적으로 막아놓음,

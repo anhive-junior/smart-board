@@ -114,14 +114,9 @@
     <div class="img_frame">
         <div class="in_frame">
             <img id="photo" alt="photo" onclick="document.getElementById('_file').click();">
-            <img class="arrow_btn" src="images/back.svg" onclick="getslide('previous');" style="width:50px;left : -65px;" alt="previous">
-            <img class="arrow_btn" src="images/forward.svg" onclick="getslide('next');" style="width:50px;right : -65px;" alt="next">
         </div>
     </div>
     <div id="vlog">최근등록 파일</div>
-    <img id="rotate_270" class="img_btn" src="images/rotate_270.png" onclick="setslide('rotate_left');" style="width:72px;" alt='rotate_left'>
-    <img id="rotate_90" class="img_btn" src="images/rotate_90.png" onclick="setslide('rotate_right');" style="width:72px;" alt='rotate_right'>
-    <img id="exclude_img"  class="img_btn" src="images/exclude.png" onclick="exclude(_photo.alt);" style="width:72px;" alt='exclude'>
 
     <!-- uppear -->
     <div style="margin-top : 20px; margin-bottom : 20px;"></div>
@@ -138,7 +133,7 @@
     <div style="display : flex; justify-content: center;">
         <i id="btn_rmcard" onclick="sendcard()" class="button">
             <img src="images/check_btn.svg">
-            <div>등록</div>
+            <div>보내기</div>
         </i>
         <i id="btn_rmcard" onclick="rmcard()" class="button" style="display: block; border-color : #eb4d4b;">
             <img src="images/minus.svg">
@@ -157,48 +152,36 @@
 </body>
 
 <script>
-
-var show_level = function(){ // level 값 가져오기
-    var data = new FormData();
-    data.append('func','show_level');
-    var request = new XMLHttpRequest();
-    POST("s00_signage.php", data, function(resp){
-        console.log("level : " + resp.data.level);
-        if( resp.data.level>1 ) document.getElementById("btn_rmcard").style.display="";
-    });
-}
-
-var rmcard = function(msg){
-        var data = new FormData();
-        data.append('func','rmcard');
-        data.append('card', _photo.alt);
-        POST('s00_signage.php', data, 
-            function (resp) {  
-                document.getElementById('vlog').innerHTML=resp.data;
-                getslide('first');
-        });
-}
-
-var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
-    var data = new FormData(); 
-    data.append('func', 'headnote');
-    POST("s00_signage.php", data, function(resp){
-        console.log("headnote - " + resp.status + ':' + resp.data);
-        document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
-        document.getElementById("subject").innerHTML=resp.data.subject;
-        document.getElementById("owner").innerHTML=resp.data.owner;
-        document.getElementById("foot_note").innerHTML=resp.data.footer;
-        document.title = resp.data.owner;
-        show_level();
-    });
-}
-
-
     var _photo = document.getElementById('photo');
     var _fname = document.getElementById('fname');
     var _caption = document.getElementById('caption');
-    var _caption_txt = _caption.textLength;
     var _vlog = document.getElementById('vlog');
+    if( show_level() > 1 ) document.getElementById("btn_rmcard").style.display="";
+
+    var rmcard = function(msg){
+            var data = new FormData();
+            data.append('func','rmcard');
+            data.append('card', _photo.alt);
+            POST('s00_signage.php', data, 
+                function (resp) {  
+                    document.getElementById('vlog').innerHTML=resp.data;
+                    getslide('first');
+            });
+    }
+
+    var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
+        var data = new FormData(); 
+        data.append('func', 'headnote');
+        POST("s00_signage.php", data, function(resp){
+            console.log("headnote - " + resp.status + ':' + resp.data);
+            document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
+            document.getElementById("subject").innerHTML=resp.data.subject;
+            document.getElementById("owner").innerHTML=resp.data.owner;
+            document.getElementById("foot_note").innerHTML=resp.data.footer;
+            document.title = resp.data.owner;
+        });
+    }
+
     
     var getslide = function(msg){
         
@@ -212,8 +195,8 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
                 _photo.src = resp.data.url+"?"+Math.random();
                 _photo.alt = resp.data.photo;  
                 _caption.value = resp.data.caption; 
+                _caption_txt = _caption.textLength;
                 _fname.innerHTML = resp.data.mtime;
-                _vlog.innerHTML = msg+" card.";
         });
     }
     
@@ -231,40 +214,10 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
         _caption.placeholder = this.value;
     }
 
-    var setslide = function(msg){
-        var _body = document.getElementsByTagName('body')[0];
-        //_body.className = 'wait';
-    
-        var data = new FormData();
-        data.append('func', 'setslide');
-        data.append('action', msg);
-        data.append('photo', _photo.alt);
-        
-        POST('s00_signage.php', data, 
-            function (resp) {  
-                _vlog.innerHTML=resp.data;
-                getslide("current");
-                //_body.className = '';
-        });
-    }
-
-    var exclude = function(fname){
-        getslide("next");
-        var data = new FormData();
-        data.append('func', 'exclude');
-        data.append('card', fname);
-        
-        POST('s00_signage.php', data, 
-            function (resp) {  
-                _vlog.innerHTML = resp.data;
-                getslide("next");
-        });
-    }
-
     var sendcard = function(){
         
         if(_file.files.length === 0){
-            if( _caption_txt != _caption.textLength ){
+            if( _caption_txt !== _caption.textLength ){
                 setcaption(document.getElementById('caption').value);
                 return;
             }
@@ -286,6 +239,7 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
             }
             alerted(resp.data.msg);
             _vlog.innerHTML=resp.data.msg;
+            _file.value=""; // file photo src reset
             getslide("first");
         });
     }
@@ -299,7 +253,6 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
         
         POST('s00_signage.php', data, 
             function (resp) {  
-                _vlog.innerHTML=resp.data;
                 getslide("current");
                 alerted("메모가 변경되었습니다.")
         });
