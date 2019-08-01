@@ -17,6 +17,7 @@
     </style>    
 </head>
 <body >
+    <div id="prepend"></div>
     <div class="container">
         <div class="contents">
         
@@ -57,197 +58,193 @@
         <div id="image">
             <div  style="display:inline-block;">
                 <div class="img_block">
-                    <img class="img_base" src="=0=thumb=0=" onclick="window.open( 'openimages.html?name==0=photo=0=', '_self');" alt="=0=photo=0="> 
+                    <img class="img_base" src="=0=thumb=0=" onclick="window.open( 'openimages.html?=0=photo=0=', '_self');" alt="=0=photo=0="> 
                     <input class="img_tag" type="button" value="=0=view=0=" name="=0=photo=0=" onclick="clicked(this, 'V',' ');changelist();"> 
                 </div> 
-                <div style="font-size:0.7em;text-align:center;padding-buttom:10px;">
-                    <span style="">=0=elapse=0=</span>
+                <div style="font-size:0.7em;text-align:center;padding-bottom:10px;">
+                    <span>=0=elapse=0=</span>
                 </div> 
             </div>
         </div>
     </div>
 </body>
 <script>
-
-var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
-    var data = new FormData(); 
-    data.append("func", "headnote");
-    POST("s00_signage.php", data, function(resp){
-        console.log(resp.status + ':' + resp.data);
-        document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
-        document.getElementById("subject").innerHTML=resp.data.subject;
-        document.getElementById("owner").innerHTML=resp.data.owner;
-        document.getElementById("foot_note").innerHTML=resp.data.footer;
-        document.title=resp.data.owner; // title 변경
-    });
-}
-
-var getlist = function () {
-    var data = new FormData();
-    data.append('func', 'getslidelist');
-    POST("s00_signage.php", data, function(resp){
-        var fdiv = document.getElementById("packinglist");
-        fdiv.innerHTML = "";
-        block = document.getElementById("block").innerHTML;
-        image = document.getElementById("image").innerHTML;
-        innerhtml = "";
-        for (i=0; i<resp.data.length; i++) {
-            slide = resp.data[i];
-            //console.log (slide.term+slide.thumb);
-            segment = (slide.block != "")?block:"";
-            segment += image;
-            segment = segment
-                    .replace("=0=term=0="  , slide.term       )
-                    .replace("=0=block=0="  , slide.block     )
-                    .replace("=0=thumb=0="  , slide.thumb     )
-                    .replace("=0=file=0="  , slide.file       )
-                    .replace("=0=view=0="  , slide.view       )
-                    .replace(/=0=photo=0=/gi   , slide.photo    )
-                    .replace("=0=elapse=0="  , slide.elapse   );
-            innerhtml += segment;
-        }
-        fdiv.innerHTML = innerhtml;
-    });
-}
-
-var changeterm = function(obj) {
-
-    packinglist = document.getElementById("packinglist");
-    finput = packinglist.getElementsByTagName("input");
-    //val = "";
-    start_term = false;
-    for (var i = 0;i< finput.length; i++) {
-        if (!start_term && finput[i].name != obj.name) continue;
-        if (start_term && (/^TERM\+?(0|[1-9]\d*)$/.test(finput[i].name))) break;
-        if (finput[i].name == 'ctl') continue;
-        start_term = true;
-        finput[i].value = obj.value;
+    var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지고 옵니다. - 초기설정
+        var data = new FormData(); 
+        data.append("func", "headnote");
+        POST("s00_signage.php", data, function(resp){
+            console.log(resp.status + ':' + resp.data);
+            document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
+            document.getElementById("subject").innerHTML=resp.data.subject;
+            document.getElementById("owner").innerHTML=resp.data.owner;
+            document.getElementById("foot_note").innerHTML=resp.data.footer;
+            document.title=resp.data.owner; // title 변경
+        });
     }
-    changelist();
-    //document.getElementById("lst").value = val;
-}
 
-var changelist = function() {
-    packinglist = document.getElementById("packinglist");
-    finput = packinglist.getElementsByTagName("input");
-    val = "";
-    for (var i = 0;i< finput.length; i++) {
-        if (finput[i].type != 'button') continue;
-        if (finput[i].className == 'title_tag') continue;
-        //if (finput[i].name.sizeof <= 1) continue;
-        if (finput[i].value != 'V') continue;
-        val += ((val.length>0)?"|":"")+finput[i].name;
+    var getlist = function () {
+        var data = new FormData();
+        data.append('func', 'getslidelist');
+        POST("s00_signage.php", data, function(resp){
+            var fdiv = document.getElementById("packinglist");
+            fdiv.innerHTML = "";
+            block = document.getElementById("block").innerHTML;
+            image = document.getElementById("image").innerHTML;
+            innerhtml = "";
+            for (i=0; i<resp.data.length; i++) {
+                slide = resp.data[i];
+                segment = (slide.block != "")?block:"";
+                segment += image;
+                segment = segment
+                        .replace("=0=term=0="  , slide.term       )
+                        .replace("=0=block=0="  , slide.block     )
+                        .replace("=0=thumb=0="  , slide.thumb     )
+                        .replace("=0=file=0="  , slide.file       )
+                        .replace("=0=view=0="  , slide.view       )
+                        .replace(/=0=photo=0=/gi   , slide.photo    )
+                        .replace("=0=elapse=0="  , slide.elapse   );
+                innerhtml += segment;
+            }
+            fdiv.innerHTML = innerhtml;
+        });
     }
-    document.getElementById("lst").value = val;
-    //alert(val);
-}
 
-// round robin click;
-var clicked = function () {
-    obj = arguments[0];
-    for (var i = 1; i< arguments.length-1; i++) {
-        if ( obj.value==arguments[i]) {
-            obj.value = arguments[i+1];
-            return;
+    var changeterm = function(obj) {
+
+        packinglist = document.getElementById("packinglist");
+        finput = packinglist.getElementsByTagName("input");
+        //val = "";
+        start_term = false;
+        for (var i = 0;i< finput.length; i++) {
+            if (!start_term && finput[i].name != obj.name) continue;
+            if (start_term && (/^TERM\+?(0|[1-9]\d*)$/.test(finput[i].name))) break;
+            if (finput[i].name == 'ctl') continue;
+            start_term = true;
+            finput[i].value = obj.value;
         }
+        changelist();
+        //document.getElementById("lst").value = val;
     }
-    obj.value = arguments[1];
-}
 
-var change = function () {
-    
-    var data = new FormData();
-    data.append('func', 'setplaylist');
-    changelist();
-    data.append('lst', document.getElementById("lst").value);
-    
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch (e){
-                var resp = {
-                    status: 'error',
-                    data: 'Unknown error occurred: [' + request.responseText + ']'
-                };
-            }
-            document.getElementById("msg").innerHTML = resp.data;
-            getlist();
+    var changelist = function() {
+        packinglist = document.getElementById("packinglist");
+        finput = packinglist.getElementsByTagName("input");
+        val = "";
+        for (var i = 0;i< finput.length; i++) {
+            if (finput[i].type != 'button') continue;
+            if (finput[i].className == 'title_tag') continue;
+            //if (finput[i].name.sizeof <= 1) continue;
+            if (finput[i].value != 'V') continue;
+            val += ((val.length>0)?"|":"")+finput[i].name;
         }
-    };
-    request.open('POST', 's00_signage.php');
-    request.send(data);
-    return request;
-}
+        document.getElementById("lst").value = val;
+        //alert(val);
+    }
 
-var rmcard = function(){
-    var data = new FormData();
-    data.append('func', 'rmcard');
-    data.append('rm_list', true);
-    changelist();
-    data.append('lst', document.getElementById("lst").value);
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try{
-                var resp = JSON.parse(request.response);
+    // round robin click;
+    var clicked = function () {
+        obj = arguments[0];
+        for (var i = 1; i< arguments.length-1; i++) {
+            if ( obj.value==arguments[i]) {
+                obj.value = arguments[i+1];
+                return;
             }
-            catch(e){
-                var resp = {
-                    status: 'error',
-                    data : 'Unkonw error occured : [' + request.responseText + ']'
-                };
-            }
-            document.getElementById("msg").innerHTML = resp.data;
-            getlist();
         }
-    };
-    request.open('POST', 's00_signage.php');
-    request.send(data);
-    return request;
-}
+        obj.value = arguments[1];
+    }
 
-
-var setthumb = function () {
-    
-    var data = new FormData();
-    data.append('func', 'buildthumbs');
-    changelist();
-    data.append('lst', document.getElementById("lst").value);
-    
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function(){
-        if(request.readyState == 4){
-            try {
-                var resp = JSON.parse(request.response);
-            } catch (e){
-                var resp = {
-                    status: 'error',
-                    data: 'Unknown error occurred: [' + request.responseText + ']'
-                };
+    var change = function () {
+        
+        var data = new FormData();
+        data.append('func', 'setplaylist');
+        changelist();
+        data.append('lst', document.getElementById("lst").value);
+        
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if(request.readyState == 4){
+                try {
+                    var resp = JSON.parse(request.response);
+                } catch (e){
+                    var resp = {
+                        status: 'error',
+                        data: 'Unknown error occurred: [' + request.responseText + ']'
+                    };
+                }
+                document.getElementById("msg").innerHTML = resp.data;
+                getlist();
             }
-            document.getElementById("msg").innerHTML = resp.data;
-            getlist();
-        }
-    };
-    request.open('POST', 's00_signage.php');
-    request.send(data);
-    return request;
-}
+        };
+        request.open('POST', 's00_signage.php');
+        request.send(data);
+        return request;
+    }
 
-var setpolicy = function () {
-    window.open( "playwork.html", "_self");
-}
+    var rmcard = function(){
+        var data = new FormData();
+        data.append('func', 'rmcard');
+        data.append('rm_list', true);
+        changelist();
+        data.append('lst', document.getElementById("lst").value);
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if(request.readyState == 4){
+                try{
+                    var resp = JSON.parse(request.response);
+                }
+                catch(e){
+                    var resp = {
+                        status: 'error',
+                        data : 'Unkonw error occured : [' + request.responseText + ']'
+                    };
+                }
+                document.getElementById("msg").innerHTML = resp.data;
+                getlist();
+            }
+        };
+        request.open('POST', 's00_signage.php');
+        request.send(data);
+        return request;
+    }
 
-var showusb = function (usb) {
-    USBlist = window.open( "USBlist.php?usb", "cc", "width=250px,height=320px");
-}
 
-headnote();
-getlist();
-changelist();
+    var setthumb = function () {
+        
+        var data = new FormData();
+        data.append('func', 'buildthumbs');
+        changelist();
+        data.append('lst', document.getElementById("lst").value);
+        
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if(request.readyState == 4){
+                try {
+                    var resp = JSON.parse(request.response);
+                } catch (e){
+                    var resp = {
+                        status: 'error',
+                        data: 'Unknown error occurred: [' + request.responseText + ']'
+                    };
+                }
+                document.getElementById("msg").innerHTML = resp.data;
+                getlist();
+            }
+        };
+        request.open('POST', 's00_signage.php');
+        request.send(data);
+        return request;
+    }
 
- 
+    var setpolicy = function () {
+        window.open( "playwork.html", "_self");
+    }
+
+    var showusb = function (usb) {
+        USBlist = window.open( "USBlist.php?usb", "cc", "width=250px,height=320px");
+    }
+
+    headnote();
+    getlist();
+    changelist();
 </script>
 </html>

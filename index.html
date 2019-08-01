@@ -113,6 +113,7 @@ html, body {
 </style>
 </head>
 <body>
+<div id="prepend"></div>
 <div id="photo"></div>
 <div class="login-box">
     <div class="login-header" id="title" style="margin-top:15px;"></div>
@@ -137,12 +138,12 @@ function loader(msg){
         var div = document.createElement("div");
         div.setAttribute("id", "load");
         div.setAttribute("class", "bg");
-        document.body.prepend(div);
+        document.getElementById("prepend").appendChild(div);
         var div = document.getElementById("load");
-        div.innerHTML = "<div class='loader_box'>";
+        div.innerHTML = "<div class='loader_box'></div>";
+        var div = document.getElementsByClassName("loader_box")[0];
         div.innerHTML += "<div class='loader'><p>🐝</p></div>";
         div.innerHTML += "<div id='load_txt'></div>";
-        div.innerHTML += "</div>";
     }
     if (msg == undefined){
         msg = "Loading..";
@@ -162,7 +163,7 @@ function alerted(msg){ // alerte
         div += "<h1><img src='./images/bullhorn.svg'></h1>";
         div += "<h2 style='margin-top:40px;' id='alert_inner'></h2>";
         div += "<input type=\"submit\" value=\"확인\" onclick=alerted('exit'); style='margin-top:10px;font-size:20px;'/></div>";
-        document.body.innerHTML += div;
+        document.getElementById("prepend").innerHTML += div;
     }
     if(msg == "exit"){
         document.getElementById("alert").style.visibility = "hidden";

@@ -370,7 +370,7 @@ function _sendcard() {
     global $config_slide, $config_playlist, $config_playlink, $config_caption, $config_thumbs, $config_info;
     // Upload file
     // Check for errors
-    //prevent duplication
+    // prevent duplication
     $actionlog = "/run/shm/lastaction/".session_id ();
     $currentcard = md5(print_r($_POST, true));
     $lastcard = file_exists($actionlog)?file_get_contents($actionlog):"none";
@@ -447,7 +447,8 @@ function _sendcard() {
         submit_RPi(getcommand("restart"));
     
     // Success!
-    outputJSON(array("msg" => "[$file] 등록완료", "file"=>$file, "photo"=>$photo_md5_name), 'success');
+    outputJSON(array("msg" => "등록완료", "file"=>$file, "photo"=>$photo_md5_name), 'success');
+    // msg => "[$file] 등록완료", 형식에서 -> 등록완료로 변경되었음
 }    
 
 /////////////////////////////////////

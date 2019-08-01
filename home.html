@@ -25,7 +25,7 @@ html, body {
 }
 
 .container {
-    height : 60%;
+    height : 50%;
     width : 100%;
 }
 
@@ -34,16 +34,15 @@ html, body {
     cursor : pointer;
     color:#fff;
     background: #efefef;
-    line-height: 13vh; /*********/
+    height : 25%;
+    justify-content:center;
+    align-items: center;
 }
 
 .tiletitle{
     font-size:1.7em;
     font-weight:bold; 
     color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
 }
 
 .config {
@@ -66,28 +65,30 @@ html, body {
     cursor : pointer;
 }
 .icon {
-    max-width : 38px;
+    max-width : 30px;
     width : 80%;
     background : none;
     font-size: 13px; 
     font-weight: bold;
     margin-right : 15px;
+    margin-bottom : 7px;
+    vertical-align: middle;
 }
 header {
     position: absolute;
     width : 100%;
 } 
 footer {
-    position: absolute;
-    bottom : 0;
+    padding : 0;
+    padding-top : 2%;
+    margin : 0 auto;
     color : black; 
-    text-align : center;
-    font-size : 1.em;
+    font-size : 10px;
     font-weight: bold; 
     background-color : white;
     width : 100%;
-    padding: 5px 0px;
     opacity: 0.3;
+    height : 5%;
 }
 
 @media screen and (min-width: 800px){
@@ -142,8 +143,8 @@ footer {
             <span id='button_none' class="button_span" style="display:none;width: 100%;"></span>
         </div>
     </div>
-    <footer id="foot_note"></footer>
 </div>
+<footer id="foot_note"></footer>
 <script>
 var content_none = document.getElementById("content_none");
 var buttons = document.getElementById("buttons");
@@ -179,14 +180,14 @@ var home_level_contents = function(){ // level에 따른 contents를 가지고 �
             var clone = document.getElementById("content_none").cloneNode(true);
             
             clone.setAttribute("id","norm" + (i+1));
-            clone.style.display="block";
+            clone.style.display="flex";
             clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
             clone.style.backgroundColor = cont['color'];
             ch = clone.childNodes;
             for (var k = 0;k<ch.length; k++ ){
                 if (ch[k].className == 'tiletitle'){
                     ch[k].innerHTML = "<img src =" + cont['icon'] + " class=icon>";
-                    ch[k].innerHTML += cont['tiletitle']
+                    ch[k].innerHTML += cont['tiletitle'];
                 }
             }
             contents.appendChild(clone);

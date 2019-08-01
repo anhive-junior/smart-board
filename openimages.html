@@ -29,25 +29,6 @@
     <img id="exclude_img"  class="img_btn" src="images/exclude.png" onclick="exclude(_photo.alt);" style="width:72px;" alt='exclude'>
     
 <script>
-    function parseURLParams(url) { // URL, GET 데이터 읽어들이기
-        var queryStart = url.indexOf("?") + 1,
-            queryEnd   = url.indexOf("#") + 1 || url.length + 1,
-            query = url.slice(queryStart, queryEnd - 1),
-            pairs = query.replace(/\+/g, " ").split("&"),
-            parms = {}, i, n, v, nv;
-
-        if (query === url || query === "") return;
-
-        for (i = 0; i < pairs.length; i++) {
-            nv = pairs[i].split("=", 2);
-            n = decodeURIComponent(nv[0]);
-            v = decodeURIComponent(nv[1]);
-
-            if (!parms.hasOwnProperty(n)) parms[n] = [];
-            parms[n].push(nv.length === 2 ? v : null);
-        }
-        return parms;
-    }
     var rmcard = function(msg){
             var data = new FormData();
             data.append('func','rmcard');
@@ -61,10 +42,9 @@
                     }
             });
     }
-    var url = parseURLParams(document.URL).name[0];
     var openimages = function(){ // rmcard 권한 및 초기 데이터 설정
         var data = new FormData();
-        data.append("name", url);
+        data.append("name", document.URL.substr(document.URL.indexOf("?")+1));
         data.append("func","openimages");
         POST("s00_signage.php", data, function(resp){
             console.log("openimages -" + resp.status + ':' + resp.data);
@@ -80,7 +60,7 @@
     openimages();
 
     var _photo = document.getElementById('photo');
-    var _fname = document.getElementById('fname');
+    var _fname = document.getElementById('img').src;
     var _caption = document.getElementById('caption');
     var _vlog = document.getElementById('vlog');
 

@@ -69,7 +69,7 @@ function alerted(msg, func){ // alerte
         var div = document.createElement("div");
         div.setAttribute("id", "alert");
         div.setAttribute("style", "visibility : hidden;");
-        document.body.prepend(div);
+        document.getElementById("prepend").appendChild(div);
         var div = document.getElementById("alert");
         div.innerHTML = "<h1><img src='./images/bullhorn.svg'></h1>";
         div.innerHTML += "<h2 style='margin-top:40px;' id='alert_inner'></h2>";
@@ -110,12 +110,12 @@ function loader(msg){
         var div = document.createElement("div");
         div.setAttribute("id", "load");
         div.setAttribute("class", "bg");
-        document.body.prepend(div);
+        document.getElementById("prepend").appendChild(div);
         var div = document.getElementById("load");
-        div.innerHTML = "<div class='loader_box'>";
+        div.innerHTML = "<div class='loader_box'></div>";
+        var div = document.getElementsByClassName("loader_box")[0];
         div.innerHTML += "<div class='loader'><p>🐝</p></div>";
         div.innerHTML += "<div id='load_txt'></div>";
-        div.innerHTML += "</div>";
     }
     if (typeof msg === "undefined"){
         msg = "Loading..";
