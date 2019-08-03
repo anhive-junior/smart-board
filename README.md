@@ -1,7 +1,11 @@
-![raspbian-version](https://img.shields.io/badge/raspbian->=2019--06--20-red.svg)
-![php-version](https://img.shields.io/badge/php-%5E7.1.3-blue.svg)
-![smart-board-version](https://img.shields.io/badge/smart--board-v0.05-orange.svg)
-![license](https://img.shields.io/badge/license-MIT-green.svg)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/36920367/62413241-54e97f80-b648-11e9-89d5-6d2e27612cab.PNG">
+<img src="https://img.shields.io/badge/raspbian->=2019--06--20-red.svg">
+<img src="https://img.shields.io/badge/php-%5E7.1.3-blue.svg">
+<img src="https://img.shields.io/badge/smart--board-v0.05-orange.svg">
+<img src="https://img.shields.io/badge/license-MIT-green.svg">
+</p>
+
 # smart-board
 
 smart-board 프로젝트는 라즈베리파이로 집에서 혹은 가게에서 \
