@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/36920367/62413241-54e97f80-b648-11e9-89d5-6d2e27612cab.PNG">
+<img src="https://user-images.githubusercontent.com/36920367/62415168-6b033a00-b660-11e9-84c5-6fd3cf8cba6d.png">
 <img src="https://img.shields.io/badge/raspbian->=2019--06--20-red.svg">
 <img src="https://img.shields.io/badge/php-%5E7.1.3-blue.svg">
 <img src="https://img.shields.io/badge/smart--board-v0.05-orange.svg">
