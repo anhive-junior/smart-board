@@ -192,7 +192,7 @@ function getfile($dir, $basephoto, $index) {
                     //if not matched 
                     if ( $firstfile == "" && $basephoto == $file ) 
                         $index = "last";
-                    elseif ( $basephoto == $file)
+                    else if ( $basephoto == $file)
                         return $searched;
                     break;
                 case "next":
@@ -209,7 +209,7 @@ function getfile($dir, $basephoto, $index) {
                 default:
                     outputJSON("Undefined action work");
             }
-            if ($firstfile =="") $firstfile = $file;
+            if ($firstfile == "") $firstfile = $file;
             $searched = $file;
         }
         $lastfile = $searched;
@@ -234,7 +234,7 @@ function _getslide() {
     error_log($config_playlist);
     $photo = getfile($config_playlist, $base, $action);
     error_log("[$action] of [$base] is [$photo]");
-    if ($photo=="") {
+    if ($photo==""){
         error_log("Set the first sample.");
         $photo="sample.jpg";
         $custom_path = 'custom/'.$_SESSION['profile'];
@@ -1870,43 +1870,6 @@ function _show_level(){
     $data = array("level" => $_SESSION["uselevel"] );
     outputJSON($data, "success");
 }
-////////////////////////////////////////////////////////////////////////////
-////////// openimages - openimages.html에서 사용함.
-
-$services['openimages'] = '_openimages';
-function _openimages(){
-	global $config_caption;
-    s00_log("Start ".__FUNCTION__);
-    if ( !isset($_SESSION['uselevel']) ) 
-        outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
-    
-    $name = $_POST["name"];
-    if (strpos($name, 'http') !== false) {
-    $uri = $name;
-    } else {
-        $filename = basename ($name);  //c
-        $dir= isset($_GET['dir'])?$_GET['dir']:$_SESSION['slide'];
-        $script_path = dirname(trim($_SERVER['SCRIPT_NAME']));//if ($script_path != "") $dir = $script_path."/".$dir;
-        $uri = $dir."/".$filename;
-        $cap = $config_caption."/".$filename.'.txt';
-		
-    }
-    $id_date = date("Y/m/d H:i:s.", filemtime($uri));
-    $memo = "메모: ".(file_exists($cap)?file_get_contents($cap):"");
-
-    $img = $uri;
-    $data = array(
-         "file_name" => $filename,
-         "memo" => $memo,
-         "date" => $id_date,
-         "img" => $img
-         );
-    if(isset($_SESSION['uselevel']) && $_SESSION['uselevel']>1){ // rmcard(); privilege
-          $data += [ "func" => "rmcard(\"$img\")" ];
-          $data += [ "value" => "사진삭제"];
-    };
-    outputJSON($data, "success");
-};
 
 /////////////////////////////////////
 //// videolist

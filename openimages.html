@@ -14,55 +14,28 @@
 <body>
     <div style="margin-top:10px;"><!-- upper line feed --></div>
     <div style="text-align:center;">
-    <div id="file_name"></div>
-    <div id="date"></div>
-    <div id="memo"></div>
-    <img id="img" style="width:600px;height:500px;"/><br>
-    <div style="margin-top:10px;"><!-- upper line feed --></div>
-    <input type="button" onclick="history.go(-1);" value="돌아가기">
-    <input type="button" id="btn_rmcard" style="display:none">
+        <div id="file"></div>
+        <div id="fname">???</div>
+        <div id="caption"></div>
+        <img id="photo" style="width:600px;height:500px;"/><br>
+        <div id="vlog"></div>
+        <div style="margin-top:10px;"><!-- upper line feed --></div>
+        <input type="button" onclick="history.go(-1);" value="돌아가기">
+        <input type="button" id="btn_rmcard" style="display:none">
     </div>
-    <img class="arrow_btn" src="images/back.svg" onclick="getslide('previous');" style="width:50px;left : -65px;" alt="previous">
-    <img class="arrow_btn" src="images/forward.svg" onclick="getslide('next');" style="width:50px;right : -65px;" alt="next">
-    <img id="rotate_270" class="img_btn" src="images/rotate_270.png" onclick="setslide('rotate_left');" style="width:72px;" alt='rotate_left'>
-    <img id="rotate_90" class="img_btn" src="images/rotate_90.png" onclick="setslide('rotate_right');" style="width:72px;" alt='rotate_right'>
-    <img id="exclude_img"  class="img_btn" src="images/exclude.png" onclick="exclude(_photo.alt);" style="width:72px;" alt='exclude'>
-    
+    <div style="text-align: center">
+        <img class="arrow_btn" src="images/back.svg" onclick="getslide('previous');" style="width:50px;left : -65px;" alt="previous">
+        <img class="arrow_btn" src="images/forward.svg" onclick="getslide('next');" style="width:50px;right : -65px;" alt="next">
+        <img id="rotate_270" class="img_btn" src="images/rotate_270.png" onclick="setslide('rotate_left');" style="width:72px;" alt='rotate_left'>
+        <img id="rotate_90" class="img_btn" src="images/rotate_90.png" onclick="setslide('rotate_right');" style="width:72px;" alt='rotate_right'>
+        <img id="exclude_img"  class="img_btn" src="images/exclude.png" onclick="exclude(_photo.alt);" style="width:72px;" alt='exclude'>
+    </div>
 <script>
-    var rmcard = function(msg){
-            var data = new FormData();
-            data.append('func','rmcard');
-            data.append('card', msg);
-            POST('s00_signage.php', data, 
-                function (resp) {
-                    if( resp.status == 'success') {
-                        history.go(-1);
-                    } else {
-                        alerted('Error : 파일삭제가 되지 않았습니다.<br>' + resp.data);
-                    }
-            });
-    }
-    var openimages = function(){ // rmcard 권한 및 초기 데이터 설정
-        var data = new FormData();
-        data.append("name", document.URL.substr(document.URL.indexOf("?")+1));
-        data.append("func","openimages");
-        POST("s00_signage.php", data, function(resp){
-            console.log("openimages -" + resp.status + ':' + resp.data);
-            document.getElementById("btn_rmcard").value = resp.data.value;
-            document.getElementById("btn_rmcard").setAttribute("onclick", resp.data.func);
-            if(resp.data.value == "사진삭제") document.getElementById("btn_rmcard").style.display = "";
-            document.getElementById("file_name").innerHTML = resp.data.file_name;
-            document.getElementById("date").innerHTML = resp.data.date;
-            document.getElementById("memo").innerHTML = resp.data.memo;
-            document.getElementById("img").setAttribute("src", resp.data.img);
-        }); 
-    }
-    openimages();
-
     var _photo = document.getElementById('photo');
-    var _fname = document.getElementById('img').src;
+    var _fname = document.getElementById('fname');
     var _caption = document.getElementById('caption');
     var _vlog = document.getElementById('vlog');
+    _photo.setAttribute("alt", document.URL.substr(document.URL.indexOf("?")+1));
 
     var exclude = function(fname){
         getslide("next");
@@ -72,8 +45,7 @@
         
         POST('s00_signage.php', data, 
             function (resp) {  
-                _vlog.innerHTML = resp.data;
-                getslide("next");
+                history.go(-1);
         });
     }
 
@@ -86,8 +58,9 @@
         POST('s00_signage.php', data, 
             function (resp) {  
                 _photo.src = resp.data.url+"?"+Math.random();
-                _photo.alt = resp.data.photo;  
-                _caption.value = resp.data.caption; 
+                _photo.alt = resp.data.photo;
+                document.getElementById("file").innerText = "파일명 : " + resp.data.photo;
+                _caption.innerText = "메모 : " + resp.data.caption; 
                 _fname.innerHTML = resp.data.mtime;
         });
     }
@@ -103,6 +76,7 @@
                 getslide("current");
         });
     }
+    getslide('current');
 </script>
 </body>
 </html>
