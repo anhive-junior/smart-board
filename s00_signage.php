@@ -254,8 +254,8 @@ function _getslide() {
    
     error_log($_SERVER['DOCUMENT_ROOT']); 
     error_log(__DIR__."||".__FILE__); 
-    $caption = "sample 입니다";
     $url = $config_playlist.'/'.$photo;
+    if ( ! file_exists($config_playlist.'/'.$photo) ) $url = "none";
     $cfile = $config_caption.'/'.$photo.'.txt';
     $caption = file_exists($cfile)?
                 file_get_contents($cfile):$photo;
@@ -272,7 +272,6 @@ function _getslide() {
       , "mtime" => $mtime
       , "url" => $url
       , "server_ip" => $_SERVER['HTTP_HOST'] . substr($url, 2)
-	  , "test" => $_SERVER['HTTP_HOST'].substr($url,2)
       );
     
     outputJSON($arr, 'success');

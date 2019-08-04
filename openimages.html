@@ -6,7 +6,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />   
     <script type="text/javascript" src="signage.base.js"></script>
     <link rel="stylesheet" type="text/css" href="signage.base.css">
-    <title>AnHive, Show Video</title>
+    <title>AnHive, Show image</title>
     <style>
        body { margin:0; height:100%;width:100%}
     </style>
@@ -57,8 +57,9 @@
         
         POST('s00_signage.php', data, 
             function (resp) {  
-                _photo.src = resp.data.url+"?"+Math.random();
-                _photo.alt = resp.data.photo;
+                console.log(resp.data.url);
+                _photo.src = !( resp.data.url == "none" ) ? resp.data.url+"?"+Math.random() : "";
+                _photo.alt = !( resp.data.url == "none" ) ?  resp.data.photo : "목록에서 제외된 사진입니다.";
                 document.getElementById("file").innerText = "파일명 : " + resp.data.photo;
                 _caption.innerText = "메모 : " + resp.data.caption; 
                 _fname.innerHTML = resp.data.mtime;
