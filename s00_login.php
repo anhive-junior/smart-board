@@ -45,9 +45,6 @@ function _login(){
     } else if ( $_SESSION['sam_code'] == $input_code /* && !$anonymous */ ) {
         if (  $freespace < 16 ) @unlink ( "emergency.dumy" );
         $_SESSION['uselevel']=2;
-    } else if ( $_SESSION["admin_code"] == $input_code ) {
-        if (  $freespace < 16 ) @unlink ( "emergency.dumy" );
-        $_SESSION['uselevel']=3;
     } else {
         $mesg = "접속코드를 확인해주세요!";
     }

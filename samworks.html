@@ -20,16 +20,16 @@
    
    <div style="">
     <div id="profile" style="font-size:.8em; text-align:left; margin-left:10px;width: 50%; margin: 0 auto;min-width: 350px;">
-     (소유) : <input type="text" id='title' style="width : 280px;text-align:center;" ><br>
-     (제목) : <input type="text" id='subject' style="width : 280px;text-align:center;"  ><br>
-     (주제) : <input type="text" id='owner' style="width : 280px;text-align:center;" ><br>
-     <div style="text-align:center;">
-     <img class="img_shadow" id="photo" alt="photo" style="width:60%;"  onclick="document.getElementById('nfile').click();">
-     </div>
-     <div style="display:none;">
-     (사진) : <input id="nfile" name="nfile" type="file" style="width:300px;position:relative;"/>
-     </div>
-     (꼬리말) : <input type="text" id='footnote' style="width : 280px;text-align:center;">
+        (소유) : <input type="text" id='title' style="width : 280px;text-align:center;" ><br>
+        (제목) : <input type="text" id='subject' style="width : 280px;text-align:center;"  ><br>
+        (주제) : <input type="text" id='owner' style="width : 280px;text-align:center;" ><br>
+        <div style="text-align:center;">
+        <img class="img_shadow" id="photo" alt="photo" style="width:60%;"  onclick="document.getElementById('nfile').click();">
+        </div>
+        <div style="display:none;">
+        (사진) : <input id="nfile" name="nfile" type="file" style="width:300px;position:relative;"/>
+        </div>
+        (꼬리말) : <input type="text" id='footnote' style="width : 280px;text-align:center;">
     </div>
     <div style="text-align:center; background-color:#eee;margin-top:10px;">
      기본정보 <input type="button" onclick='javascript:set_subject()' value="설정" > <input type="button" onclick='javascript:get_subject()' value="읽기" >
@@ -57,8 +57,8 @@
     </div>
     <div id="usbctl" style="font-size:.8em; text-align:left; margin-left:10px;width: 50%; margin: 0 auto;min-width: 350px;">
      <div style="margin-top:10px;"><!-- upper line feed --></div>
-     (USB) : <input type="text" id='usb_name' name="targets" style="width : 180px; text-align:center; color:red; font-weight:bold;" value="" ><input type="button" id='get_usb' style=" color:red; font-weight:bold;" value="USB확인" onclick="getnextusb();"> <br>
-     (폴더) : <input type="text" id='usb_path' name="targets" style="width : 220px; text-align:left; color:red; font-weight:bold;" value="" ><input type="button" id='get_usb' style=" color:red; font-weight:bold;" value="폴더확인" onclick="getnextpath();"> <br>
+     (USB) : <input type="text" id='usb_name' name="targets" style="width : 180px; text-align:center; color:red; font-weight:bold;" value="" ><input type="button" style=" color:red; font-weight:bold;" value="USB확인" onclick="getnextusb();"> <br>
+     (폴더) : <input type="text" id='usb_path' name="targets" style="width : 220px; text-align:left; color:red; font-weight:bold;" value="" ><input type="button" style=" color:red; font-weight:bold;" value="폴더확인" onclick="getnextpath();"> <br>
      
      (대상) : 
      <input type="text" id='image_cb'  name="targets" class="checkinput" value='✔' readonly onclick="_clicked(this,'_','✔')" style="background-color:#eee;color:#000;"> 사진, 
@@ -78,115 +78,97 @@
 </body>
 
 <script>
- function g(code, v) {
-  for(i=0;i<code.length;i++) {
-   if (code[i] == v) return i;
-  }
-  return null;
- }
- var use = ['_','✔']; 
-    
- var loadingdiv;
- function waiting(objectname, msg) {
-  loadingdiv = document.getElementById(objectname).appendChild(document.createElement("div"));
-  loadingdiv.innerHTML = msg;
-  loadingdiv.setAttribute("style", "text-align:center; position: absolute; top: "+(document.body.clientHeight - 60)/2+"px; left: "+(document.body.clientWidth - 300)/2+"px; width:300px; height:60px; color: red; background-color:yellow; font-size:3em;");
- }
- function closing(time) {
-  setTimeout( loadingdiv.remove(), time);
- }
+    function g(code, v) {
+        for(i=0;i<code.length;i++) {
+        if (code[i] == v) return i;
+        }
+        return null;
+    }
+    var use = ['_','✔']; 
 
-function check8(str) {
-  if (str.length < 8) alert ("비밀번호는 8자리 이상입니다.");
-}        
+    function check8(str) {
+        if (str.length < 8) alert ("비밀번호는 8자리 이상입니다.");
+    }        
  
  
- var _usb = document.getElementById("usb_name");
- var getnextusb = function() {
+    var _usb = document.getElementById("usb_name");
+    var getnextusb = function() {
         var data = new FormData();
         data.append('func', 'get_nextusb');
         data.append('usb_name', _usb.value);
+        POST('s00_signage.php', data, 
+        function (resp) {
+            _usb.value = resp.data.usb_name;
+            return; 
+        });
+    }
 
-  POST('s00_signage.php', data, 
-   function (resp) {
-    _usb.value = resp.data.usb_name;
-    return; 
-   }
-  );
- }
-
- var _folder = document.getElementById("usb_path");
- var getnextpath = function() {
+    var _folder = document.getElementById("usb_path");
+    var getnextpath = function() {
         var data = new FormData();
         data.append('func', 'get_nextpath');
         data.append('usb_name', _usb.value);
         data.append('usb_path', _folder.value);
-        
-  POST('s00_signage.php', data, 
-   function (resp) {
-    _folder.value = resp.data.usb_path;
-    return; 
-   }
-  );
- }
+        POST('s00_signage.php', data, 
+        function (resp) {
+            _folder.value = resp.data.usb_path;
+            return; 
+        });
+    }
  
- var usb_backup = function(){
-        var data = new FormData();
-        data.append('func', 'usb_backup');
-        waiting('class', "백업중");
+    var usb_backup = function(){
+    var data = new FormData();
+    data.append('func', 'usb_backup');
+    loader("백업중..");
+    dd = document.getElementsByName("targets");
+    for (i=0;i <dd.length;i++) {
+        if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
+        data.append(dd[i].id, dd[i].value);
+    }
+    POST('s00_signage.php', data, 
+        function (resp){
+        loader("exit");
+        return; 
+    });
+    }
 
+    var usb_restore = function(){
+        var data = new FormData();
+        data.append('func', 'usb_restore');
+        loader("복구중..");
         dd = document.getElementsByName("targets");
         for (i=0;i <dd.length;i++) {
             if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
             data.append(dd[i].id, dd[i].value);
         }
         POST('s00_signage.php', data, 
-          function (resp){
-            closing(1000);
+        function (resp) {
+            loader("exit");
             return; 
-          }
-        );
- }
-
- var usb_restore = function(){
+        });
+    }
+ 
+ 
+    var set_subject = function(profile){
         var data = new FormData();
-        data.append('func', 'usb_restore');
-        waiting('class', "복구중");
-        dd = document.getElementsByName("targets");
+        data.append('func', 'set_subject');
+        dd = document.getElementById("profile").childNodes;
         for (i=0;i <dd.length;i++) {
             if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
             data.append(dd[i].id, dd[i].value);
         }
-  POST('s00_signage.php', data, 
-   function (resp) {
-    closing(1000);
-    return; 
-   }
-  );
- }
- 
- 
-  var set_subject = function(profile){
-    var data = new FormData();
-    data.append('func', 'set_subject');
-    dd = document.getElementById("profile").childNodes;
-    for (i=0;i <dd.length;i++) {
-        if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
-        data.append(dd[i].id, dd[i].value);
+        if (document.getElementById('nfile').files[0] != undefined)
+        data.append('nfile', document.getElementById('nfile').files[0] );
+        POST('s00_signage.php', data, function (resp) { return; });
     }
-    if (document.getElementById('nfile').files[0] != undefined)
-      data.append('nfile', document.getElementById('nfile').files[0] );
-    POST('s00_signage.php', data, function (resp) {
-    return; });
-  }
     
-  var get_subject = function(profile){
-    var data = new FormData();
-    data.append('func', 'get_subject');
-    POST('s00_signage.php', data, function (resp) {
-        if(resp.data == "true") document.location.reload();
-    });
-  }
+    var get_subject = function(profile){
+        var data = new FormData();
+        data.append('func', 'get_subject');
+        POST('s00_signage.php', data, function (resp) {
+            if(resp.data == "true") document.location.reload();
+        });
+    }
     
     var set_code = function(){
         var data = new FormData();
@@ -196,61 +178,52 @@ function check8(str) {
             if (dd[i].type != "text") continue;
             data.append(dd[i].id, dd[i].value);
         }        
-        
-  POST('s00_signage.php', data, 
-   function (resp) {  return;  }
-  );
+        POST('s00_signage.php', data, function (resp) {  return;  });
     }
     
- var get_code = function(profile){      
-  var data = new FormData();
-  data.append('func', 'get_code');
-  if (typeof profile != 'undefined') data.append('profile', profile);
-  POST('s00_signage.php', data, function (resp) {
-        dd = document.getElementById("class").childNodes;
-        for (i=0;i <dd.length;i++) {
-            if (dd[i].type != "text") continue;
-            dd[i].value = resp.data[dd[i].id];
-            data.append(dd[i].id, dd[i].value);
-        }
-    });
-  }
-  get_code();
+    var get_code = function(profile){      
+        var data = new FormData();
+        data.append('func', 'get_code');
+        if (typeof profile != 'undefined') data.append('profile', profile);
+        POST('s00_signage.php', data, function (resp) {
+            dd = document.getElementById("class").childNodes;
+            for (i=0;i <dd.length;i++) {
+                if (dd[i].type != "text") continue;
+                dd[i].value = resp.data[dd[i].id];
+                data.append(dd[i].id, dd[i].value);
+            }
+        });
+    }
+    get_code();
 
- _file = document.getElementById('nfile');
- _photo = document.getElementById('photo');
- _file.onchange = function (event) {
-
-  _photo.src = URL.createObjectURL(event.target.files[0]);
- }
- 
- var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
- var data = new FormData(); 
- data.append("func", "headnote");
- data.append("samwork", "true");
- POST("s00_signage.php", data, function(resp){
-   console.log(resp.status + ':' + resp.data);
-   document.title = resp.data.owner;
-   document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
-   document.getElementById("title").setAttribute("value",resp.data.title);
-   document.getElementById("subject").setAttribute("value",resp.data.subject);
-   document.getElementById("owner").setAttribute("value",resp.data.owner);
-   document.getElementById("photo").setAttribute("src",resp.data.photo);
-   document.getElementById("footnote").setAttribute("value",resp.data.footer);
-   
-   document.getElementById("sam_code").setAttribute("value",resp.data.samcode);
-   document.getElementById("access_code").setAttribute("value",resp.data.accesscode);
-   document.getElementById("surprisebox_code").setAttribute("value",resp.data.surpriseboxcode);
-   document.getElementById("external_port").setAttribute("value",resp.data.externalport);
-   document.getElementById("gate_server").setAttribute("value",resp.data.gateserver);
-   document.getElementById("ssid").setAttribute("value",resp.data.ssid);
-   document.getElementById("wifi_password").setAttribute("value",resp.data.wifi_password);
-   document.getElementById("subject_").innerHTML = resp.data.subject;
-   document.getElementById("owner_").innerHTML = resp.data.owner;
-   document.getElementById("foot_note").innerHTML = resp.data.footer;
- });
-}
-headnote();
- 
+    _file = document.getElementById('nfile');
+    _photo = document.getElementById('photo');
+    _file.onchange = function (event) {
+        _photo.src = url.createobjecturl(event.target.files[0]);
+    }
+    var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
+        var data = new FormData(); 
+        data.append("func", "headnote");
+        data.append("samwork", "true");
+        POST("s00_signage.php", data, function(resp){
+            console.log(resp.status + ':' + resp.data);
+            document.title = resp.data.owner;
+            document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
+            document.getElementById("title").setAttribute("value",resp.data.title);
+            document.getElementById("subject").setAttribute("value",resp.data.subject);
+            document.getElementById("owner").setAttribute("value",resp.data.owner);
+            document.getElementById("photo").setAttribute("src",resp.data.photo);
+            document.getElementById("footnote").setAttribute("value",resp.data.footer);
+            
+            document.getElementById("sam_code").setAttribute("value",resp.data.samcode);
+            document.getElementById("access_code").setAttribute("value",resp.data.accesscode);
+            document.getElementById("ssid").setAttribute("value",resp.data.ssid);
+            document.getElementById("wifi_password").setAttribute("value",resp.data.wifi_password);
+            document.getElementById("subject_").innerHTML = resp.data.subject;
+            document.getElementById("owner_").innerHTML = resp.data.owner;
+            document.getElementById("foot_note").innerHTML = resp.data.footer;
+        });
+    }
+    headnote();
 </script>
 </html>

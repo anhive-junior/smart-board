@@ -1518,7 +1518,6 @@ function get_omxcommand($ctrl) {
 //////////////////////////////////////
 //// USB 
 
-
 /////////////////////////////////////
 // get usb name
 define("dUSBROOT", "/media");
@@ -1526,29 +1525,25 @@ $services['get_nextusb'] = '_get_nextusb';
 function _get_nextusb() { 
     s00_log ("Start ".__FUNCTION__);
 
-    $un = $_POST['usb_name'];
-    $sun = "";
-    
-    //read and cleansing
-    $fds = scandir(dUSBROOT);
-    if ($fds==false) outputJSON(array('usb_name'=>'N/A'), 'success');
-    $fds2 = "";
-    foreach($fds as $i => $fd) {
-        if ( ($fd == '.') || ($fd == '..') ) continue;
-        $fds2[] = $fd;
+    $usb_name = $_POST['usb_name'];
+    //read usb directory
+    $dir_infiles = scandir(dUSBROOT);
+    if ($dir_infiles==false) outputJSON(array('usb_name'=>'N/A'), 'success');
+    foreach($dir_infiles as $i => $file) {
+        if ( ($file == '.') || ($file == '..') ) continue;
+        $folder = array($file);
     }
-    $fds = $fds2;
-    
-    //search 
-    if (sizeof($fds)==1) outputJSON(array('usb_name'=>$fds[0]), 'success');
-    foreach($fds as $i => $fd) {
-        if ( ($fd == $un) && isset($fds[$i+1]) ) {
-            $sun = $fds[$i+1];
-            break;
-        }
-    }
-    if ($sun == "") outputJSON(array('usb_name'=>$fds[0]), 'success');
-    outputJSON(array('usb_name'=>$sun), 'success');
+    if(sizeof($folder)==1) outputJSON(array('usb_name' => $folder[0]), 'success');
+    // //search 
+    // if (sizeof($fds)==1) outputJSON(array('usb_name'=>$fds[0]), 'success');
+    // foreach($fds as $i => $fd) {
+    //     if ( ($fd == $usb_nme) && isset($fds[$i+1]) ) {
+    //         $sun = $fds[$i+1];
+    //         break;
+    //     }
+    // }
+    // if ($sun == "") outputJSON(array('usb_name'=>$fds[0]), 'success');
+    // outputJSON(array('usb_name'=>$sun), 'success');
 };
 
 
@@ -1765,9 +1760,9 @@ function _headnote(){
           $data += ["title" => $_SESSION['title']];
           $data += ["samcode" => $_SESSION['sam_code']];
           $data += ["accesscode" => $_SESSION['access_code']];
-          $data += ["supriseboxcode" => $_SESSION['surprisebox_code']];
-          $data += ["externalport" => $_SESSION['external_port']];
-          $data += ["gateserver" => $_SESSION['gate_server']];
+          //   $data += ["supriseboxcode" => $_SESSION['surprisebox_code']];
+          //   $data += ["externalport" => $_SESSION['external_port']];
+          //   $data += ["gateserver" => $_SESSION['gate_server']];
           $data += ["ssid" => $_SESSION['ssid']];
           $data += ["wifi_password" => $_SESSION['wifi_password']];
     }
@@ -1783,7 +1778,6 @@ function _home_bottom_button(){
     //entry criteria.. check condition, constraints  준비과정
     if ( !isset($_SESSION['uselevel']) || ($_SESSION['uselevel'] < 2) )
         outputJSON("error : uselevel is not defined or level is not privilige - line :  __LINE__", "error");
-    
     // task
     $data[] = array(
         "link" => "participants.html",
@@ -1797,18 +1791,15 @@ function _home_bottom_button(){
         "link" => "playwork.html",
         "spanInner" => "재생관리"
     );
+    $data[] = array(
+        "link" => "syswork.html",
+        "spanInner" => "접속관리"
+    );
 
     //exteneded task
-    if(isset($_SESSION['uselevel']) && $_SESSION['uselevel'] >=3){
-        $data[] = array(
-            "link" => "syswork.html",
-            "spanInner" => "접속관리"
-        );
-    }
-    $arr = array("contents"=>$data, "count"=>count($data));
     //validation 검증과정
-        
     //exit criteria, return
+    $arr = array("contents"=>$data, "count"=>count($data));
     outputJSON($arr, "success");
 };
 
@@ -1978,6 +1969,19 @@ function _parti_level_contents(){
         "mesg" => '접속화면에 "점검중입니다." 메시지 표시함.<br>일반 사용자는 이용할 수 없음.',
         );
     outputJSON($data, "success");
+}
+////////////////////////////////////
+///// apsetting - android
+$services['apsetting'] = "_apsetting";
+function _apsetting(){
+    s00_log("Start ".__FUNCTION__);
+    if(!isset($_POST['ap']) || !isset($_POST['pass'])){
+        error_log("not Post ssid or not Post Password");
+    }
+    $wid = $_POST['ap'];
+    $wpass = $_POST['pass'];
+    $current = "\nnetwork={\n"."ssid=".$wid."\n"."psk=".$wpass."\n}";
+    file_put_contents("/etc/wpa_supplicant/wpa_supplicant.conf",$current, FILE_APPEND);
 }
 
 /////////////////////////////////////
