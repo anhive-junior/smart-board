@@ -113,32 +113,6 @@ function getcommand($ctrl) {
     return (isset($msg[$ctrl]))?$msg[$ctrl]:"";
 }
 
-/////////////////////////////////////
-// set slide show options of feh
-$services['setfeh'] = '_setfeh';
-function _setfeh() { 
-    s00_log ("Start ".__FUNCTION__);
-
-    $fname="/etc/hive/signage/feh.sh";
-    $msg = $_POST['message'];
-    file_put_contents($fname, $msg);
-    @chmod($fname, 0775);
-    
-    outputJSON("[$msg] proceed", 'success');
-};
-
-/////////////////////////////////////
-// read slide show options
-$services['getfeh'] = '_getfeh';
-function _getfeh() { 
-    s00_log ("Start ".__FUNCTION__);
-
-    $fname="/etc/hive/signage/feh.sh";
-    $msg = file_get_contents($fname);
-    
-    outputJSON($msg, 'success');
-};
-
 ///////////////////////////////////////
 // pick one from time ordering slide
 function getfile($dir, $basephoto, $index) {
