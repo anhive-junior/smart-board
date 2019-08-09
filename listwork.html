@@ -14,7 +14,7 @@
         height: 32px;background: yellow; color:green; font-weight:bold;}
     .img_tag:active {background: red;}
     .button_span { width : 15%; padding: 5% 0; margin: 0; }
-    </style>    
+    </style>   
 </head>
 <body >
     <div id="prepend"></div>
@@ -38,8 +38,6 @@
                     <span class="button_span" onclick="alerted('사진을 삭제하시겠습니까?', 'rmcard')">사진삭제</span>
                     <span class="button_span" onclick="setpolicy()">재생옵션</span>
                     <span class="button_span" onclick="setthumb()">사진갱신</span>
-                    <!--USB 이미지 업로드-->
-                    <span class="button_span" onclick="showusb()">USB</span>
                 </div>
                 <div id="msg"></div>
     
@@ -237,10 +235,6 @@
 
     var setpolicy = function () {
         window.open( "playwork.html", "_self");
-    }
-
-    var showusb = function (usb) {
-        USBlist = window.open( "USBlist.php?usb", "cc", "width=250px,height=320px");
     }
 
     headnote();

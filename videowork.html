@@ -184,12 +184,9 @@
 
 
     var videolist;
-    var showvideos = function (usb) {
+    var showvideos = function() {
         if (typeof videolist !== 'undefined') videolist.close();
-        if (usb == true) 
-            videolist = window.open( "videolist.html?usb", "cc", "width=250px,height=320px");
-        else 
-            videolist = window.open( "videolist.html", "cc", "width=250px,height=320px");
+        videolist = window.open( "videolist.html", "cc", "width=250px,height=320px");
     }
     
     var control = function(msg){

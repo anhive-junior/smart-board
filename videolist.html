@@ -11,8 +11,8 @@
     .videoitem {
         color:red; 
         padding: 3px;
-        padding_top: 6px;
-        padding_bottom: 6px;
+        padding-top: 6px;
+        padding-bottom: 6px;
         margin: 2px;
         background-color: lightgray;
         word-break: break-all;
@@ -23,14 +23,10 @@
     <div class="container" >
         <div class="contents">
         
+            <div style="margin-top:10px;"><!-- upper line feed --></div>
             <!-- head note -->
             <div class='headnote'>
                 <span class="input_title">비디오목록</span>
-            </div>
-            <div style="margin-top:10px;"><!-- upper line feed --></div>
-            
-            <div id="position1">
-            <br>
             </div>
             <a id="link1"></a><br>
             <div id = "videolist">
@@ -39,20 +35,6 @@
     </div>
     <footer id="foot_note"></footer>
 <script>
-var useusb = function (usb) {
-    opener.showvideos(usb);
-}
-
-var usbcheck = function(){
-    var data = new FormData(); 
-    data.append("func", "usbcheck");
-    POST("s00_signage.php", data, function(resp){
-        document.getElementById("position1").innerHTML = "위치:[USB] or <input type='button' id='usb'>";
-        document.getElementById("usb").setAttribute("onclick",resp.data.func);
-        document.getElementById("usb").setAttribute("value",resp.data.value);
-        document.getElementById("foote_note").innerHTML = resp.data.footer;
-    });
-}
 
 var filecheck = function(){
     var data = new FormData(); 
@@ -69,7 +51,6 @@ var filecheck = function(){
         }
     });
 }
-usbcheck();
 filecheck();
 
 </script>

@@ -1489,213 +1489,8 @@ function get_omxcommand($ctrl) {
     return (isset($msg[$ctrl]))?$msg[$ctrl]:"";
 }
 
-//////////////////////////////////////
-//// USB 
-
 /////////////////////////////////////
-// get usb name
-define("dUSBROOT", "/media");
-$services['get_nextusb'] = '_get_nextusb';
-function _get_nextusb() { 
-    s00_log ("Start ".__FUNCTION__);
-
-    $usb_name = $_POST['usb_name'];
-    //read usb directory
-    $dir_infiles = scandir(dUSBROOT);
-    if ($dir_infiles==false) outputJSON(array('usb_name'=>'N/A'), 'success');
-    foreach($dir_infiles as $i => $file) {
-        if ( ($file == '.') || ($file == '..') ) continue;
-        $folder = array($file);
-    }
-    if(sizeof($folder)==1) outputJSON(array('usb_name' => $folder[0]), 'success');
-    // //search 
-    // if (sizeof($fds)==1) outputJSON(array('usb_name'=>$fds[0]), 'success');
-    // foreach($fds as $i => $fd) {
-    //     if ( ($fd == $usb_nme) && isset($fds[$i+1]) ) {
-    //         $sun = $fds[$i+1];
-    //         break;
-    //     }
-    // }
-    // if ($sun == "") outputJSON(array('usb_name'=>$fds[0]), 'success');
-    // outputJSON(array('usb_name'=>$sun), 'success');
-};
-
-
-/////////////////////////////////////
-// get usb path
-$services['get_nextpath'] = '_get_nextpath';
-function _get_nextpath() { 
-    s00_log ("Start ".__FUNCTION__);
-
-    $un = $_POST['usb_name'];
-    $up = $_POST['usb_path'];
-    $sun = "";
-    $usb_path = dUSBROOT."/$un";
-    //error_log("usbroot is [$usb_path]}");
-    
-    //read and cleansing
-    chdir("$usb_path");
-    $fds = shell_exec("find . -type d");
-    //error_log(print_r($fds , true));
-    $fds2 = str_replace("\n","|",$fds);
-    //error_log(print_r($fds2 , true));
-    $fds = explode("|",$fds2);
-    //error_log(print_r($fds , true));
-    
-    //search 
-    if (sizeof($fds)==1) outputJSON(array('usb_path'=>$fds[0]), 'success');
-    foreach($fds as $i => $fd) {
-        //error_log($fd);
-        if ( ($fd == $up) && isset($fds[$i+1]) ) {
-            $sun = $fds[$i+1];
-            break;
-        }
-    }
-    if ($sun == "") outputJSON(array('usb_path'=>$fds[0]), 'success');
-    outputJSON(array('usb_path'=>$sun), 'success');
-};
-
-/////////////////////////////////////
-// backup content to usb
-$services['usb_backup'] = '_usb_backup';
-function _usb_backup() {
-    s00_log ("Start ".__FUNCTION__);
-
-    error_log(print_r($_POST , true));
-    
-    $image_cb = $_POST['image_cb']; //
-    $video_cb = $_POST['video_cb']; //
-    $profile_cb = $_POST['profile_cb'];
-    $usb_name = $_POST['usb_name']; // 
-    $usb_path = $_POST['usb_path']; //
-    
-    //read and cleansing
-    date_default_timezone_set('Asia/Seoul');
-    $mtime = date('Y-m-d.H-m-s', time());
-    //dUSBROOT="/media"
-    $usb_dest = "";
-    if (strpos($usb_path, "AnHivePF")!==false){
-        $usb_dest = dUSBROOT."/$usb_name/$usb_path";
-        preg_match('/(?<path>^.*AnHivePF)/',$usb_dest,$m);
-        $usb_dest = $m['path'];
-    } else {
-        $usb_dest = dUSBROOT."/$usb_name/$usb_path/AnHivePF";
-    }
-    if(!($profile_cb != "_" && $video_cb != "_" && $image_cb != "_")){
-        outputJSON("백업 대상이 없음..", 'success');
-    }
-    if(!file_exists($usb_dest)) mkdir($usb_dest,0777, true);
-    $cont_path = "/var/www/media";
-    $cont_path_sign = "/var/www/signage";
-    $image_cb=($image_cb != "_")?1:0;
-    $video_cb=($video_cb != "_")?1:0;
-    $profile_cb=($profile_cb)?1:0;
-    //
-    if(!file_exists($cont_path . "/backup")) mkdir($cont_path . "/backup", 0777, true); // backup 디렉토리 생성
-    //chdir($media_path);
-    chdir($cont_path);
-    $rt = shell_exec("sudo /etc/hive/bin/usb_backup.sh backup $usb_dest $cont_path $cont_path_sign $image_cb $video_cb $profile_cb");
-    error_log("end of backup");
-    outputJSON("backup completed", 'success');
-};
-
-/////////////////////////////////////
-// usb_restore
-$services['usb_restore'] = '_usb_restore';
-function _usb_restore() { 
-    s00_log ("Start ".__FUNCTION__);
-
-    error_log(print_r($_POST , true));
-    
-    $image_cb = $_POST['image_cb'];
-    $video_cb = $_POST['video_cb'];
-    $profile_cb = $_POST['profile_cb'];
-    $usb_name = $_POST['usb_name'];
-    $usb_path = $_POST['usb_path'];
-    
-    //free space check
-    $dfs = disk_free_space(".");
-    if (($dfs - $_FILES['card']['size']) < 1048576 * $_SESSION['reserve_space']) 
-    {
-        outputJSON('Not enough disk free space.');
-    }
-    
-    //read and cleansing
-    date_default_timezone_set('Asia/Seoul');
-    $mtime = date('Y-m-d.H-m-s');
-    
-    $usb_dest = "";
-    if (strpos($usb_path, "AnHivePF")!==false){
-        $usb_dest = dUSBROOT."/$usb_name/$usb_path";
-        preg_match('/(?<path>^.*AnHivePF)/',$usb_dest,$m);
-        $usb_dest = $m['path'];
-    } else {
-        $usb_dest = dUSBROOT."/$usb_name/$usb_path/AnHivePF";
-    }
-
-    $cont_path = "/var/www/media";
-    $cont_path_sign = "/var/www/signage";
-    $image_cb=($image_cb != "_")?1:0;
-    $video_cb=($video_cb != "_")?1:0;
-    $profile_cb=($profile_cb)?1:0;
-    if(file_exists($usb_dest . "/backup.tar.gz")){
-        chdir($cont_path);
-        $rt = shell_exec("sudo /etc/hive/bin/usb_backup.sh restore $usb_dest $cont_path $cont_path_sign $image_cb $video_cb $profile_cb");
-    }
-    
-    error_log("end of restore");
-    outputJSON("backup restore", 'success');
-};
-//////////////////////////////////
-//////USB file copy for RPI
-$services['fileCopy'] = '_fileCopy';
-function _fileCopy(){
-    error_log ("Start ".__FUNCTION__);
-    
-    global $config_playlist, $config_caption, $config_slide, $config_info,$config_thumbs, $config_playlink ;
-    
-    $fileslength = $_POST['length'];
-    $directory = $_POST['directory'];
-    
-    for($i=0;$i<$fileslength;$i++){
-        if(!(isset($_POST['fileSearch' . "$i"]))) { continue; }
-        $file = $_POST['fileSearch' . "$i"];
-        $file_md5=(pathinfo($file, PATHINFO_EXTENSION)=="jpg")?substr(md5($file),-14,12).".jpg":substr(md5($file),-14,12).".png";
-        
-   
-        $usbfile = $directory."/$file"; // 원본파일 
-        $slidefile = $config_slide."/$file_md5"; //  slide 복사파일 
-        $thaumbsfile = $config_thumbs."/$file_md5.png"; // thaumbs 복사파일
-        $captionfile = $config_caption."/$file_md5.txt"; //txt 파일
-        $infofile = $config_info."/$file_md5.json"; // json 원본 파일
- 
-        // /home/pi/media/slide
-        if(!copy($usbfile, $slidefile)) { 
-            throw new Exception ("파일복사 실패[$usbfile => $slidefile]");
-        } 
-        chmod($slidefile, 0775);
-        // /home/pi/media/thaumbs 썸네일 파일 생성
-        make_thumb_from_image($slidefile, $thaumbsfile, 64,64);
-                
-        // ~/media/captions 확장자명 .txt
-        file_put_contents($captionfile, "");            
-        
-        // ~/media/info 확장자명 .json
-        $json_file = $config_info."/$file_md5.json";
-        $info = array("caption"=> "", 
-            "time" => time(),
-            "photo_md5"=>$file_md5,
-            "user_md5"=>get_userindex(),
-            "thumbs"=>"thumbs",
-            "origin"=>$file);        
-        file_put_contents($json_file, json_encode($info));                
-     }
-    
-      outputJSON( "파일을 복사하였습니다" , 'success');
-};
-
-/////////////////////////////////////
-// get usb name
+// get usb name ?? --> display는 어떠한 역할인건가..
 $services['display'] = '_display';
 function _display() { 
     s00_log ("Start ".__FUNCTION__);
@@ -1838,41 +1633,16 @@ function _show_level(){
 /////////////////////////////////////
 //// videolist
 
-$services['usbcheck'] = '_usbcheck';
-function _usbcheck(){
-    s00_log("Start ".__FUNCTION__);
-    $usb = isset($_GET['usb'])?true:false;
-    error_log("usb use : ". (isset($_GET['usb'])?"true":"false") );
-    if ($usb==true) {
-        $data = array(
-             "func" => "useusb(false)", 
-             "value" => "RPi(ToDo)"
-             );
-        $_SESSION['dir']= isset($_GET['dir'])? $_GET["dir"]: '/media';//$dir = ($dir=="")?'/media':$dir;
-        error_log("dir is ".$dir);
-    }else {
-        $data =  array(
-             "position" => str_ireplace("/home/pi/","",getcwd()),
-             "func" => "useusb(true)",
-             "value"=> "USB(ToDo)",
-             "footer" => $_SESSION['footnote']
-             );
-        $_SESSION['dir']= isset($_GET['dir'])? $_GET["dir"]: '../media/video';
-    }
- 
-    outputJSON($data,"success");
-}
-
 $services['filecheck'] = '_filecheck';
 function _filecheck(){
     s00_log("Start ".__FUNCTION__);
-    $usb = isset($_GET['usb'])?true:false;
-    $ext = isset($_GET['ext'])? $_GET["ext"]: '/(\.mp4|\.mov)/i';
+    global $config_video;
+    $ext = '/(\.mp4|\.mov)/i';
     $mcount = 0;
     $tcount = 0;
-    $arraycount=0;
+    $arraycount = 0;
     date_default_timezone_set('Asia/Seoul');
-    $dir= $_SESSION['dir'];
+    $dir = $config_video;
     $files=scandir($dir);
     $fs1="";
     foreach($files as $fs){
@@ -1885,50 +1655,27 @@ function _filecheck(){
     $time = time();
     arsort($fs2);
     foreach($fs2 as $fs3){
-        //if ($tcount < $page*$batch) { $tcount++; continue;}
-        if(count($fs2) == $arraycount+1){
-            $arr = array("contents"=>$data, "count"=>count($data));
-            outputJSON($arr,"success");
-        }
         $fs3 = trim($fs3);
         if ($fs3 == "") continue;
         list($mtime, $file, $size, $isdir) = explode("#", $fs3);
-       
         $size = (integer) ($size/1024/1024);
-        
-        if ($isdir == "1") {
-            $options=($usb?"usb=1":"")."&dir=$dir/$file&ext=$ext";
+        if(preg_match($ext,$fs3,$matches)){
+            $json = $dir.'/../info/'.$file.'.json';
+            if (file_exists($json)) 
+                $info = json_decode(file_get_contents($dir.'/../info/'.$file.'.json'), true);
+            else 
+                $info = array("origin"=> basename($file));
             $data[] = array(
-                 "link" =>"videolist.html?".$options,
-                 "position" => $file );
-            } 
-        else {
-            if(preg_match($ext,$fs3,$matches)){
-                if ($usb==true) {
-                    $data[] = array(
-                        "id" => $file,
-                        "func" => "opener.getvideo(this.id,".$dir.")",
-                        "value" => $file
+                    "id" =>  $file,
+                    "func" => "opener.getvideo(this.id, '')",
+                    "info" =>  $info['origin']
                     );
-                } else {
-                    //echo $file.':::../info/'.$dir.'/'.$file.'.json<br>';
-                    $json = $dir.'/../info/'.$file.'.json';
-                    if (file_exists($json)) {
-                        $info = json_decode(file_get_contents($dir.'/../info/'.$file.'.json'), true);
-                    } else {
-                            $info = array("origin"=> basename($file));
-                    }
-                    $data[] = array(
-                         "id" =>  $file,
-                         "func" => "opener.getvideo(this.id, '')",
-                         "info" =>  $info['origin']
-                         );
-                    }
-                    $mcount++;
-                }
-             }
+            $mcount++;
+        }
         $arraycount++;
     }
+    $arr = array("contents"=>$data, "count"=>count($data));
+    outputJSON($arr,"success");
 }
 
 /////////////////////////////////////

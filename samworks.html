@@ -49,28 +49,15 @@
      
      
      (무선접속) : <input type="text" id='ssid' style="width : 10em; text-align:center; color:red; font-weight:bold;">  /pw  <input type="text" id='wifi_password' style="width : 6em; text-align:center;"  onblur="check8(this.value);" > <br>
-     <div style="margin-top:10px;"><!-- upper line feed --></div>
+    <div style="margin-top:10px;"><!-- upper line feed --></div>
     </div>
     <div style="text-align:center; background-color:#eee;margin-top:10px;">
     코드 <input type="button" onclick='javascript:set_code()' value="설정" >
     <input type="button" onclick='javascript:get_code()' value="보기" >
     </div>
-    <div id="usbctl" style="font-size:.8em; text-align:left; margin-left:10px;width: 50%; margin: 0 auto;min-width: 350px;">
-     <div style="margin-top:10px;"><!-- upper line feed --></div>
-     (USB) : <input type="text" id='usb_name' name="targets" style="width : 180px; text-align:center; color:red; font-weight:bold;" value="" ><input type="button" style=" color:red; font-weight:bold;" value="USB확인" onclick="getnextusb();"> <br>
-     (폴더) : <input type="text" id='usb_path' name="targets" style="width : 220px; text-align:left; color:red; font-weight:bold;" value="" ><input type="button" style=" color:red; font-weight:bold;" value="폴더확인" onclick="getnextpath();"> <br>
-     
-     (대상) : 
-     <input type="text" id='image_cb'  name="targets" class="checkinput" value='✔' readonly onclick="_clicked(this,'_','✔')" style="background-color:#eee;color:#000;"> 사진, 
-     <input type="text" id='video_cb'  name="targets" class="checkinput" value='✔' readonly onclick="_clicked(this,'_','✔')" style="background-color:#eee;color:#000;"> 동영상, 
-     <input type="text" id='profile_cb'  name="targets" class="checkinput" value='✔' readonly onclick="_clicked(this,'_','✔')" style="background-color:#eee;color:#000;"> 프로파일 
-     <br>
-     <div style="margin-top:10px;font-size:0.5em;"><!-- upper line feed --></div>
     </div>
-    <div style="text-align:center; background-color:#eee;margin-top:10px;">
-    USB <input type="button" onclick='usb_backup()' value="백업" > <input type="button" onclick='usb_restore()' value="복구" >
+    <hr>
     </div>
-    <hr style="line-color:green;"> <!-- hr -->   </div>
    
   </div>
  </div>
@@ -89,66 +76,7 @@
     function check8(str) {
         if (str.length < 8) alert ("비밀번호는 8자리 이상입니다.");
     }        
- 
- 
-    var _usb = document.getElementById("usb_name");
-    var getnextusb = function() {
-        var data = new FormData();
-        data.append('func', 'get_nextusb');
-        data.append('usb_name', _usb.value);
-        POST('s00_signage.php', data, 
-        function (resp) {
-            _usb.value = resp.data.usb_name;
-            return; 
-        });
-    }
 
-    var _folder = document.getElementById("usb_path");
-    var getnextpath = function() {
-        var data = new FormData();
-        data.append('func', 'get_nextpath');
-        data.append('usb_name', _usb.value);
-        data.append('usb_path', _folder.value);
-        POST('s00_signage.php', data, 
-        function (resp) {
-            _folder.value = resp.data.usb_path;
-            return; 
-        });
-    }
- 
-    var usb_backup = function(){
-    var data = new FormData();
-    data.append('func', 'usb_backup');
-    loader("백업중..");
-    dd = document.getElementsByName("targets");
-    for (i=0;i <dd.length;i++) {
-        if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
-        data.append(dd[i].id, dd[i].value);
-    }
-    POST('s00_signage.php', data, 
-        function (resp){
-        loader("exit");
-        return; 
-    });
-    }
-
-    var usb_restore = function(){
-        var data = new FormData();
-        data.append('func', 'usb_restore');
-        loader("복구중..");
-        dd = document.getElementsByName("targets");
-        for (i=0;i <dd.length;i++) {
-            if (dd[i].nodeName !== "INPUT" || dd[i].type != "text") continue;
-            data.append(dd[i].id, dd[i].value);
-        }
-        POST('s00_signage.php', data, 
-        function (resp) {
-            loader("exit");
-            return; 
-        });
-    }
- 
- 
     var set_subject = function(profile){
         var data = new FormData();
         data.append('func', 'set_subject');
