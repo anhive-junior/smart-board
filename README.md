@@ -61,7 +61,7 @@ find . -name "*.php" -exec sed -i 's/\t/    /g'  {} +
 
 ## 만든이 (Author or Manager)
 
-* **Ryujae Seok** - *github, @yhk1515* -
+* **Jaeseok Ryu** - *github, @yhk1515* -
 * **Sangha Lee** - *github, @toriato*-
 * **Yonghoon Jung** - *github, @dydgns2017* -
 * **Yongsoo Han** - *github, @ilovecho* -
