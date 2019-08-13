@@ -17,11 +17,12 @@ if [ "$1" == "" ] ; then
   echo -e "$usage"
   exit 1
 fi
-echo "$@" >> /etc/hive/log/command.log
+#echo "$@" >> /etc/hive/log/command.log
 while [ "$1" != "" ]; do
     case $1 in
         shutdown    )     shutdown -h 0; exit  ;;
         reboot      )     reboot; exit  ;;
+	ap_disable  ) 	  bash /home/pi/ap/set_ap.sh disable  ;;
         -d | --direct )   shift; "$@" ; exit ;;
         -s | --sleep)     shift; sleep $1; shift; "$@"; exit  ;;
         -h | --help )     exec echo "$usage"; exit ;;

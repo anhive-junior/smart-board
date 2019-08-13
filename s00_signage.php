@@ -1697,12 +1697,14 @@ $services['apsetting'] = "_apsetting";
 function _apsetting(){
     s00_log("Start ".__FUNCTION__);
     if(!isset($_POST['ap']) || !isset($_POST['pass'])){
-        error_log("not Post ssid or not Post Password");
+        error_log("not defined ssid or not defind Password");
     }
     $wid = $_POST['ap'];
     $wpass = $_POST['pass'];
     $current = "\nnetwork={\n"."ssid=".$wid."\n"."psk=".$wpass."\n}";
     file_put_contents("/etc/wpa_supplicant/wpa_supplicant.conf",$current, FILE_APPEND);
+    shell_exec("sudo /etc/hive/bin/shellcmd ap_disable");
+    shell_exec("sudo /etc/hive/bin/shellcmd reboot");
 }
 
 /////////////////////////////////////
