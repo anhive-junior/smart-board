@@ -1359,7 +1359,7 @@ function _rmvideo() {
 $services['getvideo'] = '_getvideo';
 function _getvideo() { 
     s00_log ("Start ".__FUNCTION__);
-    global $config_playlist, $config_caption, $config_slide, $config_info,$config_thumbs, $config_playlink, $config_video ;
+    global $config_playlist, $config_caption, $config_slide, $config_info,$config_thumbs, $config_playlink, $config_video;
 
     $base = isset($_POST['video'])?$_POST['video']:"";
     $action = isset($_POST['action'])?$_POST['action']:""; //current. next, ...
@@ -1395,10 +1395,11 @@ function _getvideo() {
     $video = getfile($config_video, $base, $action);
     error_log("[$action] of [$base] is [$video]");
     if ($video=="") {
+        $custom_path = 'custom/'.$_SESSION['profile'];
         error_log("Set the first sample.");
-        $video_url="http://www.w3schools.com/html/mov_bbb.mp4";
-        $video = "sample.mp4";
-        shell_exec("wget $video_url -O $config_video/$video");
+        $video="sample.mp4";
+        copy ("$custom_path/sample_video.mp4",      "$config_video/$video");
+        copy ("$custom_path/sample_video.mp4.json", "$config_info/$video.json");
     }
 
     $url = $config_video.'/'.$video;
