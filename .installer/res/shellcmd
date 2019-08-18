@@ -23,7 +23,6 @@ while [ "$1" != "" ]; do
         shutdown    )     shutdown -h 0; exit  ;;
         reboot      )     reboot; exit  ;;
 	    ap_disable  ) 	  bash /home/pi/ap/set_ap.sh disable  ;;
-        kill_omx    )     killall omxplayer ;;
         -d | --direct )   shift; "$@" ; exit ;;
         -s | --sleep)     shift; sleep $1; shift; "$@"; exit  ;;
         -h | --help )     exec echo "$usage"; exit ;;

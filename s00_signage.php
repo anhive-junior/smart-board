@@ -116,17 +116,15 @@ function getcommand($ctrl) {
 ///////////////////////////////////////
 // pick one from time ordering slide
 function getfile($dir, $basephoto, $index) {
-
     date_default_timezone_set('Asia/Seoul');
     $files=scandir($dir);
-    if (sizeof($files) ==0) return "";
+    if (sizeof($files) == 0) return "";
     
     $fs1="";
     foreach($files as $fs){
         if (strpos(".;..;js;css;images;img;", $fs)!==false) continue;
         if (strpos("captions;filelist", $fs)!==false) continue;
         if (substr($fs,0,1)==".") continue;
-
         $df = $dir.'/'.$fs;
         $fs1.=filemtime($df).'#'.$fs
               .'#'.filesize($df).'#'.is_dir($df).'|';
@@ -144,19 +142,14 @@ function getfile($dir, $basephoto, $index) {
     $countdown = 2; // for prevent infinite loof
     while($countdown--) {
         foreach($fs2 as $fs3){
-
             $fs3 = trim($fs3);
             if ($fs3 == "") continue;
             list($mtime, $file, $size, $isdir) = explode("#", $fs3);
-            
             //$mtime = date('Y-m-d', $mtime);
             if ($isdir == "1") continue;
-
             $df = $dir.'/'.$file;
-            
             $fx = strtolower(pathinfo($df, PATHINFO_EXTENSION));
             if (strpos("jpg;gif;png;mp4;mov;mkv", $fx)===false) continue;
-
             //if matched
             //error_log(str_replace($dir.'/', "", ">>>b[$basephoto]$index:::c[$df]:::f[$firstfile],l[$lastfile],s[$searched]<<<" ));
             switch ($index) {
@@ -306,7 +299,7 @@ function _setcaption() {
     file_put_contents($cfile, $caption);
     
     outputJSON($caption, 'success');
-};
+}
 
 function get_userindex(){
     if (isset($_SESSION['user_md5'])) return $_SESSION['user_md5'];
@@ -1355,7 +1348,7 @@ function _rmvideo() {
     outputJSON("Removed card : [$video].", 'success'); 
 }    
 
-// play video 
+// play video
 $services['getvideo'] = '_getvideo';
 function _getvideo() { 
     s00_log ("Start ".__FUNCTION__);
@@ -1364,7 +1357,6 @@ function _getvideo() {
     $base = isset($_POST['video'])?$_POST['video']:"";
     $action = isset($_POST['action'])?$_POST['action']:""; //current. next, ...
     $source = isset($_POST['source'])?$_POST['source']:"";
-    
     $info = "";
     $video = "";
     // video is on usb drive
@@ -1410,14 +1402,16 @@ function _getvideo() {
     $ifile = "$config_info/$video.json";
     $info = json_decode(file_get_contents($ifile),true);
 
-    
-    $status = "reserved";
+    // check is running the omxplayer program in linux
+    $pid=trim(shell_exec("ps -A | grep omxplayer | awk {'print $1'} | head -1"));
+    if(preg_replace("/\s+/","",$pid) == "") $status = "new";
+    else $status = "reserved";
+
     $fx = strtolower(pathinfo($video, PATHINFO_EXTENSION));
     $link = "$config_video/.omx_default.$fx";
     
     $target = readlink($link);
     if ( basename($target) != basename($video) ) {
-        $status = "new";
         unlink($link);
         error_log("delete link :".$link);
     }
@@ -1428,10 +1422,9 @@ function _getvideo() {
             unlink($ff);
         }
     }
-    symlink( $video, $link); 
+    symlink($video, $link); 
     
     date_default_timezone_set('Asia/Seoul');
-
     $arr = array (
         "video" => $video
       , "caption" => $caption
@@ -1444,20 +1437,15 @@ function _getvideo() {
     outputJSON($arr, 'success');
 };
 
-
 /////////////////////////////////////
 // control to slide show on running
 $services['video_control'] = '_video_control';
 function _video_control() { 
     s00_log ("Start ".__FUNCTION__);
-
     $ctrl = $_POST['ctrl'];
-    
     $msg = get_omxcommand($ctrl);
     if ($msg=="") outputJSON("[$ctrl] is not defined.");
-    
     $r = submit_RPi($msg);
-    
     outputJSON("[$ctrl] proceed", 'success');
 };
 
