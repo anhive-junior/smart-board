@@ -36,10 +36,9 @@
                     <div class="button_base" style="text-align:center;background-color:#eee;">
                         <span id="btn_get" class="button_span btn" style="width: 3.2em;" onclick="document.getElementById('_file').click();" >찾기</span>  
                         <span id="btn_send" class="button_span btn" style="width: 3.2em;" onclick="upvideo();" >등록</span>  
-
-                        <span id="btn_cancel" class="button_span btn" style="width: 3.2em;display:none;" onclick="rmvideo();">삭제</span>
-
+                        <span id="btn_cancel" class="button_span btn" style="width: 3.2em; display:none;" onclick="rmvideo();">삭제</span>
                         <span id="btn_list" class="button_span btn" style="width: 3.2em;" onclick="showvideos();" >목록</span>
+                        <span id="btn_exit" class="button_span btn" style="width: 3.2em;" onclick="showvideos();" >종료</span>
                     </div>
                 </div>
                                 <div style="margin-top:3px;"><!-- upper line feed --></div>
@@ -67,13 +66,15 @@
 </body>
 
 <script>
-
     var _video = document.getElementById('video');
     var _fname = document.getElementById('_prog');
     var _caption = document.getElementById('caption');
     var _vlog = document.getElementById('vlog');
     var btn_cancel = document.getElementById("btn_cancel");
-    if( show_level() > 1) btn_cancel.style.display=""; 
+    show_level(function(resp){
+        if(resp.data.level>1) btn_cancel.style.display = "";
+    });
+    
 
     _file = document.getElementById('_file');
     _file.onchange = function (event) {
@@ -225,8 +226,6 @@
            document.getElementById("foot_note").innerHTML = resp.data.footer;
        });
    }
-
 headnote();
-
 </script>
 </html>

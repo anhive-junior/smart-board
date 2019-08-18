@@ -24,6 +24,34 @@ var POST = function(api, data, func){
     return request;
 }
 
+// level 값 가져오기
+var show_level = function(func){
+    var data = new FormData();
+    data.append('func','show_level');
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function(){
+        if(request.readyState == 4){
+            try {
+                //console.log(request.response);
+                var resp = JSON.parse(request.response);
+            } catch (e){
+                var resp = {
+                    status: 'error',
+                    data: 'Unknown error occurred: [' + request.responseText + ']'
+                };
+            }
+            console.log(resp.status + ': ' + resp.data);
+            if (resp.status == 'error') {
+                return;
+            }
+            //console.log("level is " + resp.data.level);
+            func(resp);
+        }
+    };
+    request.open('POST', "s00_signage.php");
+    request.send(data);
+}
+
 var _key = function (event, id) {
     if (event.which == 13 || event.keyCode == 13) {
         //code to execute here
@@ -48,16 +76,6 @@ var _clicked = function () {
     obj.value = arguments[1];
 } 
 
-// level 값 가져오기
-var show_level = function(){
-    var data = new FormData();
-    data.append('func','show_level');
-    var request = new XMLHttpRequest();
-    POST("s00_signage.php", data, function(resp){
-        console.log("level : " + resp.data.level);
-        return resp.data.level;
-    });
-}
 
 // 알림창 띄우기
 function alerted(msg, func){ // alerte

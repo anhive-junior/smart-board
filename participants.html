@@ -58,6 +58,10 @@
     <footer id="foot_note"></footer>
 
 <script>
+    var level = 0;
+    show_level(function(resp){
+        this.level = resp.data.level;
+    });
     var headnote = function(){
         var data = new FormData();
         data.append("func", "headnote");
@@ -95,7 +99,7 @@
                 ftable.setAttribute('style', 'width:100%;');
                 ftr = document.createElement('tr');
                     ftr.setAttribute('style', "font-wight:bold;color:gray;");
-                    if( show_level() >= 2 ){
+                    if( this.level >= 2 ){
                         rec = "<td style='width:30%;'>이름</td>"
                         +"<td style='width:40%;' >MAC(IP)</td>";
                         rec += "<td style='width:20%;'>강퇴</td>";
@@ -105,7 +109,7 @@
                     }
                     ftr.innerHTML = rec;
                 ftable.appendChild(ftr);
-                if( ! show_level() >=2 ) return;
+                if( ! this.level >= 2 ) return;
                 for (i=0; i<resp.data.length; i++) {
                     ftr = document.createElement('tr');
                         rec = "<td>"+resp.data[i].user+"</td>"
@@ -116,7 +120,7 @@
                                     +" style='width:1.2em;height:1.2em;'"
                                     +" onclick='extract(\""+resp.data[i].mac+"\",\""+resp.data[i].ip+"\");'"
                                     +" alt=\""+resp.data[i].user+"\"></td>\n";
-                        ftr.innerHTML = rec;
+                    ftr.innerHTML = rec;
                     ftable.appendChild(ftr);
                 }
             fdiv.appendChild(ftable);
