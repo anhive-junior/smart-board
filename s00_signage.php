@@ -31,7 +31,10 @@ function _test() {
 // command to specific channel to control
 function submit_RPi($msg) { 
     s00_log ("Start ".__FUNCTION__);
-
+    if(file_exists("lxde-pi-rc.xml.dpkg-old")){
+       error_log("Error :::: lxde short key file is converted to *.dpkg-old file"); 
+       return "";
+    }
     if ($msg == "") return "";
     
     $host    = "127.0.0.1";
