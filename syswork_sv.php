@@ -181,94 +181,94 @@ $services['get_netinfo'] = array('fn' => '_get_netinfo', 'auth' =>'__RU__');
 /////////////////////////////////////
 // 시스템 정보 수집
 // 2014-10-01, by AnHive
-$services['set_netinfo'] = array('fn' => '_set_netinfo',         'auth' =>'A_____');
-function _set_netinfo() {
+// $services['set_netinfo'] = array('fn' => '_set_netinfo',         'auth' =>'A_____');
+// function _set_netinfo() {
 
-    $ap_use          = isset($_POST['ap_use'        ])?$_POST['ap_use'        ]:""; 
-    $ssid            = isset($_POST['ssid'          ])?$_POST['ssid'          ]:""; 
-    $sec_use         = isset($_POST['sec_use'       ])?$_POST['sec_use'       ]:""; 
-    $wpa_passphrase  = isset($_POST['wpa_passphrase'])?$_POST['wpa_passphrase']:""; 
-    $wpa             = isset($_POST['wpa'           ])?$_POST['wpa'           ]:""; 
-    $int_use         = isset($_POST['int_use'       ])?$_POST['int_use'       ]:""; 
-    $interface       = isset($_POST['interface'     ])?$_POST['interface'     ]:""; 
-    $operation       = isset($_POST['operation'     ])?$_POST['operation'     ]:""; 
-    $ip_address      = isset($_POST['ip_address'    ])?$_POST['ip_address'    ]:""; 
-    $ip_mask         = isset($_POST['ip_mask'       ])?$_POST['ip_mask'       ]:""; 
-    $ip_gate         = isset($_POST['ip_gate'       ])?$_POST['ip_gate'       ]:""; 
-    $ip_dns1         = isset($_POST['ip_dns1'       ])?$_POST['ip_dns1'       ]:""; 
-    $ip_dns2         = isset($_POST['ip_dns2'       ])?$_POST['ip_dns2'       ]:""; 
-    // $external_ip     = isset($_POST['external_ip'   ])?$_POST['external_ip'   ]:""; 
-    // $external_port   = isset($_POST['external_port' ])?$_POST['external_port' ]:""; 
-    // $ext_use         = isset($_POST['ext_use'       ])?$_POST['ext_use'       ]:""; 
+//     $ap_use          = isset($_POST['ap_use'        ])?$_POST['ap_use'        ]:""; 
+//     $ssid            = isset($_POST['ssid'          ])?$_POST['ssid'          ]:""; 
+//     $sec_use         = isset($_POST['sec_use'       ])?$_POST['sec_use'       ]:""; 
+//     $wpa_passphrase  = isset($_POST['wpa_passphrase'])?$_POST['wpa_passphrase']:""; 
+//     $wpa             = isset($_POST['wpa'           ])?$_POST['wpa'           ]:""; 
+//     $int_use         = isset($_POST['int_use'       ])?$_POST['int_use'       ]:""; 
+//     $interface       = isset($_POST['interface'     ])?$_POST['interface'     ]:""; 
+//     $operation       = isset($_POST['operation'     ])?$_POST['operation'     ]:""; 
+//     $ip_address      = isset($_POST['ip_address'    ])?$_POST['ip_address'    ]:""; 
+//     $ip_mask         = isset($_POST['ip_mask'       ])?$_POST['ip_mask'       ]:""; 
+//     $ip_gate         = isset($_POST['ip_gate'       ])?$_POST['ip_gate'       ]:""; 
+//     $ip_dns1         = isset($_POST['ip_dns1'       ])?$_POST['ip_dns1'       ]:""; 
+//     $ip_dns2         = isset($_POST['ip_dns2'       ])?$_POST['ip_dns2'       ]:""; 
+//     // $external_ip     = isset($_POST['external_ip'   ])?$_POST['external_ip'   ]:""; 
+//     // $external_port   = isset($_POST['external_port' ])?$_POST['external_port' ]:""; 
+//     // $ext_use         = isset($_POST['ext_use'       ])?$_POST['ext_use'       ]:""; 
 
-    //write_ap --wpa_passphrase YONGSOO
-    function change_ap($key, $value) {
-        if ($key == "") return;
-        $cmd = "/etc/hive/bin/write_ap --$key $value";
-        shell_exec("sudo ".$cmd);
-    }
-    if ($ap_use) {
-        change_ap('wpa', $wpa);
-        change_ap('ssid', $ssid);
-    }
+//     //write_ap --wpa_passphrase YONGSOO
+//     function change_ap($key, $value) {
+//         if ($key == "") return;
+//         $cmd = "/etc/hive/bin/write_ap --$key $value";
+//         shell_exec("sudo ".$cmd);
+//     }
+//     if ($ap_use) {
+//         change_ap('wpa', $wpa);
+//         change_ap('ssid', $ssid);
+//     }
     
-    if ($sec_use) {
-        if ( strlen($wpa_passphrase)<8 ) {
-                outputJSON("WiFi 비밀번호는 최소 8자입니다");
-        }
-        change_ap('wpa', $wpa);
-        change_ap('ssid', $ssid);
-        change_ap('wpa_passphrase', $wpa_passphrase);
-        change_ap('-u', "wpa");
-        change_ap('-u', "wpa_passphrase");
-        change_ap('-u', "wpa_key_mgmt");
-        change_ap('-u', "wpa_pairwise");
-        change_ap('-u', "rsn_pairwise");
-        error_log ("enable security");
-    } else {
-        change_ap('-m', "wpa");
-        change_ap('-m', "wpa_passphrase");
-        change_ap('-m', "wpa_key_mgmt");
-        change_ap('-m', "wpa_pairwise");
-        change_ap('-m', "rsn_pairwise");
-        error_log ("disable security");
-    }
+//     if ($sec_use) {
+//         if ( strlen($wpa_passphrase)<8 ) {
+//                 outputJSON("WiFi 비밀번호는 최소 8자입니다");
+//         }
+//         change_ap('wpa', $wpa);
+//         change_ap('ssid', $ssid);
+//         change_ap('wpa_passphrase', $wpa_passphrase);
+//         change_ap('-u', "wpa");
+//         change_ap('-u', "wpa_passphrase");
+//         change_ap('-u', "wpa_key_mgmt");
+//         change_ap('-u', "wpa_pairwise");
+//         change_ap('-u', "rsn_pairwise");
+//         error_log ("enable security");
+//     } else {
+//         change_ap('-m', "wpa");
+//         change_ap('-m', "wpa_passphrase");
+//         change_ap('-m', "wpa_key_mgmt");
+//         change_ap('-m', "wpa_pairwise");
+//         change_ap('-m', "rsn_pairwise");
+//         error_log ("disable security");
+//     }
 
-    // set_upnp(80, $external_port, $ext_use);
+//     // set_upnp(80, $external_port, $ext_use);
 
 
-    // change /etc/network/interfaces
-    function change_if($interface, $key, $value) {
-        if ($key == "") return;
-        $cmd = sprintf('/etc/hive/bin/write_if %s --%s %s', $interface, $key, $value);
-        //error_log($cmd);
-        shell_exec("sudo ".$cmd);
-    }
-    if ($int_use) {
-        // set interface value
-        //change_if('interface', $interface);
-        if ($operation!="") change_if($interface, "iface", $operation);
-        if ($ip_address!="") change_if($interface, 'address', $ip_address);
-        if ($ip_mask!="") change_if($interface, 'netmask', $ip_mask);
-        if ($ip_gate!="") change_if($interface, 'gateway', $ip_gate);
+//     // change /etc/network/interfaces
+//     function change_if($interface, $key, $value) {
+//         if ($key == "") return;
+//         $cmd = sprintf('/etc/hive/bin/write_if %s --%s %s', $interface, $key, $value);
+//         //error_log($cmd);
+//         shell_exec("sudo ".$cmd);
+//     }
+//     if ($int_use) {
+//         // set interface value
+//         //change_if('interface', $interface);
+//         if ($operation!="") change_if($interface, "iface", $operation);
+//         if ($ip_address!="") change_if($interface, 'address', $ip_address);
+//         if ($ip_mask!="") change_if($interface, 'netmask', $ip_mask);
+//         if ($ip_gate!="") change_if($interface, 'gateway', $ip_gate);
         
-        // open network service 
-        shell_exec("sudo /etc/hive/bin/shellcmd --direct /sbin/ifdown $interface ");
-        shell_exec("sudo /etc/hive/bin/shellcmd --direct /sbin/ifup $interface");
+//         // open network service 
+//         shell_exec("sudo /etc/hive/bin/shellcmd --direct /sbin/ifdown $interface ");
+//         shell_exec("sudo /etc/hive/bin/shellcmd --direct /sbin/ifup $interface");
         
-    } else {
-        // open network service 
-        if ($operation!="") change_if($interface, "iface", $operation);
-        if ($ip_address!="") change_if($interface, 'address', $ip_address);
-        if ($ip_mask!="") change_if($interface, 'netmask', $ip_mask);
-        if ($ip_gate!="") change_if($interface, 'gateway', $ip_gate);
+//     } else {
+//         // open network service 
+//         if ($operation!="") change_if($interface, "iface", $operation);
+//         if ($ip_address!="") change_if($interface, 'address', $ip_address);
+//         if ($ip_mask!="") change_if($interface, 'netmask', $ip_mask);
+//         if ($ip_gate!="") change_if($interface, 'gateway', $ip_gate);
         
-        $r = shell_exec("sudo /etc/hive/bin/shellcmd --direct /sbin/ifdown $interface");
-        //error_log($r);
-    }
+//         $r = shell_exec("sudo /etc/hive/bin/shellcmd --direct /sbin/ifdown $interface");
+//         //error_log($r);
+//     }
     
-    return "Net information stored.";
-}
+//     return "Net information stored.";
+// }
 
 //////////////////////////////////////
 // EBS 등 외부 서비스를 저장

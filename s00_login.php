@@ -48,7 +48,6 @@ function _login(){
     } else {
         $mesg = "접속코드를 확인해주세요!";
     }
-
     if ($_SESSION['uselevel']>0) {
         setrawcookie ("NAME", $user_code, $cookie_expire);
         setrawcookie ("CODE", $input_code, $cookie_expire);

@@ -149,8 +149,6 @@
                 document.getElementById('storage_total').value = resp.data.total;
                 document.getElementById('storage_free').value = resp.data.free;
                 document.getElementById('storage_used').value = resp.data.used;
-                //document.getElementById('storage_media').value = resp.data.media;
-                //document.getElementById('storage_garbage').value = resp.data.garbage;
         });
     }
     get_resource(); 
@@ -208,8 +206,6 @@
         });  
         
     } 
-    //_reboot.addEventListener('click', reboot);                
-    
     var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
     var data = new FormData(); 
     data.append("func", "headnote");

@@ -212,9 +212,12 @@ function _getslide() {
         copy ("$custom_path/sample_slide.jpg.json", "$config_info/$photo.json");
         make_thumb_from_image("$config_slide/sample.jpg", 
                         "$config_thumbs/$photo.png", 64,64);
-        $info = json_decode(file_get_contents("$config_info/$photo.json"),true);
+        //$info = json_decode(file_get_contents("$config_info/$photo.json"),true);
         $cfile = "$config_caption/$photo.txt";
-        file_put_contents($cfile, $info['caption']);
+        $ap_data = shell_exec("./explainment/ap_info_feh.sh");
+        error_log("data : " . json_decode($ap_data));
+        //file_put_contents($cfile, $info['caption']);
+        file_put_contents($cfile,$ap_data,FILE_APPEND);
         symlink( "$config_playlink/$photo", 
                     "$config_playlist/$photo"); 
         touch($cfile, $info['time']);
@@ -1682,21 +1685,6 @@ function _parti_level_contents(){
         "mesg" => '접속화면에 "점검중입니다." 메시지 표시함.<br>일반 사용자는 이용할 수 없음.',
         );
     outputJSON($data, "success");
-}
-////////////////////////////////////
-///// apsetting - android
-$services['apsetting'] = "_apsetting";
-function _apsetting(){
-    s00_log("Start ".__FUNCTION__);
-    if(!isset($_POST['ap']) || !isset($_POST['pass'])){
-        error_log("not defined ssid or not defind Password");
-    }
-    $wid = $_POST['ap'];
-    $wpass = $_POST['pass'];
-    $current = "\nnetwork={\n"."ssid=".$wid."\n"."psk=".$wpass."\n}";
-    file_put_contents("/etc/wpa_supplicant/wpa_supplicant.conf",$current, FILE_APPEND);
-    shell_exec("sudo /etc/hive/bin/shellcmd ap_disable");
-    shell_exec("sudo /etc/hive/bin/shellcmd reboot");
 }
 
 /////////////////////////////////////
