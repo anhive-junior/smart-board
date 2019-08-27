@@ -22,6 +22,7 @@ while [ "$1" != "" ]; do
     case $1 in
         shutdown    )     shutdown -h 0; exit  ;;
         reboot      )     reboot; exit  ;;
+	ap_disable  ) 	  bash /home/pi/ap/set_ap.sh disable  ;;
         -s | --sleep)     shift; sleep $1; shift; "$@"; exit  ;;
         -h | --help )     exec echo "$usage"; exit ;;
         -v | --version )  exec echo "$version"; exit ;;
