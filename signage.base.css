@@ -20,12 +20,12 @@ html, body {
 }
 
 header {
-    color : rgba(44, 62, 80,1.0);
+    background: linear-gradient(to bottom left, #0099ff 51%, #66ffcc 100%);
+    line-height: 40px;
+    color : white;
     text-align : center;
     font-weight: bold; 
     font-size : 24px;
-    background-color : rgba(236, 240, 241, 0.5);
-    border-bottom: 5px solid rgba(241, 144, 102, 0.5);
     padding: 13px 0;
     width : 100%;
 }
@@ -55,13 +55,10 @@ header {
 
 .footer {
     margin-top: 4px;
-
     padding-top: 0.2em;
     padding-bottom:0.2em;
     border-top: solid 2px #a0a0a0;
     border-bottom: solid 2px #a0a0a0;
-    
-    background:#b0b0b0;
     text-align:center;
     font-size:0.8em;
 }

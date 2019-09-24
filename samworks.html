@@ -127,7 +127,7 @@
     _file = document.getElementById('nfile');
     _photo = document.getElementById('photo');
     _file.onchange = function (event) {
-        _photo.src = url.createobjecturl(event.target.files[0]);
+        _photo.src = URL.createObjectURL(event.target.files[0]);
     }
     var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니다.
         var data = new FormData(); 

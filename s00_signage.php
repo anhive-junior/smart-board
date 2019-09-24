@@ -199,6 +199,9 @@ function _getslide() {
     $base = isset($_POST['photo'])?$_POST['photo']:"";
     $action = isset($_POST['action'])?$_POST['action']:"";
     //error_log("photo action [$action]");
+    error_log("base : $base");
+    error_log("action : $action");
+    error_log("----@@@@@@@----------------------");
     
     $info = "";
     error_log($config_playlist);
@@ -1581,7 +1584,7 @@ function _home_level_contents(){
                 "link" => "cardwork.html",
                 "tiletitle" => "사진 전송",
                 "icon" => "images/photo-camera.svg",
-                "color" => "#ff7979"
+                "color" => "white"
     );
     
     //task extended process 확장 작업과정
@@ -1591,18 +1594,18 @@ function _home_level_contents(){
                         "link" => "listwork.html",
                         "tiletitle" =>"목록 편집",
                         "icon" => "images/picture.svg",
-                        "color" =>"#a29bfe");
+                        "color" =>"white");
         $data[]=array(
                         "link" => "signwork.html",
                         "tiletitle" =>"리모트 관리",
                         "icon" => "images/remote-control.svg",
-                        "color" =>"#4cd137");
+                        "color" =>"#white");
                         
         $data[]=array(
                         "link" => "videowork.html",
                         "tiletitle" =>"영상 관리",
                         "icon" => "images/video.svg",
-                        "color" =>"#1e90ff");    
+                        "color" =>"white");    
                 
     } 
     $arr = array("contents"=>$data, "count"=>count($data));
