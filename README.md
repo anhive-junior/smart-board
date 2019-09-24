@@ -65,7 +65,8 @@ find . -name "*.php" -exec sed -i 's/\t/    /g'  {} +
 * **Sangha Lee** - *github, @toriato*-
 * **Yonghoon Jung** - *github, @dydgns2017* -
 * **Yongsoo Han** - *github, @ilovecho* -
-
+* **Jongmoon Heo** - *github, @hurjm* -
+* **Sangwon Ji** - *github, @MirrowFox* -
 ## 라이센스 (License)
 
 - [MIT_LICENSE](https://github.com/anhive-junior/smart-board/blob/master/LICENSE.md)
