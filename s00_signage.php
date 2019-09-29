@@ -1576,35 +1576,39 @@ function _home_level_contents(){
     s00_log("Start ".__FUNCTION__);
     //entry criteria.. check condition, constraints  준비과정
     if ( !isset($_SESSION['uselevel']) ) outputJSON("error : uselevel is not defined - line :  __LINE__", "error");
-    
-    
     //task default process 기본 작업과정
-    
     $data[]=array(
                 "link" => "cardwork.html",
                 "tiletitle" => "사진 전송",
+                "sup" => "CAMERA",
                 "icon" => "images/photo-camera.svg",
+                "explain" => "사진을 전송할 수 있습니다.",
                 "color" => "white"
     );
-    
     //task extended process 확장 작업과정
     if ($_SESSION['uselevel'] >= 2){
                         
         $data[]=array(
                         "link" => "listwork.html",
                         "tiletitle" =>"목록 편집",
+                        "sup" => "LIST",
                         "icon" => "images/picture.svg",
+                        "explain" => "사진 목록을 편집할 수 있습니다.",
                         "color" =>"white");
         $data[]=array(
                         "link" => "signwork.html",
                         "tiletitle" =>"리모트 관리",
+                        "sup" => "REMOTE",
                         "icon" => "images/remote-control.svg",
+                        "explain" => "사진 슬라이드를 멈추거나 변경할 수 있습니다.",
                         "color" =>"#white");
                         
         $data[]=array(
                         "link" => "videowork.html",
                         "tiletitle" =>"영상 관리",
+                        "sup" => "VIDEO",
                         "icon" => "images/video.svg",
+                        "explain" => "영상을 추가하여 실행시킬 수 있습니다.",
                         "color" =>"white");    
                 
     } 

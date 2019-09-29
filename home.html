@@ -19,13 +19,12 @@
 }
 
 #contents {
-    height : 80%;
     max-width: 800px;
     margin : 0 auto;
 }
 
 .container {
-    height : 50%;
+    height : 450px;
     width : 100%;
 }
 
@@ -36,18 +35,36 @@
     box-shadow: 6px 5px 11px 0px #b2bec3;
     border-radius: 1%;
     cursor : pointer;
-    color:#fff;
+    background-color:#fff;
     background: #efefef;
-    height : 25%;
-    justify-content:center;
-    align-items: center;
+    max-height : 110px;
 }
 
-.tiletitle{
+.tile .explain {
+    margin: 0 auto;
+    padding-top : 10px;
+    padding-bottom : 20px;
+    color : #9e9dac;
+    font-weight: bold;
+    font-size : 15px;
+}
+
+.tiletitle {
     font-size:1.7em;
     font-weight: 500;
     text-align: center;
     color: #2fe6e2;
+    width: 250px;
+    margin : 0 auto;
+    border-bottom:  solid 2px #bab9cc;
+    padding-top : 20px;
+}
+
+.tiletitle > sup{
+    color : #bab9cc;
+    font-weight : bold;
+    font-size : 15px;
+    margin-left : 5px;
 }
 
 .config {
@@ -62,8 +79,8 @@
 }
 
 .config .closebtn {
-    top : 15px;
     position: absolute;
+    top : 15px;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
@@ -87,13 +104,13 @@ header {
     width : 100%;
 } 
 footer {
-    padding : 0;
-    margin : 0 auto;
-    color : black; 
+    display : block;
+    color : #9e9dac;
+    margin-top : 15px;
+    margin-bottom : 10px;
     font-weight: bold; 
     background : none;
     width : 100%;
-    opacity: 0.5;
 }
 
 </style>
@@ -101,8 +118,8 @@ footer {
 <body>
 <header style="position : relative;">
     <!--configuration-->
-    <div><i style="cursor: pointer;max-width:45px;width:80%;float:left;" onclick="config_button();">
-        <img src="./images/cog-solid.svg" style="margin-left : 10px;" title="설정" alt="설정">
+    <div><i style="position : absolute;cursor: pointer;max-width:35px;width:80%;float:left; left : 10px;" onclick="config_button();">
+        <img src="./images/cog-solid.svg" title="설정" alt="설정">
     </i></div>
     <span id="subject"></span>
     <span id="owner"></span>
@@ -114,6 +131,7 @@ footer {
     <div id="contents" style="text-align:center;">
         <div id='content_none' class="tile" style="display:none;background-color: white">
             <div class="tiletitle"></div>
+            <div class="explain"></div>
         </div>
         <!-- button -->
         <div class="config" id="buttons" style="text-align:center">
@@ -163,7 +181,7 @@ var home_level_contents = function(){ // level에 따른 contents를 가지고 �
             var clone = document.getElementById("content_none").cloneNode(true);
             
             clone.setAttribute("id","norm" + (i+1));
-            clone.style.display="flex";
+            clone.style.display="block";
             clone.setAttribute("onclick", "window.open('"+cont['link']+"', '_self');");
             clone.style.backgroundColor = cont['color'];
             ch = clone.childNodes;
@@ -171,6 +189,10 @@ var home_level_contents = function(){ // level에 따른 contents를 가지고 �
                 if (ch[k].className == 'tiletitle'){
                     ch[k].innerHTML = "<img src =" + cont['icon'] + " class=icon>";
                     ch[k].innerHTML += cont['tiletitle'];
+                    ch[k].innerHTML += "<sup>" + cont['sup'] + "</sup>";
+                }
+                if (ch[k].className == "explain"){
+                    ch[k].innerHTML += cont['explain'];
                 }
             }
             contents.appendChild(clone);
