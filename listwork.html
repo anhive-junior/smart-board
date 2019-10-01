@@ -9,18 +9,20 @@
     <title>AnHive, List Media Files</title>
     <style>
     .img_block{    position: relative;    width: 80px; height: 80px; font-size:1.2em;}
-    .img_base{    width: 100%;height: 100%;background: blue;}
-    .img_tag{position: absolute;bottom: 5px;right: 5px;    width: 32px;
-        height: 32px;background: yellow; color:green; font-weight:bold;}
-    .img_tag:active {background: red;}
-    .button_span { width : 15%; padding: 5% 0; margin: 0; }
+    .img_base{    width: 100%;height: 100%;background: blue; border-radius: 10px; }
+    .img_tag {position: absolute;bottom: 5px;right: 5px;    width: 32px;
+        height: 32px; font-weight:bold;}
+    .button_span { width : 70px; padding: 30px 10px; margin: 0; }
+    .checkbox { position : relative; margin-bottom : 10px; 
+        background-color : white; height : 50px; 
+    }
+    .checkbox input[type=checkbox] { position : absolute; bottom : 16px; left : 10px; transform: scale(2.5); }
     </style>   
 </head>
 <body >
     <div id="prepend"></div>
     <div class="container">
         <div class="contents">
-        
             <!-- head note -->
             <header onclick="javascript:document.location.href='home.html'">
                 <img id="headnote_img" style="height:15px;">
@@ -28,9 +30,7 @@
                 <span id="owner"></span>
             </header>
             <div style="margin-top:10px;"><!-- upper line feed --></div>
-
-            <div id="packinglist" style > </div>
-            
+            <div id="packinglist" style="width : 90%; margin :0 auto;" > </div>
             <div style="display: inline-block;padding-top:10px;width:100%;text-align:center;">
                 <input type='text' id='lst' value='' style="width:20em;display:none;">
                 <div class="button_base" style="text-align:center;">
@@ -40,7 +40,6 @@
                     <span class="button_span" onclick="setthumb()">사진갱신</span>
                 </div>
                 <div id="msg"></div>
-    
             </div>
         </div>
     </div>
@@ -48,16 +47,17 @@
     <div id="html_data_model" style="display:none;">
         <div id="block">
             <div style="margin:10px;padding:2px;"><!-- upper line feed --></div>
-            <div style="background-color:#ccc;">
-                <input class="title_tag" type="button" value=" " name="=0=term=0=" style="width:1.7em; font-size:1.2em; font-weight: bold; color:red;" onclick="clicked(this, 'V',' ');changeterm(this);"> =0=block=0=<br>
+            <div class="checkbox">
+                <input class="title_tag" type="checkbox" value=" " name="=0=term=0=" style="width:1.7em; font-size:1.2em; font-weight: bold; color:red;" onclick="clicked(this, 'V',' ');changeterm(this);">
+                <div style="position : absolute; margin-left : 50px; bottom : 17px;">=0=block=0=</div>
             </div>
             <div style="margin:2px;padding:2px;"><!-- upper line feed --></div>
         </div>
-        <div id="image">
-            <div  style="display:inline-block;">
+        <div id="image" style="margin-left : 20px;">
+            <div style="display:inline-block; margin-left : 5px;">
                 <div class="img_block">
                     <img class="img_base" src="=0=thumb=0=" onclick="window.open( 'openimages.html?=0=photo=0=', '_self');" alt="=0=photo=0="> 
-                    <input class="img_tag" type="button" value="=0=view=0=" name="=0=photo=0=" onclick="clicked(this, 'V',' ');changelist();"> 
+                    <input class="img_tag" type="checkbox" value="=0=view=0=" name="=0=photo=0=" onclick="clicked(this, 'V',' ');changelist();"> 
                 </div> 
                 <div style="font-size:0.7em;text-align:center;padding-bottom:10px;">
                     <span>=0=elapse=0=</span>
@@ -108,7 +108,6 @@
     }
 
     var changeterm = function(obj) {
-
         packinglist = document.getElementById("packinglist");
         finput = packinglist.getElementsByTagName("input");
         //val = "";
@@ -119,6 +118,8 @@
             if (finput[i].name == 'ctl') continue;
             start_term = true;
             finput[i].value = obj.value;
+            if ( obj.value == "V") finput[i].checked = true;
+            else finput[i].checked = false;
         }
         changelist();
         //document.getElementById("lst").value = val;
@@ -129,7 +130,7 @@
         finput = packinglist.getElementsByTagName("input");
         val = "";
         for (var i = 0;i< finput.length; i++) {
-            if (finput[i].type != 'button') continue;
+            if (finput[i].type != 'checkbox') continue;
             if (finput[i].className == 'title_tag') continue;
             //if (finput[i].name.sizeof <= 1) continue;
             if (finput[i].value != 'V') continue;
@@ -143,7 +144,7 @@
     var clicked = function () {
         obj = arguments[0];
         for (var i = 1; i< arguments.length-1; i++) {
-            if ( obj.value==arguments[i]) {
+            if ( obj.value==arguments[i]) { // checked false
                 obj.value = arguments[i+1];
                 return;
             }
@@ -152,30 +153,14 @@
     }
 
     var change = function () {
-        
         var data = new FormData();
         data.append('func', 'setplaylist');
         changelist();
         data.append('lst', document.getElementById("lst").value);
-        
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function(){
-            if(request.readyState == 4){
-                try {
-                    var resp = JSON.parse(request.response);
-                } catch (e){
-                    var resp = {
-                        status: 'error',
-                        data: 'Unknown error occurred: [' + request.responseText + ']'
-                    };
-                }
-                document.getElementById("msg").innerHTML = resp.data;
-                getlist();
-            }
-        };
-        request.open('POST', 's00_signage.php');
-        request.send(data);
-        return request;
+        POST("s00_signage.php", data, function(resp){
+            document.getElementById("msg").innerHTML = resp.data;
+            getlist();
+        });
     }
 
     var rmcard = function(){
@@ -184,53 +169,21 @@
         data.append('rm_list', true);
         changelist();
         data.append('lst', document.getElementById("lst").value);
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function(){
-            if(request.readyState == 4){
-                try{
-                    var resp = JSON.parse(request.response);
-                }
-                catch(e){
-                    var resp = {
-                        status: 'error',
-                        data : 'Unkonw error occured : [' + request.responseText + ']'
-                    };
-                }
+        POST("s00_signage.php", data, function(resp){
                 document.getElementById("msg").innerHTML = resp.data;
                 getlist();
-            }
-        };
-        request.open('POST', 's00_signage.php');
-        request.send(data);
-        return request;
+        });
     }
 
-
     var setthumb = function () {
-        
         var data = new FormData();
         data.append('func', 'buildthumbs');
         changelist();
         data.append('lst', document.getElementById("lst").value);
-        
-        var request = new XMLHttpRequest();
-        request.onreadystatechange = function(){
-            if(request.readyState == 4){
-                try {
-                    var resp = JSON.parse(request.response);
-                } catch (e){
-                    var resp = {
-                        status: 'error',
-                        data: 'Unknown error occurred: [' + request.responseText + ']'
-                    };
-                }
-                document.getElementById("msg").innerHTML = resp.data;
-                getlist();
-            }
-        };
-        request.open('POST', 's00_signage.php');
-        request.send(data);
-        return request;
+        POST("s00_signage.php", data, function(resp){
+            document.getElementById("msg").innerHTML = resp.data;
+            getlist();
+        });
     }
 
     var setpolicy = function () {
