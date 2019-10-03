@@ -537,10 +537,8 @@ function make_thumb_from_image($file, $thumb, $t_width,$t_height)
 $services['buildthumbs'] = '_buildthumbs';
 function _buildthumbs() {
     error_log ("Start ".__FUNCTION__);
-    
     global $config_slide, $config_thumbs;
-    
-    $lst = $_REQUEST['lst'];
+    $lst = $_POST['lst'];
     if ($lst != "") {
         error_log("playlist :" .$lst);
         $lst = str_replace("|","\n",$lst);
@@ -548,13 +546,11 @@ function _buildthumbs() {
     } else {
         $fn = scans("", 0, $config_slide);
     }
-    
     $cnt = 0;
     foreach($fn as $f){
-        //error_log("config_thumbs ..[$config_thumbs]... $f");
+        error_log("config_thumbs ..[$config_thumbs]... $f");
         $slide = $config_slide.'/'.$f;
         $thumb = $config_thumbs.'/'.$f.".png";
-
         if ( ( file_exists($thumb) )
             && ( filemtime($thumb) > filemtime($slide) 
             && ( filesize($thumb) > 0 ) ) ) {
@@ -562,12 +558,12 @@ function _buildthumbs() {
                 continue;
             }
         
-        //$g = getimagesize($slide); 
-        //error_log (print_r($g, true));
-        //$i = is_array($g); 
-        //error_log($i."---".$g[3]);
-        //if(!$i) continue;
-        //if ( ($lst == "") && file_exists($thumb)) continue;
+        $g = getimagesize($slide); 
+        error_log (print_r($g, true));
+        $i = is_array($g); 
+        error_log($i."---".$g[3]);
+        if(!$i) continue;
+        if ( ($lst == "") && file_exists($thumb)) continue;
         
         make_thumb_from_image($slide, $thumb, 64,64);
         $cnt++;

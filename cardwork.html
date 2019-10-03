@@ -39,33 +39,6 @@
         background-color : white;
         margin-bottom : -3px;
     }
-    .button {
-        position : relative;
-        max-width : 38px;
-        width : 80%; 
-        margin : 1.5%;
-        border-bottom : 5px #78e08feb solid; 
-        background-color : white; 
-        cursor: pointer; 
-        padding: 10px 30px 30px 30px;
-        font-size: 13px; 
-        font-weight: bold;
-        font-style: normal;
-    }
-    .button > div {
-        position : absolute;
-        top : 85%;
-       	left : 50%;
-        transform: translate(-50%, -85%);
-        -webkit-transform: translate(-50%, -85%);
-        width : 100%;
-    }
-    .arrow_btn {
-        position : absolute;
-        top : 40%;
-        transform: translate(-40%, 0);
-        -webkit-transform: translate(-0%, 0);
-    }
     #fname {
         position : relative;
         width: 100%;
@@ -98,6 +71,15 @@
             width : 55%;
         }
     }
+    .rotate_image {
+        position : absolute;
+        cursor: pointer;
+        width: 40px;
+        height : 40px;
+        z-index: 5;
+        right : 0;
+        top : 0;
+    }
     </style>    
 </head>
 <body>
@@ -113,6 +95,9 @@
 
     <div id="fname">???</div>
     <div class="img_frame">
+        <div class="rotate_image" onclick="setslide('rotate_right');" >
+            <img src="images/sync-alt-solid.svg">
+        </div>
         <div class="in_frame">
             <img id="photo" alt="photo" onclick="document.getElementById('_file').click();">
         </div>
@@ -132,8 +117,8 @@
     <!-- uppear -->
     <div style="margin-top : 50px; margin-bottom : 15px;"></div>
 
-    <div style="display : flex; justify-content: center;">
-        <i id="btn_rmcard" onclick="sendcard()" class="button">
+    <div class="buttonContainer">
+        <i id="btn_sencard" onclick="sendcard()" class="button">
             <img src="images/check_btn.svg">
             <div>보내기</div>
         </i>
@@ -259,9 +244,17 @@
                 alerted("메모가 변경되었습니다.")
         });
     }
-
-    var showlistwork = function () {
-        window.open( "listwork.html", "_self");
+        var setslide = function(msg){
+        var data = new FormData();
+        data.append('func', 'setslide');
+        data.append('action', msg);
+        data.append('photo', _photo.alt);
+        
+        POST('s00_signage.php', data, 
+            function (resp) {  
+                _vlog.innerHTML=resp.data;
+                getslide("current");
+        });
     }
     
     headnote();
