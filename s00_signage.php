@@ -1,25 +1,18 @@
 <?php 
 /**
-
 Digital Signage
 Copyright 2016 @ AnHive Co., Ltd.
-
-*/
+**/
 session_start(); 
 include_once("lib/get_config.php");
 include_once("lib/get_resource.php");
 include_once("lib/lib_common.php");
-
-
 ini_set('max_execution_time', 3600);//?
-
 $trace=true;
-
 function s00_log($msg) {
     global $trace;
     if ($trace) error_log($msg);
-}
-
+} 
 /////////////////////////////////////
 // null service
 $services['test'] = '_test';
@@ -283,6 +276,7 @@ function _setslide() {
         outputJSON("Undefined work");
     }
     $mtime = filemtime($photo_addr);
+    $mtime--; // for thumbs update
     //error_log("$cmd at $mtime");
     $r = shell_exec($cmd);
     touch($photo_addr, $mtime);
@@ -502,19 +496,15 @@ function _exclude() {
 // get receive info
 $services['system'] = '_system';
 function _system() { 
-    s00_log ("Start ".__FUNCTION__);
-    
+    s00_log ("Start ".__FUNCTION__); 
     $rt = check_accesscode($_POST['code']);
     if ( $rt != "success") outputJSON($rt, 'success');
-
     $mode = $_POST['mode'];
-
     if ($mode == 'reset') {
         sudo_exec("reboot");
     } else if ($mode == 'shutdown') {
         sudo_exec("shutodown -h 0");
     }
-    
     outputJSON("$mode proceed", 'success');
 };
 
@@ -522,14 +512,21 @@ function _system() {
 // get receive info
 function make_thumb_from_image($file, $thumb, $t_width,$t_height) 
 {
-  $source_image = imagecreatefromstring(file_get_contents($file)); //파일읽기
-  $width = imagesx($source_image);
-  $height = imagesy($source_image);
-
-  $virtual_image = imagecreatetruecolor($t_width, $t_height); //가상 이미지 만들기
-
-  imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $t_width, $t_height, $width, $height); //사이즈 변경하여 복사
-  imagepng($virtual_image, $thumb); // png파일로 썸네일 생성
+    if ( file_exists($thumb) ){
+        global $config_info;
+        $f = "$config_info/".substr($file, 15).".json";
+        $obj = json_decode(file_get_contents($f), true);
+        $t = $obj['time'];
+    } else {
+        $t = filemtime($file);
+    }
+    $source_image = imagecreatefromstring(file_get_contents($file)); //파일읽기
+    $width = imagesx($source_image);
+    $height = imagesy($source_image);
+    $virtual_image = imagecreatetruecolor($t_width, $t_height); //가상 이미지 만들기
+    imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $t_width, $t_height, $width, $height); //사이즈 변경하여 복사
+    imagepng($virtual_image, $thumb); // png파일로 썸네일 생성
+    touch($file, $t); touch($thumb, $t);
 }
 
 //////////////////////////////////////////////////
@@ -540,7 +537,7 @@ function _buildthumbs() {
     global $config_slide, $config_thumbs;
     $lst = $_POST['lst'];
     if ($lst != "") {
-        error_log("playlist :" .$lst);
+        // error_log("playlist :" .$lst);
         $lst = str_replace("|","\n",$lst);
         $fn = preg_split('/\n/',$lst);
     } else {
@@ -548,23 +545,18 @@ function _buildthumbs() {
     }
     $cnt = 0;
     foreach($fn as $f){
-        error_log("config_thumbs ..[$config_thumbs]... $f");
         $slide = $config_slide.'/'.$f;
         $thumb = $config_thumbs.'/'.$f.".png";
-        if ( ( file_exists($thumb) )
-            && ( filemtime($thumb) > filemtime($slide) 
-            && ( filesize($thumb) > 0 ) ) ) {
-                //error_log("slide: $slide @".filemtime($slide)."thumg: $thumb @".filemtime($thumb)."" );
-                continue;
-            }
-        
+        if ( ( file_exists($thumb) ) && ( filemtime($slide) >= filemtime($thumb) && ( filesize($thumb) > 0 ) ) ) {
+            //error_log("slide: $slide @".filemtime($slide)."thumg: $thumb @".filemtime($thumb)."" );
+            continue;
+        }
         $g = getimagesize($slide); 
         error_log (print_r($g, true));
         $i = is_array($g); 
         error_log($i."---".$g[3]);
         if(!$i) continue;
-        if ( ($lst == "") && file_exists($thumb)) continue;
-        
+        if (($lst == "") && file_exists($thumb)) continue;
         make_thumb_from_image($slide, $thumb, 64,64);
         $cnt++;
         //break;
