@@ -244,7 +244,10 @@
                 alerted("메모가 변경되었습니다.")
         });
     }
-        var setslide = function(msg){
+    var showlistwork = function () {
+        window.open( "listwork.html", "_self");
+    }
+    var setslide = function(msg){
         var data = new FormData();
         data.append('func', 'setslide');
         data.append('action', msg);
