@@ -145,7 +145,7 @@ footer {
         </div>
     </div>
 </div>
-<footer id="foot_note"></footer>
+<footer>Powered by AnHive Co., Ltd</footer>
 <script>
 var content_none = document.getElementById("content_none");
 var buttons = document.getElementById("buttons");
@@ -167,7 +167,6 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
         document.getElementById("photo").style.backgroundImage = "url(" + resp.data.photo + ")";
         document.getElementById("subject").innerHTML = resp.data.subject;
         document.getElementById("owner").innerHTML = resp.data.owner;
-        document.getElementById("foot_note").innerHTML = resp.data.footer;
     });
 }
 

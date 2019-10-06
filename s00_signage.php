@@ -46,10 +46,8 @@ function submit_RPi($msg) {
     // get server response
     $result = socket_read ($socket, 1024) 
         or die("Could not read server response\n");
-
     // close socket
     socket_close($socket);
-    
     return $result;
 }
 /////////////////////////////////////

@@ -7,6 +7,23 @@
     <link rel="stylesheet" type="text/css" href="signage.base.css">
     <script type="text/javascript" src="signage.base.js"></script>
     <title></title>
+    <style>
+        .tile {
+            max-width : 500px;
+            margin : 0 auto;
+        }
+        .tile_title {
+            margin-top : 10px;
+            background-color: white;
+            margin-bottom: 10px;
+            color : #7a7a85;
+            font-weight: bold;
+            padding : 10px 10px;
+        }
+        .button {
+            border-bottom: 5px solid #b6c6cc;
+        }
+    </style>
 </head>
 <body > 
     <div class="container">
@@ -17,47 +34,86 @@
                 <span id="subject"></span> 
                 <span id="owner"></span>
             </header>
-            <div style="margin-top:10px;"><!-- upper line feed --></div>
-            <div style="text-align:center; margin: 0 auto; ">
-            
-                <div class="tile" style="background-color:#ff9f00;padding-top:5px;padding-bottom:5px;">
-                
-                    <div id="fname" style="text-align:center; background-color:#afbf00;margin:3px;padding-top:5px;padding-bottom:5px;">스라이드 쇼 조정</div>
-
-                    <div style="margin-top:10px;"><!-- upper line feed --></div>
-                
-                    <div style="text-align:center; background-color:#ffbf00;margin:3px;padding-top:5px;padding-bottom:5px;">
-                    
-                    슬라이드 쇼    </div>
-                    <img class="img_btn" src="images/previous.png" onclick="control('previous');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/playhold.png" onclick="control('playhold');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/next.png" onclick="control('next');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/restart.png" onclick="control('restart');" style="width:72px;" alt="b">
-                <br>
-                    <div style="text-align:center; background-color:#ffbf00;margin:3px;padding-top:5px;padding-bottom:5px;">
-                    슬라이드 방향조정</div>
-                    <img class="img_btn" src="images/rotate_270.png" onclick="control('rotate_left');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/rotate_90.png" onclick="control('rotate_right');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/flipped.png" onclick="control('flipped');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/mirrored.png" onclick="control('mirrored');" style="width:72px;" alt="b">
-                <br>
-                    <div style="text-align:center; background-color:#ffbf00;margin:3px;padding-top:5px;padding-bottom:5px;">
-                    슬라이드 크기조정</div>
-                    <img class="img_btn" src="images/larger.png" onclick="control('larger');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/smaller.png" onclick="control('smaller');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/fittosize.png" onclick="control('fittosize');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/100p.png" onclick="control('100p');" style="width:72px;" alt="b">
-                <br>
-                    <div style="text-align:center; background-color:#ffbf00;margin:3px;padding-top:5px;padding-bottom:5px;">
-                    슬라이드 위치조정</div>
-                    <img class="img_btn" src="images/upward.png" onclick="control('upward');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/downward.png" onclick="control('downward');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/leftward.png" onclick="control('leftward');" style="width:72px;" alt="b">
-                    <img class="img_btn" src="images/rightward.png" onclick="control('rightward');" style="width:72px;" alt="b">
-                <br>
-                    <div style="text-align:center; background-color:#afbf00;margin:3px;padding-top:5px;padding-bottom:5px;">
-                    <div id="vlog">&nbsp;</div></div>                
-                </div><br>
+            <div style="margin-top : 15px"></div>
+            <div class="tile">
+                <div style="margin-top:10px;"><!-- upper line feed --></div>
+                <div class="tile_title">슬라이드 쇼</div>
+                <div class="buttonContainer" style="text-align: center;">
+                    <i class="button" onclick="control('previous');">
+                        <img src="images/backward-solid.svg">
+                        <div>이전으로</div>
+                    </i>
+                    <i class="button" onclick="control('playhold');">
+                        <img src="images/pause-play.svg">
+                        <div>시작/정지</div>
+                    </i>
+                    <i class="button" onclick="control('next');">
+                        <img src="images/forward-solid.svg">
+                        <div>다음으로</div>
+                    </i>
+                    <i class="button" onclick="control('restart');">
+                        <img src="images/rev-brands.svg">
+                        <div>재시작</div>
+                    </i>
+                </div>
+                <div class="tile_title">슬라이드 방향조정</div>
+                <div class="buttonContainer" style="text-align: center;">
+                    <i class="button" onclick="control('rotate_left');">
+                        <img src="images/undo-solid.svg">
+                        <div>90&#176;</div>
+                    </i>
+                    <i class="button" onclick="control('rotate_right');">
+                        <img src="images/redo-solid.svg">
+                        <div>90&#176;</div>
+                    </i>
+                    <i class="button" onclick="control('flipped');">
+                        <img src="images/arrows-alt-v-solid.svg">
+                        <div>상하 반전</div>
+                    </i>
+                    <i class="button" onclick="control('mirrored');">
+                        <img src="images/arrows-alt-h-solid.svg">
+                        <div>좌우 반전</div>
+                    </i>
+                </div>
+                <div class="tile_title">슬라이드 크기조정</div>
+                <div class="buttonContainer" style="text-align: center;">
+                    <i class="button" onclick="control('larger');">
+                        <img src="images/search-plus-solid.svg">
+                        <div>확대</div>
+                    </i>
+                    <i class="button" onclick="control('smaller');">
+                        <img src="images/search-minus-solid.svg">
+                        <div>축소</div>
+                    </i>
+                    <i class="button" onclick="control('fittosize');">
+                        <img src="images/image-regular.svg">
+                        <div>원본 크기</div>
+                    </i>
+                    <i class="button" onclick="control('100p');">
+                        <img src="images/expand-solid.svg">
+                        <div>화면 크기</div>
+                    </i>
+                </div>
+                <div class="tile_title">슬라이드 위치조정</div>
+                <div class="buttonContainer" style="text-align: center;">
+                    <i class="button" onclick="control('upward');">
+                        <img src="images/arrow-circle-up-solid.svg">
+                        <div>위로</div>
+                    </i>
+                    <i class="button" onclick="control('downward');">
+                        <img src="images/arrow-circle-down-solid.svg">
+                        <div>아래로</div>
+                    </i>
+                    <i class="button" onclick="control('leftward');">
+                        <img src="images/arrow-circle-left-solid.svg">
+                        <div>왼쪽</div>
+                    </i>
+                    <i class="button" onclick="control('rightward');">
+                        <img src="images/arrow-circle-right-solid.svg">
+                        <div>오른쪽</div>
+                    </i>
+                </div>
+                <div style="text-align: center;" id="vlog">&nbsp;</div></div>                
             </div>
         </div>
     </div>
