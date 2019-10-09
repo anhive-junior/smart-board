@@ -8,22 +8,14 @@
     <title>anhive</title>
 <style>
 html, body {
+background-color: white;
     padding : 0;
     margin : 0;
     height : 100%;
     overflow: hidden;
 }
-#photo > #photo_s {
-    display : block;
-    width : 250px;
-    height : auto;
-    margin : 0 auto;
-    margin-top : 15px;
-}
-
 .login-box {
-    opacity: 0.8;
-    width : 90%;
+    width : 85%;
     max-width : 450px;
     height : 400px;
     position: absolute;
@@ -35,10 +27,6 @@ html, body {
     background-color : white;
     padding : 0 0;
 }
- .login-box:hover{
-    opacity: 1;
- }
-
  .login-box h1 {
     /* 
     @media screen configuration -- bottom : 
@@ -47,8 +35,7 @@ html, body {
     display : table;
     margin : auto;
     font-size: 4vw;
-
-    border-bottom: 3px solid #ff8000;
+    border-bottom: 3px solid dodgerblue;
     padding: 13px 0;
  } 
 
@@ -58,7 +45,7 @@ html, body {
     margin : auto;
     margin-top : 25px;
     max-width : 300px;
-    width : 90%;
+    width : 80%;
     overflow : hidden;
     font-size : 20px;
     padding : 8px 0;
@@ -76,17 +63,18 @@ html, body {
     margin : auto;
     margin-top : 40px;
     max-width : 270px;
-    width: 90%;
-    background-color : #ff8000;
+    width: 85%;
+    background-color : dodgerblue;
+    border-bottom: 3px #b9e2e1 solid;
     color : white;
     padding : 15px;
     cursor: pointer;
-    font-size : 18px;
+    font-size : 22px;
     text-align: center;
     font-weight: bold;
  }
 .login-box .button:hover {
-    background-color: green;
+    background-color: #c8d6e5;
  }
 .login-header {
     color : black;
@@ -115,9 +103,6 @@ html, body {
 </head>
 <body>
 <div id="prepend"></div>
-<div id="photo">
-    <img id="photo_s" src="" alt="image">
-</div>
 <div class="login-box">
     <div class="login-header" id="title" style="margin-top:15px;"></div>
     <h1 style="margin-top:15px;">
@@ -131,7 +116,7 @@ html, body {
     <i style="max-width:32px;width:80%;float:left;"><img src="./images/key-solid.svg" title="접속코드" alt="code"></i>&nbsp;&nbsp;
     <input type='password' onkeypress="key_event();" id="icode" name='input_code' size='7' style="font-size:1.2em;" autocomplete="off" placeholder="접속코드">
     </div>
-    <div class="button" onclick="logged_in();" >로그인</div>
+    <div class="button" onclick="logged_in();">로그인</div>
     <div class="login-footer" id="foot_note"></div>
 </div>
 <script>
@@ -277,7 +262,6 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
             document.title = resp.data.subject;
             document.getElementById("subject").innerHTML = resp.data.subject;
             document.getElementById("owner").innerHTML = resp.data.owner;
-            document.getElementById("photo_s").src = resp.data.photo;
             document.getElementById("foot_note").innerHTML=resp.data.footer;
         }
     }

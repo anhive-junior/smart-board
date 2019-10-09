@@ -111,14 +111,13 @@ input[type=button] {
     left: 50%;
     transform : translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
-
-    box-shadow: 0 32px 48px 0 rgba(0, 0, 0, 0.5);
-    width: 70%;
+    width: 85%;
     max-width : 500px;
     height : auto;
     background: white;
     padding: 10px;
     text-align:center;
+    border : 2px solid black;
 }
 #alert input[type=submit] {
     margin-bottom: 25px;
@@ -136,7 +135,6 @@ input[type=button] {
 
 #alert h1 {
     margin: 0 auto;
-    margin-top : -35px;
     font-size: 50px;
     width : 50px;
 }
