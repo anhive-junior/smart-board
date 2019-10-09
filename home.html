@@ -112,7 +112,6 @@ footer {
     background : none;
     width : 100%;
 }
-
 </style>
 </head>
 <body>
@@ -188,7 +187,7 @@ var home_level_contents = function(){ // level에 따른 contents를 가지고 �
                 if (ch[k].className == 'tiletitle'){
                     ch[k].innerHTML = "<img src =" + cont['icon'] + " class=icon>";
                     ch[k].innerHTML += cont['tiletitle'];
-                    ch[k].innerHTML += "<sup>" + cont['sup'] + "</sup>";
+                    ch[k].innerHTML += "<sup style='font-size : 0.5em;'>" + cont['sup'] + "</sup>";
                 }
                 if (ch[k].className == "explain"){
                     ch[k].innerHTML += cont['explain'];

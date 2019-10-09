@@ -13,11 +13,12 @@ html, body {
     height : 100%;
     overflow: hidden;
 }
-#photo {
-    background-size: cover;
-    background-position: center;
-    height : 100%;
-    width : 100%;
+#photo > #photo_s {
+    display : block;
+    width : 250px;
+    height : auto;
+    margin : 0 auto;
+    margin-top : 15px;
 }
 
 .login-box {
@@ -114,7 +115,9 @@ html, body {
 </head>
 <body>
 <div id="prepend"></div>
-<div id="photo"></div>
+<div id="photo">
+    <img id="photo_s" src="" alt="image">
+</div>
 <div class="login-box">
     <div class="login-header" id="title" style="margin-top:15px;"></div>
     <h1 style="margin-top:15px;">
@@ -274,7 +277,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
             document.title = resp.data.subject;
             document.getElementById("subject").innerHTML = resp.data.subject;
             document.getElementById("owner").innerHTML = resp.data.owner;
-            document.getElementById("photo").style.backgroundImage = "url(" + resp.data.photo + ")";
+            document.getElementById("photo_s").src = resp.data.photo;
             document.getElementById("foot_note").innerHTML=resp.data.footer;
         }
     }

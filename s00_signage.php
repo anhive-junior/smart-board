@@ -1472,32 +1472,6 @@ function get_omxcommand($ctrl) {
 
     return (isset($msg[$ctrl]))?$msg[$ctrl]:"";
 }
-
-/////////////////////////////////////
-// get usb name ?? --> display는 어떠한 역할인건가..
-$services['display'] = '_display';
-function _display() { 
-    s00_log ("Start ".__FUNCTION__);
-    error_log(print_r($_POST , true));
-    
-    $rt ="";
-    $power = $_POST['power'];
-    if ($power == "on") {
-        $rt = shell_exec("vcgencmd display_power 1");
-    } else if ($power == "off") {
-        $rt = shell_exec("vcgencmd display_power 0");
-    } else {
-        $rt = shell_exec("vcgencmd display_power");
-    }
-    $rt = trim($rt);
-    error_log($rt);
-    if ($rt == 'display_power=1') $rt = 'on';
-    else if ($rt == 'display_power=0') $rt = 'off';
-    error_log($rt);
-    
-    outputJSON($rt, 'success');
-};
-
 ////////////////////////////////////////////
 ////// headnote
 $services['headnote'] = '_headnote';
