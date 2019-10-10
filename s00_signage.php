@@ -1539,7 +1539,7 @@ function _home_level_contents(){
     //task default process 기본 작업과정
     $data[]=array(
                 "link" => "cardwork.html",
-                "tiletitle" => "사진 전송",
+                "tiletitle" => "사진 보내기",
                 "sup" => "CAMERA",
                 "icon" => "images/photo-camera.svg",
                 "explain" => "사진을 전송할 수 있습니다.",

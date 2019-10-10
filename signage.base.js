@@ -89,10 +89,10 @@ function alerted(msg, func){ // alerte
         div.setAttribute("style", "visibility : hidden;");
         document.getElementById("prepend").appendChild(div);
         var div = document.getElementById("alert");
-        div.innerHTML = "<h1><img src='./images/exclamation-solid.svg'></h1>";
+        div.innerHTML = "<h1><img src='./images/bell-solid.svg'></h1>";
         div.innerHTML += "<h2 style='margin-top:15px;' id='alert_inner'></h2>";
-        div.innerHTML += "<input id=\"alert_exit\" type=\"submit\" value=\"확인\" style='margin-top:10px;font-size:20px;'/>";
-        div.innerHTML += "<input id=\"alert_cancle\" type=submit value=\"취소\" onclick=alerted('cancle'); style='display:none;background-color: #e17055;font-size:20px;'/>";
+        div.innerHTML += "<input id=\"alert_exit\" type=\"submit\" value=\"확인\"/>";
+        div.innerHTML += "<input id=\"alert_cancle\" type=submit value=\"취소\" onclick=alerted('cancle'); style='display:none;background-color: #e17055;'/>";
     }
     if(msg == "exit"){
         document.getElementById("alert").style.visibility = "hidden";
@@ -108,14 +108,11 @@ function alerted(msg, func){ // alerte
     // !(func == "default") -> is function process
     if ( !(func == "default") ) {
         document.getElementById("alert_cancle").style.display='inline-block';
-        document.getElementById("alert_cancle").style.width="45%";
         document.getElementById("alert_exit").style.display='inline-block';
-        document.getElementById("alert_exit").style.width="45%";
         document.getElementById("alert_exit").setAttribute("onclick", "alerted('exit', '" + func + "')"); 
     }
     else {
         document.getElementById("alert_cancle").style.display="none";
-        document.getElementById("alert_exit").style.width="55%";
         document.getElementById("alert_exit").setAttribute("onclick", "alerted('exit')"); 
     }
     loader("exit");

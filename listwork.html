@@ -25,7 +25,6 @@
         <div class="contents">
             <!-- head note -->
             <header onclick="javascript:document.location.href='home.html'">
-                <img id="headnote_img" style="height:15px;">
                 <span id="subject"></span> 
                 <span id="owner"></span>
             </header>
@@ -38,15 +37,15 @@
                         <img src="images/check_btn.svg">
                         <div>목록등록</div>
                     </i>
-                    <i class="button" onclick="alerted('사진을 <span style=\'color : red;\'>삭제</span>하시겠습니까?', 'rmcard')" style="display: block; border-color : #eb4d4b;">
+                    <i class="button" onclick="alerted('사진을 <span style=\'color : red;\'>삭제</span>하시겠습니까?', 'rmcard')">
                         <img src="images/minus.svg">
                         <div>사진삭제</div>
                     </i>
-                    <i class="button" onclick="setpolicy()" style="display: block; border-color : #9e9dac;">
+                    <i class="button" onclick="setpolicy()">
                         <img src="images/clock-solid.svg">
                         <div>재생옵션</div>
                     </i>
-                    <i class="button" onclick="setthumb()" style="display: block; border-color : #339af0;">
+                    <i class="button" onclick="setthumb()">
                         <img src="images/retweet-solid.svg">
                         <div>썸네일갱신</div>
                     </i>
@@ -84,7 +83,6 @@
         data.append("func", "headnote");
         POST("s00_signage.php", data, function(resp){
             console.log(resp.status + ':' + resp.data);
-            document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
             document.getElementById("subject").innerHTML=resp.data.subject;
             document.getElementById("owner").innerHTML=resp.data.owner;
             document.getElementById("foot_note").innerHTML=resp.data.footer;

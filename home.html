@@ -9,12 +9,12 @@
     <title>SweetHome</title>
 <style>
 #photo {
-    background-size: cover;
-    background-position: center;
+    display : block;
     margin : 0 auto;
-    margin-top : 20px;
+    margin-top : 15px;
+    margin-bottom : 15px;
     height : 150px;
-    width : 90%;
+    width : 80%;
     max-width: 400px;
 }
 
@@ -51,9 +51,9 @@
 
 .tiletitle {
     font-size:1.7em;
-    font-weight: 500;
+    font-weight: bold;
     text-align: center;
-    color: #2fe6e2;
+    color: dodgerblue;
     width: 250px;
     margin : 0 auto;
     border-bottom:  solid 2px #bab9cc;
@@ -123,8 +123,7 @@ footer {
     <span id="subject"></span>
     <span id="owner"></span>
 </header>
-<div id="photo">
-</div>
+<img id="photo" src="" alt="photo">
 <div class="container">
     <!-- contents -->
     <div id="contents" style="text-align:center;">
@@ -163,7 +162,7 @@ var headnote = function(){ // headnote에 대한 데이터를 가지고 옵니�
     var data = new FormData(); 
     data.append("func", "headnote");
     POST("s00_signage.php", data, function(resp){
-        document.getElementById("photo").style.backgroundImage = "url(" + resp.data.photo + ")";
+        document.getElementById("photo").src = resp.data.photo;
         document.getElementById("subject").innerHTML = resp.data.subject;
         document.getElementById("owner").innerHTML = resp.data.owner;
     });

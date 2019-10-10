@@ -10,7 +10,8 @@ html, body {
     background-color: #f5f6fa;
 } 
 header {
-    background: linear-gradient(to bottom left, #0099ff 51%, #66ffcc 100%);
+    background-color : dodgerblue;
+    /* background: linear-gradient(to bottom left, #0099ff 51%, #66ffcc 100%); */
     line-height: 40px;
     color : white;
     text-align : center;
@@ -64,13 +65,16 @@ input[type=button] {
 }
 .button {
     position : relative;
-    max-width : 38px;
-    width : 80%; 
+    max-width : 30px;
+    width : 80%;
     margin : 0.5%;
-    border-bottom : 5px #78e08feb solid; 
+    border-bottom : 2px  #707070 solid; 
+    border-top : 2px  #9e9dac solid; 
+    border-right : 2px  #707070 solid; 
+    border-left : 2px  #9e9dac solid; 
     background-color : white; 
     cursor: pointer; 
-    padding: 10px 30px 30px 30px;
+    padding: 10px 30px 25px 30px;
     font-size: 13px; 
     font-weight: bold;
     font-style: normal;
@@ -111,23 +115,26 @@ input[type=button] {
     left: 50%;
     transform : translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
-    width: 85%;
-    max-width : 500px;
+    width: 100%;
     height : auto;
     background: white;
     padding: 10px;
     text-align:center;
-    border : 2px solid black;
+    border-top : solid black 7px;
+    border-bottom : solid black 7px;
 }
 #alert input[type=submit] {
-    margin-bottom: 25px;
-    width: 50%;
+    margin-bottom: 5px;
+    width: 30%;
+    max-width : 200px;
     background-color: dodgerblue;
     color: white;
-    padding: 12px 20px;
+    padding: 10px 18px;
     border: none;
     cursor: pointer;
     font-weight: bold;
+    font-size : 17px;
+    margin-top : 10px;
 }
 #alert input[type=submit]:hover {
     background-color: #45a049;
@@ -137,6 +144,10 @@ input[type=button] {
     margin: 0 auto;
     font-size: 50px;
     width : 50px;
+    margin-top : 10px;
+}
+#alert h2{
+    font-size : 23px;
 }
 
 /****************************/

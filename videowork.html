@@ -13,7 +13,6 @@
         <div class="contents">
             <!-- head note -->
             <header onclick="javascript:document.location.href='home.html'">
-                <img id="headnote_img" style="height:15px;">
                 <span id="subject"></span> 
                 <span id="owner"></span>
             </header>
@@ -220,7 +219,6 @@
        var data = new FormData(); 
        data.append("func", "headnote");
        POST("s00_signage.php", data, function(resp){
-           document.getElementById("headnote_img").setAttribute("src", resp.data.photo);
            document.getElementById("subject").innerHTML = resp.data.subject;
            document.getElementById("owner").innerHTML = resp.data.owner;
            document.getElementById("foot_note").innerHTML = resp.data.footer;

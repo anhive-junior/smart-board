@@ -13,31 +13,22 @@
         text-align: center;
     }
     .img_frame {
-        width : 80%;
+        width : 60%;
         position: relative;
         margin : 0 auto;
-        background-color: #d2a873;
-        padding: 15px;
-        border-top: 15px solid #ab824d;
-        border-left: 15px solid #cea26a;
-        border-right: 15px solid #cea26a;
-        border-bottom: 15px solid #d09e5f;
     }
-    .img_frame .in_frame {
-        position : relative;
+    .in_frame #photo{
+        max-height: 600px;
         width : 100%;
-        border-top: 15px solid #ecf0f1;
-        border-left: 15px solid #f5f6f7;
-        border-right: 15px solid #ecf0f1;
-        border-bottom: 15px solid #ecf0f1;
-        box-sizing : border-box;
     }
-    .in_frame #photo {
-        width : 100%;
-        height: 40%;
-        max-height : 550px;
-        background-color : white;
-        margin-bottom : -3px;
+    .rotate_image {
+        position : absolute;
+        cursor: pointer;
+        width: 40px;
+        height : 40px;
+        z-index: 5;
+        right : 0;
+        top : 0;
     }
     #fname {
         position : relative;
@@ -60,7 +51,7 @@
         border-top : 2px solid #a4b0be;
         border-bottom : 2px solid #a4b0be;
         text-align : center;
-        width : 80%;
+        width : 67%;
         min-height : 60px;
         padding : 15px 0 15px 0;
         background-color : white;
@@ -68,17 +59,8 @@
     @media screen and (min-width: 1000px){
         .container {
             margin : 0 auto;
-            width : 55%;
+            width : 65%;
         }
-    }
-    .rotate_image {
-        position : absolute;
-        cursor: pointer;
-        width: 40px;
-        height : 40px;
-        z-index: 5;
-        right : 0;
-        top : 0;
     }
     </style>    
 </head>
@@ -86,7 +68,6 @@
 <div id="prepend"></div>
 <div class="container">
     <header onclick="javascript:document.location.href='home.html'">
-        <img id="headnote_img" style="height:15px;">
         <span id="subject"></span>
         <span id="owner"></span>
     </header>
@@ -103,16 +84,14 @@
         </div>
     </div>
     <div id="vlog">최근등록 파일</div>
-
-
     <div style="position : relative; text-align : center; display : block; width : 100%; margin : 0 auto; height : 100px;">
-        <p style="clear:both;font-weight:bold;text-align:left; margin-left : 8%; font-size: 20px;">
+        <p style="clear:both;font-weight:bold;text-align:left; margin-left : 17%; font-size: 15px; color :#7a7a85;">
             <i style="max-width: 20px; width: 80%; float: left">
                 <img src="images/memo.svg">
             </i>
             &nbsp;Memo
         </p>
-        <textarea id="caption" rows="1" type="text" placeholder="여기에 글을 쓰신 후 등록하면 글이 액자에 등록됩니다."></textarea>
+        <textarea id="caption" rows="1" type="text" placeholder="메모하기"></textarea>
     </div>
     <!-- uppear -->
     <div style="margin-top : 50px; margin-bottom : 15px;"></div>
@@ -122,11 +101,11 @@
             <img src="images/check_btn.svg">
             <div>보내기</div>
         </i>
-        <i id="btn_rmcard" onclick="rmcard()" class="button" style="display: block; border-color : #eb4d4b;">
+        <i id="btn_rmcard" onclick="rmcard()" class="button">
             <img src="images/minus.svg">
             <div>삭제</div>
         </i>
-        <i id="btn_list" onclick="showlistwork()" class="button" style="border-color : #a4b0be;">
+        <i id="btn_list" onclick="showlistwork()" class="button">
             <img src="images/list.svg">
             <div>목록 편집</div>
         </i>
@@ -163,7 +142,6 @@
         data.append('func', 'headnote');
         POST("s00_signage.php", data, function(resp){
             console.log("headnote - " + resp.status + ':' + resp.data);
-            document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
             document.getElementById("subject").innerHTML=resp.data.subject;
             document.getElementById("owner").innerHTML=resp.data.owner;
             document.getElementById("foot_note").innerHTML=resp.data.footer;

@@ -20,9 +20,6 @@
             font-weight: bold;
             padding : 10px 10px;
         }
-        .button {
-            border-bottom: 5px solid #b6c6cc;
-        }
     </style>
 </head>
 <body > 
@@ -30,7 +27,6 @@
         <div class="contents">
             <!-- head note -->
             <header onclick="javascript:document.location.href='home.html'">
-                <img id="headnote_img" style="height:15px;">
                 <span id="subject"></span> 
                 <span id="owner"></span>
             </header>
@@ -43,7 +39,7 @@
                         <img src="images/backward-solid.svg">
                         <div>이전으로</div>
                     </i>
-                    <i class="button" onclick="control('playhold');">
+                    <i class="button" onclick="control('playhold');" style="max-width : 36px;">
                         <img src="images/pause-play.svg">
                         <div>시작/정지</div>
                     </i>
@@ -139,7 +135,6 @@ var headnote = function(){ // headnote 및 footer에 대한 데이터를 가지�
     data.append("func", "headnote");
     POST("s00_signage.php", data, function(resp){
         console.log(resp.status + ':' + resp.data);
-        document.getElementById("headnote_img").setAttribute("src", resp.data.photo)
         document.getElementById("subject").innerHTML=resp.data.subject;
         document.getElementById("owner").innerHTML=resp.data.owner;
         document.getElementById("foot_note").innerHTML=resp.data.footer;
