@@ -23,6 +23,17 @@
     margin : 0 auto;
 }
 
+.button_span {
+    font-weight: bold;
+    padding-top : 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
+    border-top : 2px solid rgb(116, 116, 116);
+    border-bottom : 2px solid rgb(71, 71, 71);
+    margin-top : 5px;
+    background-color : rgb(240, 240, 240);
+}
+
 .container {
     height : 450px;
     width : 100%;
@@ -133,7 +144,7 @@ footer {
         </div>
         <!-- button -->
         <div class="config" id="buttons" style="text-align:center">
-            <div style="border-bottom: 5px solid #7f8fa6; width : 80%; margin:0 auto; margin-bottom : 15px; font-weight: bold; padding-bottom: 10px;">
+            <div style="width : 100%; margin:0 auto; margin-bottom : 15px; font-weight: bold; padding-bottom: 10px; padding-top : 10px; background-color : rgb(78, 166, 255); color : white;">
                 Configuration
             </div>
             <i style="max-width:32px;width:80%;float:left;" class="closebtn" onclick="config_button()">
@@ -141,6 +152,16 @@ footer {
             </i>
             <span id='button_none' class="button_span" style="display:none;width: 100%;"></span>
         </div>
+    </div>
+    <div id="button_back" style="display : none; position : absolute; top : 0; width: 100%; height : 100%; background-color : rgba(73, 54, 54, 0.295);" onclick="config_button()"></div>
+    <!-- creator -->
+    <div class="creator_d">
+        <h2>Creator & Author</h2>
+        <p>Yongsoo Han - github, @ilovecho</p>
+        <p>Yonghoon Jung - github, @dydgns2017</p>
+        <p>Jaeseok Ryu - github, @yhk1515</p>
+        <p>Jongmoon Heo - github, @hurjm</p> 
+        <p>Sangwon Ji - github, @MirrowFo</p>
     </div>
 </div>
 <footer>Powered by AnHive Co., Ltd</footer>
@@ -151,9 +172,11 @@ var config_status = false;
 function config_button(){
     if(config_status == false){
         document.getElementsByClassName("config")[0].style.width="250px";
+        document.getElementById("button_back").style.display = "block";
         config_status = true;
     } else {
         document.getElementsByClassName("config")[0].style.width="0";
+        document.getElementById("button_back").style.display = "none";
         config_status = false;
     }
 }
@@ -211,6 +234,9 @@ var home_bottom_button = function(){
             clone.innerHTML = cont['spanInner'];
             buttons.appendChild(clone);
         }
+        let creator = document.getElementsByClassName("creator_d")[0];
+        creator.style.display = "block";
+        buttons.appendChild(creator);
     });
 }
 headnote();
