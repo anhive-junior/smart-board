@@ -18,7 +18,10 @@ header {
     font-weight: bold; 
     font-size : 23px;
     padding: 13px 0;
-    width : 100%;
+    position: relative;
+    margin : 0 auto;
+    max-width: 800px;
+    height : 40px;
 }
  footer {
     color : black; 
