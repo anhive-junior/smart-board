@@ -123,8 +123,8 @@ input[type=button] {
     background: white;
     padding: 10px;
     text-align:center;
-    border-top : solid black 7px;
-    border-bottom : solid black 7px;
+    border-top : solid #707070 7px;
+    border-bottom : solid #707070 7px;
 }
 #alert input[type=submit] {
     margin-bottom: 5px;
@@ -217,7 +217,7 @@ input[type=button] {
     -webkit-transform: translate(-50%, -50%);
     margin-top : 70px;
 }
-/* creatro design */
+/* creator design */
 .creator_d {
     display : none;
     text-align:center;
@@ -227,6 +227,13 @@ input[type=button] {
 .creator_d > p {
     font-size : 10px;
     font-weight : bold;
+}
+
+/* iphone or small device */
+@media screen and (max-width: 370px){
+    header {
+        font-size : 17px;
+    }
 }
 /* Safari */
 @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } }

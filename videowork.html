@@ -28,12 +28,11 @@
             
                 <div class="tile" style="padding-top:5px;padding-bottom:5px; ">
                     <div id="_prog" style="margin-bottom : 10px; color : #7a7a85; font-weight: bold; "></div>
-                    <video id="video" width="95%" controls autoplay loop>
+                    <video id="video" style="max-width: 761px;" width="95%" controls autoplay loop>
                     Your browser does not support the video tag.
                     </video>
                     <div id="vlog" style="text-align:center; margin:3px;padding-top:5px;padding-bottom:5px;"></div>
-
-                    <textarea id="caption" style="width:80%;height:2em;" ></textarea><br> 
+                    <textarea id="caption" style="display:none;width:80%;height:2em;max-width : 761px;" ></textarea><br> 
                     <div class="buttonContainer" style="text-align: center;">
                         <i class="button" onclick="document.getElementById('_file').click();">
                             <img src="images/search-solid.svg">
@@ -53,7 +52,7 @@
                         </i>
                     </div>
                 </div>
-                <div id="vlog" style="margin-top : 10px; background-color: white; margin-bottom: 10px; color : #7a7a85; font-weight: bold; padding : 10px 10px;"> 영상 제어 </div>
+                <div id="vlog" style="margin : 0 auto;  margin-top : 10px; background-color: white; margin-bottom: 10px; color : #7a7a85; font-weight: bold; padding : 10px 10px; max-width: 761px;"> 영상 제어 </div>
                 <div class="buttonContainer" style="text-align: center;">
                     <i class="button" onclick="control('seek -30 seconds');">
                         <img src="images/backward-solid.svg">
@@ -79,11 +78,11 @@
                     </i>
                 </div>
                 <div class="buttonContainer" style="text-align: center;">
-                    <i class="button" onclick="control('previous');">
+                    <i class="button" onclick="control('previous chapter');">
                         <img src="images/next-vid.svg">
                         <div>이전</div>
                     </i>
-                    <i class="button" onclick="control('next');">
+                    <i class="button" onclick="control('next chapter');">
                         <img src="images/prev-vid.svg">
                         <div>다음</div>
                     </i>

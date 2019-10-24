@@ -65,7 +65,7 @@
 }
 
 .tiletitle {
-    font-size:1.7em;
+    font-size : 25px;
     font-weight: bold;
     text-align: center;
     color: dodgerblue;
@@ -119,6 +119,19 @@ footer {
     font-weight: bold; 
     background : none;
     width : 100%;
+}
+@media screen and (max-width: 370px){
+    .tiletitle {
+        font-size : 20px;
+    }
+    .tile .explain {
+    margin: 0 auto;
+    padding-top : 10px;
+    padding-bottom : 25px;
+    color : #9e9dac;
+    font-weight: bold;
+    font-size : 12px;
+    }
 }
 </style>
 </head>
@@ -239,7 +252,6 @@ var home_bottom_button = function(){
 headnote();
 home_level_contents();
 home_bottom_button();
-
 </script>    
 </body>
 </html>
