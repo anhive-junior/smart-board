@@ -46,7 +46,7 @@
                             <img src="images/list.svg">
                             <div>목록</div>
                         </i>
-                        <i class="button" onclick="rmvideo();">
+                        <i class="button" id="btn_cancel" onclick="rmvideo();">
                             <img src="images/minus.svg">
                             <div>삭제</div>
                         </i>
@@ -112,9 +112,7 @@
     var _caption = document.getElementById('caption');
     var _vlog = document.getElementById('vlog');
     var btn_cancel = document.getElementById("btn_cancel");
-    show_level(function(resp){
-        if(resp.data.level>1) btn_cancel.style.display = "";
-    });
+    show_level(function(resp){ if(resp.data.level>1) btn_cancel.style.display = ""; });
     
 
     _file = document.getElementById('_file');
