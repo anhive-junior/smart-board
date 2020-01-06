@@ -206,12 +206,9 @@ function _getslide() {
         copy ("$custom_path/sample_slide.jpg.json", "$config_info/$photo.json");
         make_thumb_from_image("$config_slide/sample.jpg", 
                         "$config_thumbs/$photo.png", 64,64);
-        //$info = json_decode(file_get_contents("$config_info/$photo.json"),true);
+        $info = json_decode(file_get_contents("$config_info/$photo.json"),true);
         $cfile = "$config_caption/$photo.txt";
-        $ap_data = shell_exec("./explainment/ap_info_feh.sh");
-        error_log("data : " . json_decode($ap_data));
-        //file_put_contents($cfile, $info['caption']);
-        file_put_contents($cfile,$ap_data,FILE_APPEND);
+        file_put_contents($cfile, $info['caption']);
         symlink( "$config_playlink/$photo", 
                     "$config_playlist/$photo"); 
         touch($cfile, $info['time']);
