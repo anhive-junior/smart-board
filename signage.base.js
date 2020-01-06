@@ -24,6 +24,14 @@ var POST = function(api, data, func){
     return request;
 }
 
+// hidden and visible
+// image flickers when page loads
+// this function is work to image flickers prevented
+window.onload = function(){
+    document.body.style.visibility = "hidden";
+    setTimeout("document.body.style.visibility = \"visible\"", 200);
+}
+
 // level 값 가져오기
 var show_level = function(func){
     var data = new FormData();
